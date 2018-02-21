@@ -3081,6 +3081,18 @@ F407xE.menu.subboard.GENERIC_F407V.upload.protocol=STLink
 F407xE.menu.subboard.GENERIC_F407V.upload.tool=stlink_upload
 F407xE.menu.subboard.GENERIC_F407V.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
 
+F407xE.menu.subboard.BLUE_F407V=BLUE_F407VE_MINI
+F407xE.menu.subboard.BLUE_F407V.upload.maximum_size=524288
+F407xE.menu.subboard.BLUE_F407V.upload.maximum_data_size=131072
+F407xE.menu.subboard.BLUE_F407V.build.variant=BLUE_F407VE_MINI
+F407xE.menu.subboard.BLUE_F407V.build.board=BLUE_F407VE_MINI
+F407xE.menu.subboard.BLUE_F407V.build.extra_flags0=-DSTM32F407VE -DHSE_VALUE=25000000
+F407xE.menu.subboard.BLUE_F407V.build.ldscript_pre=ld/f407xG
+F407xE.menu.subboard.BLUE_F407V.upload.device=STM32F407VE
+F407xE.menu.subboard.BLUE_F407V.upload.protocol=STLink
+F407xE.menu.subboard.BLUE_F407V.upload.tool=stlink_upload
+F407xE.menu.subboard.BLUE_F407V.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
+
 F407xE.menu.subboard.BLACK_F407ZE=GENERIC_F407ZE
 F407xE.menu.subboard.BLACK_F407ZE.upload.maximum_size=1232896
 F407xE.menu.subboard.BLACK_F407ZE.upload.maximum_data_size=131072
