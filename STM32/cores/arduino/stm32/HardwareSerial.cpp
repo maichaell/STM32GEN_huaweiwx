@@ -165,6 +165,16 @@ void HardwareSerial::begin(const uint32_t baud) {
        stm32AfLPUARTInit(instance, NULL,0,NULL,0);
 
    }
+   else
+	if((txPin < 0xff) && (rxPin <0xff))
+		stm32AfUARTInit(instance, 
+					variant_pin_list[rxPin].port,
+					variant_pin_list[rxPin].pinMask,
+					variant_pin_list[txPin].port,
+					variant_pin_list[txPin].pinMask);
+	else			  
+		stm32AfUARTInit(instance, NULL,0,NULL,0);	   
+ 
 #else
   if((txPin < 0xff) && (rxPin <0xff))
     stm32AfUARTInit(instance, 
