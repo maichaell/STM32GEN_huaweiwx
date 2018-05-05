@@ -43,7 +43,11 @@
                             (((mask)==bit(14))?14: \
                             (((mask)==bit(15))?15:16))))))))))))))))
 
-#if defined(STM32F0)||defined(STM32L0)||defined(STM32F7)||defined(STM32H7)
+/* 
+m0 m7 have not bitband
+STM32F3/STM32L4 GPIO unsupport bitband opration 
+*/
+#if defined(STM32F0)||defined(STM32L0)||defined(STM32F7)||defined(STM32H7)||defined(STM32F3)||defined(STM32L4)
 #	define BITBAND_OPTION 0
 #else
 #	define BITBAND_OPTION 1 
@@ -393,7 +397,6 @@ class BB_PIN{
   constexpr const uint8_t  pos(void){return variant_gpiopin_pos_static[PinNumber];};
   constexpr const uint32_t base(void){return variant_gpiopin_base_static[PinNumber];};
   constexpr const uint32_t pinMask(void){return (uint32_t)(1<<(this->pos()));};
-  constexpr GPIO_TypeDef*  port(void){return (GPIO_TypeDef *)(this->base());};
 
 #ifdef STM32F1
   constexpr const uint32_t pinReg(void){return this->base()+8;};
