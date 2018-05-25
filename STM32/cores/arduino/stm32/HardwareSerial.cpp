@@ -281,7 +281,8 @@ void HardwareSerial::end(void) {
 }
 
 int HardwareSerial::available() {
-    return rxEnd != rxStart;
+  if (rxEnd >= rxStart) return (rxEnd - rxStart);
+  return BUFFER_SIZE + rxEnd - rxStart;
 }
 
 int HardwareSerial::availableForWrite() {  
