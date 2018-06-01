@@ -65,7 +65,7 @@ public:
 #endif
 
 #ifdef TIM7
-  #ifndef FREERTOS    
+  #if FREERTOS == 0 
     extern HardwareBaseTimer Timer7;
   #endif	
 #endif

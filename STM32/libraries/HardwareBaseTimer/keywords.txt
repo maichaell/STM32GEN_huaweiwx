@@ -6,7 +6,7 @@
 # Datatypes (KEYWORD1)
 HardwareBaseTimer	KEYWORD1
 Timer6	KEYWORD1
-Time17	KEYWORD1
+Timer7	KEYWORD1
 
 #######################################
 

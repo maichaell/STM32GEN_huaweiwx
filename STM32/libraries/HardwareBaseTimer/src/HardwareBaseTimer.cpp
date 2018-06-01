@@ -31,7 +31,7 @@
 #endif
 
 #ifdef TIM7
-# ifndef FREERTOS
+# if  FREERTOS == 0
   HardwareBaseTimer* interruptTimer7;
 # endif
 #endif
@@ -50,14 +50,19 @@ void HardwareBaseTimer::resume(void) {
         __HAL_RCC_TIM6_CLK_ENABLE();
         interruptTimer6 = this;
         if (hasInterrupt) {
+#ifdef STM32H7
+            HAL_NVIC_SetPriority(TIM6_DAC_IRQn, TIM_PRIORITY, 0);
+            HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
+#else			
             HAL_NVIC_SetPriority(TIM6_IRQn, TIM_PRIORITY, 0);
             HAL_NVIC_EnableIRQ(TIM6_IRQn);
+#endif
         }
     }
 #endif
 
 #ifdef TIM7
-# ifndef FREERTOS
+# if  FREERTOS == 0
     if (handle.Instance == TIM7) {
         __HAL_RCC_TIM7_CLK_ENABLE();
         interruptTimer7 = this;
@@ -158,13 +163,17 @@ static void handleInterrupt(HardwareBaseTimer *timer) {
 
 #ifdef TIM6
  HardwareBaseTimer Timer6(TIM6);
- 
- extern "C" void TIM6_IRQHandler(void) {
+#ifdef STM32H7
+ extern "C" void TIM6_DAC_IRQHandler(void)
+#else 
+ extern "C" void TIM6_IRQHandler(void)
+#endif
+ {
     if (interruptTimer6 != NULL) handleInterrupt(interruptTimer6);
  }
 #endif
 #ifdef TIM7
-# ifndef FREERTOS    
+# if FREERTOS == 0    
     HardwareBaseTimer Timer7(TIM7);
     
     extern "C" void TIM7_IRQHandler(void) {
