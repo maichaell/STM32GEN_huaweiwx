@@ -133,7 +133,7 @@ private:
     extern HardwareTimer Timer8;
 #endif
 
-//F2/4/7 H4 L1
+//F2/4/7 H7 L1
 #ifdef TIM9
     extern HardwareTimer Timer9;
 #endif
@@ -142,19 +142,22 @@ private:
 #endif
 #ifdef TIM11
     extern HardwareTimer Timer11;
-#elif defined(TIM21)	/*L0*/
+#elif defined(TIM21)	/*L0 only*/
     extern HardwareTimer Timer21;
 #endif
 #ifdef TIM12
     extern HardwareTimer Timer12;
-#elif defined(TIM22)	/*L0*/
+#elif defined(TIM22)	/*L0 only*/
     extern HardwareTimer Timer22;
 #endif
 #ifdef TIM13
     extern HardwareTimer Timer13;
 #endif
+#ifdef TIM14
+    extern HardwareTimer Timer13;
+#endif
 
-// F0/3 L4
+// F0/3 L4 H7
 #ifdef TIM15
     extern HardwareTimer Timer15;
 #endif

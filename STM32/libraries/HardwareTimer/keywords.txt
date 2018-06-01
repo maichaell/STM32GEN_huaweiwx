@@ -21,6 +21,9 @@ Timer15	KEYWORD1
 Timer16	KEYWORD1
 Timer17	KEYWORD1
 
+Timer21	KEYWORD1
+Timer22	KEYWORD1
+
 #######################################
 
 #######################################
