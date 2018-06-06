@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-    @file    SimpleRTC.ino
-    @author  WI6LABS
+    @file    BackupRegs.ino
+    @author  huaweiwx@sina.com
     @version V1.0.0
     @date    12-December-2017
-    @brief   Simple RTC example.
+    @brief   Backup register r/w example.
 
   ******************************************************************************
     @attention
@@ -58,15 +58,34 @@ void setup()
     setdata();
     settime();
     rtc.setRegister(RTC_BKP_DR1, 0x32F2);
-   } else {
+    for (uint32_t i = 2; i < 10; i++) rtc.setRegister(i, i);
+#if RTC_BKP_NUMBER > 10U
+    for (uint32_t i = 11; i < 43; i++) rtc.setRegister(i + 5, i);
+#endif
+    Serial << "day and time be setup auto!\n";
+  } else {
+
  //   settime()
 #ifdef STM32F1
     setdata();
+    Serial << "F1 setdata, time already setup!\n";
+#else
+    Serial << "time already setup!\n";
 #endif
-   }
+  }
+
   // you can use also
   //rtc.setTime(hours, minutes, seconds);
   //rtc.setDate(weekDay, day, month, year);
+  //write backup register
+
+  //read backup register
+  for (uint32_t i = 1; i < 10; i++)
+    Serial << "RTC_BKP_DR" << i << ": " << _HEX(rtc.getRegister(i)) << "\n";
+#if RTC_BKP_NUMBER > 10U
+  for (uint32_t i = 11; i < 43; i++)
+    Serial << "RTC_BKP_DR" << i << ": " << _HEX(rtc.getRegister(i + 5)) << "\n";
+#endif
 }
 
 void loop()
@@ -85,9 +104,7 @@ void loop()
   print2digits(rtc.getMinutes());
   Serial.print(":");
   print2digits(rtc.getSeconds());
-
   Serial.println();
-
   delay(1000);
 }
 

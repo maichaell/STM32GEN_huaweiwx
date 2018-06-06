@@ -40,7 +40,9 @@
 #define __STM32_RTC_H
 
 #include "Arduino.h"
+#include "stm32_HAL/stm32XXxxx_ll_rtc.h"
 #include <RTC.H>
+
 // Check if RTC HAL enable in variants/board_name/stm32yzxx_hal_conf.h
 #ifndef HAL_RTC_MODULE_ENABLED
 #error "RTC configuration is missing. Check flag HAL_RTC_MODULE_ENABLED in variants/board_name/stm32yzxx_hal_conf.h"
@@ -55,7 +57,7 @@ typedef void(*voidFuncPtrVoidPtr)(void *);
 
 class STM32RTC {
 public:
-
+  
   enum RTC_Hour_Format : uint8_t
   {
     RTC_HOUR_12 = HOUR_FORMAT_12,
@@ -186,13 +188,42 @@ public:
   bool isAlarmEnabled(void) {
     return _alarmEnabled;
   }
+  
+ inline uint8_t rstSource(void){
+#ifdef RCC_FLAG_BORRST // STM32L4
+	 if (__HAL_RCC_GET_FLAG(RCC_FLAG_BORRST)) return  1;
+#else	 
+	 if (__HAL_RCC_GET_FLAG(RCC_FLAG_PORRST)) return  1;
+#endif	 
+	 if (__HAL_RCC_GET_FLAG(RCC_FLAG_PINRST)) return  2;
+
+	 if (__HAL_RCC_GET_FLAG(RCC_FLAG_IWDGRST)) return 3;
+  }
+
+  void setRegister(uint32_t index, uint32_t value)
+  {
+#if defined(STM32F1)
+    LL_RTC_BKP_SetRegister(BKP, index, value);
+#else
+    LL_RTC_BAK_SetRegister(RTC, index, value);
+#endif
+  }
+  
+  uint32_t getRegister(uint32_t index)
+  {
+#if defined(STM32F1)
+    return LL_RTC_BKP_GetRegister(BKP, index);
+#else
+    return LL_RTC_BAK_GetRegister(RTC, index);
+#endif
+  }
   friend class STM32LowPower;
 
 private:
   STM32RTC(void): _clockSource(RTC_LSI_CLOCK) {}
-
-  static bool _configured;
-
+  
+  static  bool _configured;
+  
   RTC_AM_PM   _hoursPeriod;
   uint8_t     _hours;
   uint8_t     _minutes;
@@ -219,7 +250,7 @@ private:
   void syncTime(void);
   void syncDate(void);
   void syncAlarmTime(void);
-
+  
 };
 
 #endif // __STM32_RTC_H

@@ -94,13 +94,13 @@ typedef void(*voidCallbackPtr)(void *);
 #endif /* !STM32F1 */
 
 /* Ultra Low Power High (ULPH) density */
-#if defined(STM32L100xBA) || defined (STM32L151xBA) || defined (STM32L152xBA) ||\
-    defined(STM32L100xC) || defined (STM32L151xC) || defined (STM32L152xC) ||\
-    defined (STM32L162xC) || defined(STM32L151xCA) || defined (STM32L151xD) ||\
-    defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L162xCA) ||\
-    defined (STM32L162xD) || defined(STM32L151xE) || defined(STM32L151xDX) ||\
-    defined (STM32L152xE) || defined (STM32L152xDX) || defined (STM32L162xE) ||\
-    defined (STM32L162xDX)
+#if defined(STM32L100xBA) || defined(STM32L100xC) ||\
+    defined(STM32L151xBA) || defined (STM32L151xC) || defined(STM32L151xCA) ||\
+    defined (STM32L151xD) || defined(STM32L151xDX) || defined(STM32L151xE) ||\
+    defined(STM32L152xBA) || defined (STM32L152xC) || defined (STM32L152xCA) ||\
+    defined(STM32L152xD)  || defined (STM32L152xDX)|| defined(STM32L152xE)  ||\
+    defined(STM32L162xD)  || defined (STM32L162xC) ||defined (STM32L162xCA) ||\
+    defined (STM32L162xE) || defined(STM32L162xDX)
 #define STM32L1_ULPH
 #endif
 
@@ -142,7 +142,7 @@ void RTC_SetClockSource(sourceClock_t source);
 void RTC_getPrediv(int8_t *asynch, int16_t *synch);
 void RTC_setPrediv(int8_t asynch, int16_t synch);
 
-void RTC_init(hourFormat_t format, sourceClock_t source);
+void RTC_init(hourFormat_t format, sourceClock_t source,uint8_t reset);
 void RTC_DeInit(void);
 
 void RTC_SetTime(uint8_t hours, uint8_t minutes, uint8_t seconds, uint32_t subSeconds, hourAM_PM_t period);

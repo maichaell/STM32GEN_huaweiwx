@@ -54,7 +54,7 @@ bool STM32RTC::_configured = false;
   */
 void STM32RTC::begin(bool resetTime, RTC_Hour_Format format)
 {
-  if(resetTime == true) {
+  if(resetTime == true) {	  
     _configured = false;
     _alarmEnabled = false;
   }
@@ -69,9 +69,11 @@ void STM32RTC::begin(bool resetTime, RTC_Hour_Format format)
 void STM32RTC::begin(RTC_Hour_Format format)
 {
   if(_configured == false) {
+	  
     RTC_init((format == RTC_HOUR_12)? HOUR_FORMAT_12: HOUR_FORMAT_24,
              (_clockSource == RTC_LSE_CLOCK)? LSE_CLOCK:
-             (_clockSource == RTC_HSE_CLOCK)? HSE_CLOCK : LSI_CLOCK);
+             (_clockSource == RTC_HSE_CLOCK)? HSE_CLOCK : LSI_CLOCK,
+			 (_clockSource == RTC_LSE_CLOCK)? 0:1);
     // Must be set before call of sync methods
     _configured = true;
     syncTime();
@@ -1016,8 +1018,8 @@ void STM32RTC::syncAlarmTime(void)
     _alarmPeriod = (p == AM)? RTC_AM : RTC_PM;
     switch (static_cast<Alarm_Match>(match)) {
       case MATCH_OFF:
-      case MATCH_YYMMDDHHMMSS://kept for compatibility
-      case MATCH_MMDDHHMMSS:  //kept for compatibility
+      case MATCH_YYMMDDHHMMSS: //kept for compatibility
+      case MATCH_MMDDHHMMSS:   //kept for compatibility
       case MATCH_DHHMMSS:
       case MATCH_HHMMSS:
       case MATCH_MMSS:

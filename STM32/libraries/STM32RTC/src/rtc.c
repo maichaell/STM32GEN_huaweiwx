@@ -204,7 +204,11 @@ static void RTC_initClock(sourceClock_t source)
     Error_Handler();
   }
 
-  __HAL_RCC_RTC_ENABLE();
+    HAL_PWR_EnableBkUpAccess();
+#ifdef STM32F1
+    __HAL_RCC_BKP_CLK_ENABLE();
+#endif
+    __HAL_RCC_RTC_ENABLE();
 }
 
 /**
@@ -308,25 +312,28 @@ static void RTC_computePrediv(int8_t *asynch, int16_t *synch)
 
 /**
   * @brief RTC Initialization
-  *        This function configures the RTC time and calendar. By default, the
+  *        This function configures the RTC time and calendar. By reset is true, the
   *        RTC is set to the 1st January 2017 0:0:0:00
   * @param format: enable the RTC in 12 or 24 hours mode
   * @retval None
   */
-void RTC_init(hourFormat_t format, sourceClock_t source)
+void RTC_init(hourFormat_t format, sourceClock_t source, uint8_t reset)
 {
   initFormat = format;
 
   /* Enable Power Clock */
   __HAL_RCC_PWR_CLK_ENABLE();
 
-#ifdef HAL_PWR_MODULE_ENABLED
+#ifdef HAL_PWR_MODULE_ENABLED  // STM32GENERIC always on
   /* Allow access to Backup domain */
   HAL_PWR_EnableBkUpAccess();
 #endif
+
   /* Reset RTC Domain */
-  __HAL_RCC_BACKUPRESET_FORCE();
-  __HAL_RCC_BACKUPRESET_RELEASE();
+  if(reset){  
+    __HAL_RCC_BACKUPRESET_FORCE();
+    __HAL_RCC_BACKUPRESET_RELEASE();
+  }	
 
   /* Init RTC clock */
   RTC_initClock(source);
@@ -355,12 +362,13 @@ void RTC_init(hourFormat_t format, sourceClock_t source)
 
   HAL_RTC_Init( &RtcHandle );
 
+  if(reset){  
   /*Sunday 1st January 2017*/
-  RTC_SetDate(17, 1, 1, 7);
-
+     RTC_SetDate(17, 1, 1, 7);
   /*at 0:0:0*/
-  RTC_SetTime(0,0,0,0,AM);
-
+     RTC_SetTime(0,0,0,0,AM);
+  }
+  
 #if !defined(STM32F1) && !defined(STM32F2) && !defined(STM32L1) || defined(STM32L1_ULPH)
   /* Enable Direct Read of the calendar registers (not through Shadow) */
   HAL_RTCEx_EnableBypassShadow(&RtcHandle);
