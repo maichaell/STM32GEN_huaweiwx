@@ -161,7 +161,7 @@ static void RTC_initClock(sourceClock_t source)
       PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_HSE_DIV16;
       HSEDiv = 16;
     }
-#elif defined(STM32F2) || defined(STM32F4) || defined(STM32F7)
+#elif defined(STM32F2) || defined(STM32F4) || defined(STM32F7)|| defined(STM32H7)
 /* Not defined for STM32F2 */
 #ifndef RCC_RTCCLKSOURCE_HSE_DIVX
 #define RCC_RTCCLKSOURCE_HSE_DIVX 0x00000300U
@@ -256,6 +256,10 @@ void RTC_getPrediv(int8_t *asynch, int16_t *synch)
 }
 
 #if !defined(STM32F1)
+
+#ifndef LSI_VALUE  /*STM32H7*/
+#define LSI_VALUE CSI_VALUE
+#endif
 /**
   * @brief Compute (a)synchronous prescaler
   *        RTC prescalers are compute to obtain the RTC clock to 1Hz. See AN4759.
@@ -322,8 +326,10 @@ void RTC_init(hourFormat_t format, sourceClock_t source, uint8_t reset)
   initFormat = format;
 
   /* Enable Power Clock */
+#if !defined(STM32H7)
   __HAL_RCC_PWR_CLK_ENABLE();
-
+#endif
+  
 #ifdef HAL_PWR_MODULE_ENABLED  // STM32GENERIC always on
   /* Allow access to Backup domain */
   HAL_PWR_EnableBkUpAccess();
@@ -353,7 +359,7 @@ void RTC_init(hourFormat_t format, sourceClock_t source, uint8_t reset)
   }
   RtcHandle.Init.OutPut = RTC_OUTPUT_DISABLE;
   RTC_getPrediv((int8_t*)&(RtcHandle.Init.AsynchPrediv), (int16_t*)&(RtcHandle.Init.SynchPrediv));
-#if defined(STM32L0) || defined(STM32L4)
+#if defined(STM32L0) || defined(STM32L4) || defined(STM32H7)
   RtcHandle.Init.OutPutRemap = RTC_OUTPUT_REMAP_NONE;
 #endif /* STM32L0 || STM32L4 */
   RtcHandle.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;

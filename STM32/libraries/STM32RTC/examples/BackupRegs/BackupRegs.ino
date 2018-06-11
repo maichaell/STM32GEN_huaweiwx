@@ -42,6 +42,17 @@
 /* Get the rtc object */
 STM32RTC& rtc = STM32RTC::getInstance();
 
+/* Change these values to set the current initial default time */
+const byte seconds = 0;
+const byte minutes = 0;
+const byte hours = 18;
+
+/* Change these values to set the current initial default date */
+/* 19th June 2018 */
+const byte day = 19;
+const byte month = 5;
+const byte year = 18;
+
 void setup()
 {
   Serial.begin(115200);
@@ -76,7 +87,7 @@ void setup()
 
   // you can use also
   //rtc.setTime(hours, minutes, seconds);
-  //rtc.setDate(weekDay, day, month, year);
+  //rtc.setDate(day, month, year);
   //write backup register
 
   //read backup register
@@ -115,17 +126,6 @@ void print2digits(int number) {
   Serial.print(number);
 }
 
-/* Change these values to set the current initial time */
-const byte seconds = 0;
-const byte minutes = 0;
-const byte hours = 18;
-
-/* Change these values to set the current initial date */
-/* Menday  19th June 2018 */
-const byte weekDay = 2;
-const byte day = 19;
-const byte month = 5;
-const byte year = 18;
 
 //  set the time
 void settime(void) {
@@ -136,7 +136,6 @@ void settime(void) {
 
 // Set the date
 void setdata(void) {
-  rtc.setWeekDay(weekDay);
   rtc.setDay(day);
   rtc.setMonth(month);
   rtc.setYear(year);

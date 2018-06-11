@@ -55,6 +55,7 @@ void setup()
 {
   Serial.begin(115200);
 
+  rtc.setClockSource(STM32RTC::RTC_LSE_CLOCK);
   rtc.begin(); // initialize RTC 24H format
 
   rtc.setTime(hours, minutes, seconds);

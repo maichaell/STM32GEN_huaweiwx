@@ -1,9 +1,20 @@
 /**
   ******************************************************************************
-    @file    SimpleRTC_set.ino
+    @file    cmdLine_timerSet.ino
     @author  huaweiwx@sina.com
     @date    2018/6/8
     @brief   Simple RTC set time example.
+    command:
+        set data & time YYMMDDHHMMSS: set yy mm dd hh mm ss
+                     or   MMDDHHMMSS: set mm dd hh mm ss
+                     or       HHMMSS: set mm dd hh mm ss
+                           ............
+        set data              YYMMDD: setymd yy mm dd
+                     or         MMDD: setymd mm dd
+                     or           DD: setymd dd
+        set time              HHMMSS: sethms yy mm dd
+                     or         MMDD: sethms mm dd
+                     or           DD: sethms dd
   ******************************************************************************
 */
 
@@ -16,6 +27,17 @@ int ptr = 0;
 
 #include <STM32RTC.h>
 STM32RTC& rtc = STM32RTC::getInstance(); /* Get the rtc object */
+
+/* Change these values to set the current initial time */
+byte seconds = 0;
+byte minutes = 0;
+byte hours = 18;
+
+/* Change these values to set the current initial date */
+/* Menday  19th June 2018 */
+byte day = 19;
+byte month = 5;
+byte year = 18;
 
 
 void setup()
@@ -49,10 +71,12 @@ void setup()
   }
   // you can use also
   //rtc.setTime(hours, minutes, seconds);
-  //rtc.setDate(weekDay, day, month, year);
+  //rtc.setDate(day, month, year);
 }
 
 boolean stringComplete = false;  // whether the string is complete
+boolean timerShowOn = true;
+
 void loop()
 {
   //cmdline process
@@ -71,12 +95,14 @@ void loop()
     stringComplete = false;
   }
 
-  showDataTime();
+  if (timerShowOn) {
+    showDataTime();
+  }
   //receiver uart input
 #if defined(STM32GENERIC)
   serialEvent();
 #endif
- delay(1000);
+  delay(1000);
 }
 
 void serialEvent() {
@@ -103,20 +129,8 @@ const char*  weekStr[7] = {
 void showDataTime(void)
 {
   Serial <<  rtc.getHours() << ":"  << rtc.getMinutes() << ":" << rtc.getSeconds() ;
-  Serial << "  "<< weekStr[ rtc.getWeekDay() - 1] <<"  "<<  rtc.getDay() << "/" <<  rtc.getMonth()   << "/"<< rtc.getYear() << "\n";
+  Serial << "  " << weekStr[ rtc.getWeekDay() - 1] << "  " <<  rtc.getDay() << "/" <<  rtc.getMonth()   << "/" << rtc.getYear() << "\n";
 }
-
-/* Change these values to set the current initial time */
-byte seconds = 0;
-byte minutes = 0;
-byte hours = 18;
-
-/* Change these values to set the current initial date */
-/* Menday  19th June 2018 */
-byte weekDay = 2;
-byte day = 19;
-byte month = 5;
-byte year = 18;
 
 //  set the time
 void settime(void) {
@@ -127,14 +141,13 @@ void settime(void) {
 
 // Set the date
 void setdata(void) {
-  rtc.setWeekDay(weekDay);
   rtc.setDay(day);
   rtc.setMonth(month);
   rtc.setYear(year);
 }
 
-/*setdt 19 12 8 12 08 58*/
-int Cmd_setdt(int argc, char *argv[])
+/*example: set 18 6 9 22 18 54*/
+int Cmd_set(int argc, char *argv[])
 {
   switch (argc) {
     case 7:
@@ -179,25 +192,72 @@ int Cmd_setdt(int argc, char *argv[])
   rtc.setHours(hours);
   rtc.setMinutes(minutes);
   rtc.setSeconds(seconds);
-
   return 0;
 }
 
-/*setwk  1~7*/
-int Cmd_setwk(int argc, char *argv[])
+/*example: on9*/
+int Cmd_timeOn(int argc, char *argv[])
+{
+  timerShowOn = true;
+  return 0;
+}
+
+/*example: on9*/
+int Cmd_timeOff(int argc, char *argv[])
+{
+  timerShowOn = false;
+  return 0;
+}
+
+/*example: setymd 18 6 9*/
+int Cmd_ymd(int argc, char *argv[])
 {
   switch (argc) {
+    case 4:
+      year = atoi(argv[1]);
+      month = atoi(argv[2]);
+      day = atoi(argv[3]);
+      break;
+    case 3:
+      month = atoi(argv[1]);
+      day = atoi(argv[2]);
+      break;
     case 2:
-      weekDay = atoi(argv[1]);
+      day = atoi(argv[1]);
       break;
     default:
       return 0;
   }
-  
-  rtc.setWeekDay(weekDay);
+  rtc.setYear(year);
+  rtc.setMonth(month);
+  rtc.setDay(day);
   return 0;
 }
 
+/*example: sethms 22 18 54*/
+int Cmd_hms(int argc, char *argv[])
+{
+  switch (argc) {
+    case 4:
+      hours = atoi(argv[1]);
+      minutes = atoi(argv[2]);
+      seconds = atoi(argv[3]);
+      break;
+    case 3:
+      minutes = atoi(argv[1]);
+      seconds = atoi(argv[2]);
+      break;
+    case 2:
+      seconds = atoi(argv[1]);
+      break;
+    default:
+      return 0;
+  }
+  rtc.setHours(hours);
+  rtc.setMinutes(minutes);
+  rtc.setSeconds(seconds);
+  return 0;
+}
 
 //*****************************************************************************
 // This function implements the "help" command.  It prints a simple list of the
@@ -219,11 +279,14 @@ int Cmd_help(int argc, char *argv[])
 
 tCmdLineEntry g_sCmdTable[] =
 {
-  { "help",      Cmd_help,      " : Display list of commands"} ,
-  { "?",         Cmd_help,      "    : alias for help"} ,
-  { "set",       Cmd_setdt,     "  : set  yy mm dd hh mm ss"} ,/* set 18 6 9 22 18 54 */ 
-  { "wkset",     Cmd_setwk,     ": wkset wk"} ,                /* setwk 6 */  
-  
+  { "help",      Cmd_help,      "  : Display list of commands"} ,
+  { "?",         Cmd_help,   "     : alias for help"} ,
+  { "on",        Cmd_timeOn,  "    : timer show on"} ,/* set 18 6 9 22 18 54 */
+  { "off",       Cmd_timeOff,  "   : timer show off"} ,         /* set 18 6 9*/
+  { "set",       Cmd_set,      "   : set  yy mo dd hh mi ss"} ,/* set 18 6 9 22 18 54 */
+  { "setymd",       Cmd_ymd,      ": time  yy mm dd"} ,         /* set 18 6 9*/
+  { "sethms",       Cmd_hms,      ": time  hh mm ss"} ,         /* set 22 18 54*/
+
   // { "alarm",      Cmd_alarm,    "  :  set alarmtime hms"},
   {  0, 0, 0 }
 };

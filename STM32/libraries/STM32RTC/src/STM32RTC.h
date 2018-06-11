@@ -33,6 +33,8 @@
   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
+  * add setRegister/getRegister by  huaweiwx@sina.com 2018.6.6
+  * add calculateWeekDay by  huaweiwx@sina.com 2018.6.11
   ******************************************************************************
   */
 
@@ -181,6 +183,8 @@ public:
 
   void getPrediv(int8_t *predivA, int16_t *predivS);
   void setPrediv(int8_t predivA, int16_t predivS);
+  
+  uint8_t calculateWeekDay(uint8_t y,uint8_t m, uint8_t d);  /*add by huaweiwx@sina.com 2018.6.11*/
 
   bool isConfigured(void) {
     return _configured;
@@ -188,7 +192,8 @@ public:
   bool isAlarmEnabled(void) {
     return _alarmEnabled;
   }
-  
+
+#if 0  
  inline uint8_t rstSource(void){
 #ifdef RCC_FLAG_BORRST // STM32L4
 	 if (__HAL_RCC_GET_FLAG(RCC_FLAG_BORRST)) return  1;
@@ -199,20 +204,39 @@ public:
 
 	 if (__HAL_RCC_GET_FLAG(RCC_FLAG_IWDGRST)) return 3;
   }
+#endif
 
-  void setRegister(uint32_t index, uint32_t value)
+  void setRegister(uint32_t index, uint32_t value) /*add by huaweiwx@sina.com 2018.6.6*/
   {
 #if defined(STM32F1)
     LL_RTC_BKP_SetRegister(BKP, index, value);
+#elif defined(STM32H7)
+  register uint32_t tmp = 0U;
+
+  tmp = (uint32_t)(&(RTC->BKP0R));
+  tmp += (index * 4U);
+
+  /* Write the specified register */
+  *(__IO uint32_t *)tmp = (uint32_t)value;
+
+//    HAL_RTCEx_BKUPRead(RTC, index, value);
 #else
     LL_RTC_BAK_SetRegister(RTC, index, value);
 #endif
   }
   
-  uint32_t getRegister(uint32_t index)
+  uint32_t getRegister(uint32_t index) /*add huaweiwx@sina.com 2018.6.6*/
   {
 #if defined(STM32F1)
     return LL_RTC_BKP_GetRegister(BKP, index);
+#elif defined(STM32H7)
+  register uint32_t tmp = 0U;
+
+  tmp = (uint32_t)(&(RTC->BKP0R));
+  tmp += (index * 4U);
+
+  /* Read the specified register */
+  return (*(__IO uint32_t *)tmp);
 #else
     return LL_RTC_BAK_GetRegister(RTC, index);
 #endif

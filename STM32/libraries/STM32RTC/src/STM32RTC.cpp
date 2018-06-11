@@ -34,6 +34,8 @@
   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
+  * add setRegister/getRegister by  huaweiwx@sina.com 2018.6.6
+  * add calculateWeekDay by  huaweiwx@sina.com 2018.6.11
   */
 
 #include <time.h>
@@ -320,6 +322,31 @@ uint8_t STM32RTC::getDay(void)
 {
   syncDate();
   return _day;
+}
+
+ /*add by huaweiwx@sina.com 2018.6.11*/
+uint8_t STM32RTC::calculateWeekDay(uint8_t year,uint8_t month, uint8_t day)
+{
+  int iweek = 0;
+  uint8_t y, c;
+  uint8_t m, d;
+  if (month == 1 || month == 2) {
+    c = (year - 1) / 100;
+    y = (year - 1) % 100;
+    m = month + 12;
+  } else {
+    c = year / 100;
+    y = year % 100;
+    m = month;
+  }
+  d = day;
+  iweek = y + y / 4 + c / 4 - 2 * c + 26 * (m + 1) / 10 + d - 1;
+  iweek = iweek >= 0 ? (iweek % 7) : (iweek % 7 + 7);
+  if (iweek == 0)
+  {
+    iweek = 7;
+  }
+  return iweek;
 }
 
 /**
@@ -611,6 +638,7 @@ void STM32RTC::setDay(uint8_t day)
     if((day >= 1) && (day <= 31)) {
       _day = day;
     }
+	_wday = calculateWeekDay(_year,_month,_day);  /*add by huaweiwx@sina.com 2018.6.11*/
     RTC_SetDate(_year, _month, _day, _wday);
   }
 }
@@ -627,6 +655,7 @@ void STM32RTC::setMonth(uint8_t month)
     if((month >= 1) && (month <= 12)) {
       _month = month;
     }
+	_wday = calculateWeekDay(_year,_month,_day);  /*add by huaweiwx@sina.com 2018.6.11*/
     RTC_SetDate(_year, _month, _day, _wday);
   }
 }
@@ -643,6 +672,7 @@ void STM32RTC::setYear(uint8_t year)
     if(year < 100) {
       _year = year;
     }
+	_wday = calculateWeekDay(_year,_month,_day);  /*add by huaweiwx@sina.com 2018.6.11*/
     RTC_SetDate(_year, _month, _day, _wday);
   }
 }
@@ -667,6 +697,7 @@ void STM32RTC::setDate(uint8_t day, uint8_t month, uint8_t year)
     if(year < 100) {
       _year = year;
     }
+	_wday = calculateWeekDay(_year,_month,_day);  /*add by huaweiwx@sina.com 2018.6.11*/
     RTC_SetDate(_year, _month, _day, _wday);
   }
 }
@@ -799,6 +830,7 @@ void STM32RTC::setAlarmDay(uint8_t day)
   if (_configured) {
     if((day >= 1) && (day <= 31)) {
       _alarmDay = day;
+	  
     }
   }
 }

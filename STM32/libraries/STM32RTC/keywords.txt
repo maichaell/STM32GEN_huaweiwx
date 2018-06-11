@@ -7,7 +7,6 @@
 #######################################
 
 STM32RTC	KEYWORD1
-STM32Backup		KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
