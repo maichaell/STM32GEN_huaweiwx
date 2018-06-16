@@ -19,7 +19,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 
-  2018.5.28  add TIM6/7 by huaweiwx
+  2018.5.28  fock from Daniel Fekete HardwareTimer lib and add basic timer TIM6/7 by huaweiwx
 */
 
 #include "HardwareBaseTimer.h"
@@ -50,12 +50,12 @@ void HardwareBaseTimer::resume(void) {
         __HAL_RCC_TIM6_CLK_ENABLE();
         interruptTimer6 = this;
         if (hasInterrupt) {
-#ifdef STM32H7
-            HAL_NVIC_SetPriority(TIM6_DAC_IRQn, TIM_PRIORITY, 0);
-            HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
-#else			
+#if defined(STM32F0)||defined(STM32F1)|| defined(STM32L0)||defined(STM32L1)||(STM32F412xx)
             HAL_NVIC_SetPriority(TIM6_IRQn, TIM_PRIORITY, 0);
             HAL_NVIC_EnableIRQ(TIM6_IRQn);
+#else
+           HAL_NVIC_SetPriority(TIM6_DAC_IRQn, TIM_PRIORITY, 0);
+            HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
 #endif
         }
     }
@@ -163,10 +163,10 @@ static void handleInterrupt(HardwareBaseTimer *timer) {
 
 #ifdef TIM6
  HardwareBaseTimer Timer6(TIM6);
-#ifdef STM32H7
- extern "C" void TIM6_DAC_IRQHandler(void)
+#if defined(STM32F0)||defined(STM32F1)|| defined(STM32L0)||defined(STM32L1)||(STM32F412xx)
+  extern "C" void TIM6_IRQHandler(void)
 #else 
- extern "C" void TIM6_IRQHandler(void)
+  extern "C" void TIM6_DAC_IRQHandler(void)
 #endif
  {
     if (interruptTimer6 != NULL) handleInterrupt(interruptTimer6);

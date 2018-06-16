@@ -1,5 +1,5 @@
 /*
-  2018.5.28  TIM6/7 by huaweiwx
+  2018.5.28  fock from Daniel Fekete HardwareTimer lib and add basic timer TIM6/7 by huaweiwx
 */
 
 #ifndef _HARDWAREBASETIMER_H_
@@ -60,6 +60,7 @@ public:
 
 #pragma GCC diagnostic pop
 
+#if defined(TIM6)||defined(TIM7)
 #ifdef TIM6
     extern HardwareBaseTimer Timer6;
 #endif
@@ -68,6 +69,9 @@ public:
   #if FREERTOS == 0 
     extern HardwareBaseTimer Timer7;
   #endif	
+#endif
+#else
+ #error !!! This chip have not TIM6 or TIM7 !!!
 #endif
 
 #endif //HARDWARETIMER_H_
