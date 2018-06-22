@@ -7,14 +7,16 @@
     command:
         set data & time YYMMDDHHMMSS: set yy mm dd hh mm ss
                      or   MMDDHHMMSS: set mm dd hh mm ss
-                     or       HHMMSS: set mm dd hh mm ss
+                     or       HHMMSS: set dd hh mm ss
                            ............
         set data              YYMMDD: setymd yy mm dd
                      or         MMDD: setymd mm dd
                      or           DD: setymd dd
-        set time              HHMMSS: sethms yy mm dd
-                     or         MMDD: sethms mm dd
-                     or           DD: sethms dd
+        set time              HHMMSS: sethms hh mm ss
+                     or         MMSS: sethms mm ss
+                     or           SS: sethms ss
+        timer show on               : on
+        timer show off              : off             
   ******************************************************************************
 */
 
@@ -46,11 +48,10 @@ void setup()
   Led.Init();
   Led.flash(10, 320, 5);
 
-  Serial.println();
-  Serial.println("****************************************");
-  Serial.println("*          RTC timer demo              *");
-  Serial.println("*  Type help Display list of commands  *");
-  Serial.println("****************************************");
+  Serial.println("\n****************************************");
+  Serial.println(  "*          RTC timer demo              *");
+  Serial.println(  "*  Type help Display list of commands  *");
+  Serial.println(  "****************************************");
 
   //select clock souce:  RTC_LSI_CLOCK/RTC_LSE_CLOCK/RTC_HSE_CLOCK/RTC_HSI_CLOCK, default RTC_LSI_CLOCK
   //default STM32RTC::RTC_LSI_CLOCK
@@ -281,8 +282,8 @@ tCmdLineEntry g_sCmdTable[] =
 {
   { "help",      Cmd_help,      "  : Display list of commands"} ,
   { "?",         Cmd_help,   "     : alias for help"} ,
-  { "on",        Cmd_timeOn,  "    : timer show on"} ,/* set 18 6 9 22 18 54 */
-  { "off",       Cmd_timeOff,  "   : timer show off"} ,         /* set 18 6 9*/
+  { "on",        Cmd_timeOn,  "    : timer show on"} ,
+  { "off",       Cmd_timeOff,  "   : timer show off"} ,
   { "set",       Cmd_set,      "   : set  yy mo dd hh mi ss"} ,/* set 18 6 9 22 18 54 */
   { "setymd",       Cmd_ymd,      ": time  yy mm dd"} ,         /* set 18 6 9*/
   { "sethms",       Cmd_hms,      ": time  hh mm ss"} ,         /* set 22 18 54*/
