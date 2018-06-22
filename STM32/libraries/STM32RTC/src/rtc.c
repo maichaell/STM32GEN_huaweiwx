@@ -34,6 +34,7 @@
   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
+  * add get_fattime for fatfs by huaweiwx@sina.com 2018.6.20
   */
 
 #include "stm32_def.h"
@@ -721,6 +722,37 @@ void RTC_Alarm_IRQHandler(void)
 {
   HAL_RTC_AlarmIRQHandler(&RtcHandle);
 }
+
+
+/*for fatfs huaweiwx@sina.com 2018.6.20
+* get_fattiime with __weak  in diskio.c
+*/
+
+typedef unsigned long	DWORD;
+DWORD get_fattime (void)
+{
+ DWORD RetVal;
+ uint8_t year, month, day,wday,hours, minutes, seconds, subSeconds;
+ hourAM_PM_t period;
+ 
+ RTC_GetDate(&year, &month, &day, &wday);
+ RTC_GetTime(&hours, &minutes, &seconds, &subSeconds, &period);
+ 
+ 
+// Temp = year - 1980;
+ RetVal = (year << 25);
+ RetVal |= (month << 21);
+ RetVal |= (day << 16);
+ if (period == PM){
+	hours +=12;  
+ }
+ RetVal |= (hours << 11);
+ RetVal |= (minutes << 5);
+ RetVal |= (seconds >> 2);
+
+return RetVal;
+}
+
 
 #ifdef __cplusplus
 }
