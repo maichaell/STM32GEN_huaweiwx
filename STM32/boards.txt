@@ -42,7 +42,7 @@ NUCLEO_64.menu.subboard.Nucleo_L053R8=Nucleo-L053R8(32M)
 NUCLEO_64.menu.subboard.Nucleo_L053R8.upload.maximum_size=65536
 NUCLEO_64.menu.subboard.Nucleo_L053R8.upload.maximum_data_size=8192
 NUCLEO_64.menu.subboard.Nucleo_L053R8.upload.device=STM32L053R8
-NUCLEO_64.menu.subboard.Nucleo_L053R8.build.mcu=cortex-m0
+NUCLEO_64.menu.subboard.Nucleo_L053R8.build.mcu=cortex-m0plus
 NUCLEO_64.menu.subboard.Nucleo_L053R8.build.series=STM32L0
 NUCLEO_64.menu.subboard.Nucleo_L053R8.build.variant=NUCLEO_L053R8
 NUCLEO_64.menu.subboard.Nucleo_L053R8.build.board=Nucleo_L053R8
@@ -987,7 +987,7 @@ DISCOVERY_L053C8.upload.maximum_data_size=8192
 DISCOVERY_L053C8.build.core=arduino
 DISCOVERY_L053C8.build.board=DISCOVERY_L053C8
 
-DISCOVERY_L053C8.build.mcu=cortex-m0
+DISCOVERY_L053C8.build.mcu=cortex-m0plus
 DISCOVERY_L053C8.build.series=STM32L0
 DISCOVERY_L053C8.build.variant=DISCOVERY_L053C8
 DISCOVERY_L053C8.build.extra_flags=-DSTM32L053C8
