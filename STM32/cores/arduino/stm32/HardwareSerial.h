@@ -34,6 +34,7 @@ class HardwareSerial : public Stream  {
   public:
     HardwareSerial(USART_TypeDef *instance);
     void begin(const uint32_t baud);
+    void configForLowPower(void);
     void end(void);
     int available(void);
 	int availableForWrite();

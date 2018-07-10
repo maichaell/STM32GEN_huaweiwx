@@ -217,6 +217,27 @@ void HardwareSerial::begin(const uint32_t baud) {
     
 }
 
+
+#if defined(HAL_PWR_MODULE_ENABLED) && defined(UART_IT_WUF)
+#  if __has_include("low_power.h") /*if used STM32LowPower lib*/
+extern "C" void Lowpower_uartConfig_(USART_TypeDef *instance);
+#define USE_LOWPOWER
+#  endif
+#endif
+/**
+  * @brief  Function called to configure the uart interface for low power
+  * @param  obj : pointer to serial_t structure
+  * @retval None
+  */
+void HardwareSerial::configForLowPower(void)
+{
+#ifdef USE_LOWPOWER
+  end();
+  Lowpower_uartConfig_(this->instance);
+  this->begin(handle->Init.BaudRate);
+#endif
+}
+
 void HardwareSerial::end(void) {
 #if defined(USART1) && (USE_SERIAL1)
   if (handle->Instance == USART1) {
@@ -438,4 +459,3 @@ extern "C" void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   interruptUART->rxEnd++;
   HAL_UART_Receive_IT(interruptUART->handle, &interruptUART->receive_buffer, 1);
 }
-

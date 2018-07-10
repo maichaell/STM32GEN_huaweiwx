@@ -723,6 +723,11 @@ void RTC_Alarm_IRQHandler(void)
   HAL_RTC_AlarmIRQHandler(&RtcHandle);
 }
 
+void RTC_WKUP_IRQHandler(void)
+{
+  HAL_RTCEx_WakeUpTimerIRQHandler(&RtcHandle);
+}
+
 
 /*for fatfs huaweiwx@sina.com 2018.6.20
 * get_fattiime with __weak  in diskio.c
