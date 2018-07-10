@@ -42,6 +42,7 @@ NUCLEO_64.menu.subboard.Nucleo_L053R8=Nucleo-L053R8(32M)
 NUCLEO_64.menu.subboard.Nucleo_L053R8.upload.maximum_size=65536
 NUCLEO_64.menu.subboard.Nucleo_L053R8.upload.maximum_data_size=8192
 NUCLEO_64.menu.subboard.Nucleo_L053R8.upload.device=STM32L053R8
+#NUCLEO_64.menu.subboard.Nucleo_L053R8.build.mcu=cortex-m0
 NUCLEO_64.menu.subboard.Nucleo_L053R8.build.mcu=cortex-m0plus
 NUCLEO_64.menu.subboard.Nucleo_L053R8.build.series=STM32L0
 NUCLEO_64.menu.subboard.Nucleo_L053R8.build.variant=NUCLEO_L053R8
@@ -63,6 +64,19 @@ NUCLEO_64.menu.subboard.Nucleo_F103RB.build.f_cpuhsi=48000000L
 NUCLEO_64.menu.subboard.Nucleo_F103RB.build.f_cpuhse=72000000L
 NUCLEO_64.menu.subboard.Nucleo_F103RB.build.extra_flags=-DSTM32F103RB
 NUCLEO_64.menu.subboard.Nucleo_F103RB.massstorage_drive=NODE_F103RB
+
+NUCLEO_64.menu.subboard.Nucleo_F103RE=Nucleo-F103RC/D/E(HSI48M/HSE72M)
+NUCLEO_64.menu.subboard.Nucleo_F103RE.upload.maximum_size=524288
+NUCLEO_64.menu.subboard.Nucleo_F103RE.upload.maximum_data_size=65536
+NUCLEO_64.menu.subboard.Nucleo_F103RE.upload.device=STM32F103RE
+NUCLEO_64.menu.subboard.Nucleo_F103RE.build.mcu=cortex-m3
+NUCLEO_64.menu.subboard.Nucleo_F103RE.build.series=STM32F1
+NUCLEO_64.menu.subboard.Nucleo_F103RE.build.variant=NUCLEO_F103RB
+NUCLEO_64.menu.subboard.Nucleo_F103RE.build.board=NUCLEO_F103RE
+NUCLEO_64.menu.subboard.Nucleo_F103RE.build.f_cpuhsi=48000000L
+NUCLEO_64.menu.subboard.Nucleo_F103RE.build.f_cpuhse=72000000L
+NUCLEO_64.menu.subboard.Nucleo_F103RE.build.extra_flags=-DSTM32F103RE
+NUCLEO_64.menu.subboard.Nucleo_F103RE.massstorage_drive=NODE_F103RE
 
 NUCLEO_64.menu.subboard.Nucleo_F303RE=Nucleo-F303RE(72M)
 NUCLEO_64.menu.subboard.Nucleo_F303RE.upload.maximum_size=524288
@@ -110,6 +124,7 @@ NUCLEO_64.menu.upload_method.MassStorageMethod.upload.tool=nucleoFlasher
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 NUCLEO_64.menu.log.default=Release(no-exceptions)
 NUCLEO_64.menu.log.default.build.log_level=-fno-exceptions
+NUCLEO_64.menu.log.Release=Release(exceptions)
 NUCLEO_64.menu.log.fatal=FATAL
 NUCLEO_64.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 NUCLEO_64.menu.log.error=ERROR
@@ -243,6 +258,7 @@ Nucleo_F207ZG.upload.tool=stlink_upload
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 Nucleo_F207ZG.menu.log.default=Release(no-exceptions)
 Nucleo_F207ZG.menu.log.default.build.log_level=-fno-exceptions
+Nucleo_F207ZG.menu.log.Release=Release(exceptions)
 Nucleo_F207ZG.menu.log.fatal=FATAL
 Nucleo_F207ZG.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 Nucleo_F207ZG.menu.log.error=ERROR
@@ -342,6 +358,7 @@ Nucleo-F401RE.upload.tool=stlink_upload
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 Nucleo-F401RE.menu.log.default=Release(no-exceptions)
 Nucleo-F401RE.menu.log.default.build.log_level=-fno-exceptions
+Nucleo-F401RE.menu.log.Release=Release(exceptions)
 Nucleo-F401RE.menu.log.fatal=FATAL
 Nucleo-F401RE.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 Nucleo-F401RE.menu.log.error=ERROR
@@ -441,6 +458,7 @@ Nucleo-F411RE.upload.tool=stlink_upload
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 Nucleo-F411RE.menu.log.default=Release(no-exceptions)
 Nucleo-F411RE.menu.log.default.build.log_level=-fno-exceptions
+Nucleo-F411RE.menu.log.Release=Release(exceptions)
 Nucleo-F411RE.menu.log.fatal=FATAL
 Nucleo-F411RE.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 Nucleo-F411RE.menu.log.error=ERROR
@@ -567,6 +585,7 @@ Nucleo_F767ZI.menu.startadr.R20000000.upload.vect=0x20000000
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 Nucleo_F767ZI.menu.log.default=Release(no-exceptions)
 Nucleo_F767ZI.menu.log.default.build.log_level=-fno-exceptions
+Nucleo_F767ZI.menu.log.Release=Release(exceptions)
 Nucleo_F767ZI.menu.log.fatal=FATAL
 Nucleo_F767ZI.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 Nucleo_F767ZI.menu.log.error=ERROR
@@ -598,7 +617,7 @@ Nucleo_H743ZI.build.ldscript_pre=ld/h743xI
 Nucleo_H743ZI.build.f_cpupre=400000000L
 
 Nucleo_H743ZI.upload.maximum_size=2097152
-Nucleo_H743ZI.upload.maximum_data_size=1015808
+Nucleo_H743ZI.upload.maximum_data_size=131072
 Nucleo_H743ZI.upload.uploadadr=0x08000000
 Nucleo_H743ZI.upload.vect=0x08000000
 Nucleo_H743ZI.upload.device=STM32H743ZI
@@ -619,7 +638,7 @@ Nucleo_H743ZI.menu.startadr.default.build.extra_flags={build.extra_flags0}
 
 Nucleo_H743ZI.menu.startadr.F08040000=flash 1:0x08040000(256k)
 Nucleo_H743ZI.menu.startadr.F08040000.upload.maximum_size=262144
-Nucleo_H743ZI.menu.startadr.F08040000.upload.maximum_data_size=1015808
+Nucleo_H743ZI.menu.startadr.F08040000.upload.maximum_data_size=131072
 Nucleo_H743ZI.menu.startadr.F08040000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x40000
 Nucleo_H743ZI.menu.startadr.F08040000.build.ldscript={build.ldscript_pre}_0804.ld
 Nucleo_H743ZI.menu.startadr.F08040000.upload.uploadadr=0x08040000
@@ -627,7 +646,7 @@ Nucleo_H743ZI.menu.startadr.F08040000.upload.vect=0x08040000
 
 Nucleo_H743ZI.menu.startadr.F08080000=flash 2:0x08080000(256k)
 Nucleo_H743ZI.menu.startadr.F08080000.upload.maximum_size=262144
-Nucleo_H743ZI.menu.startadr.F08080000.upload.maximum_data_size=1015808
+Nucleo_H743ZI.menu.startadr.F08080000.upload.maximum_data_size=131072
 Nucleo_H743ZI.menu.startadr.F08080000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x80000
 Nucleo_H743ZI.menu.startadr.F08080000.build.ldscript={build.ldscript_pre}_0808.ld
 Nucleo_H743ZI.menu.startadr.F08080000.upload.uploadadr=0x08080000
@@ -635,7 +654,7 @@ Nucleo_H743ZI.menu.startadr.F08080000.upload.vect=0x08080000
 
 Nucleo_H743ZI.menu.startadr.F080C0000=flash 3:0x080C0000(256k)
 Nucleo_H743ZI.menu.startadr.F080C0000.upload.maximum_size=262144
-Nucleo_H743ZI.menu.startadr.F080C0000.upload.maximum_data_size=1015808
+Nucleo_H743ZI.menu.startadr.F080C0000.upload.maximum_data_size=131072
 Nucleo_H743ZI.menu.startadr.F080C0000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0xC0000
 Nucleo_H743ZI.menu.startadr.F080C0000.build.ldscript={build.ldscript_pre}_080C.ld
 Nucleo_H743ZI.menu.startadr.F080C0000.upload.uploadadr=0x080C0000
@@ -643,7 +662,7 @@ Nucleo_H743ZI.menu.startadr.F080C0000.upload.vect=0x080C0000
 
 Nucleo_H743ZI.menu.startadr.F08100000=flash 4:0x08100000(256k)
 Nucleo_H743ZI.menu.startadr.F08100000.upload.maximum_size=262144
-Nucleo_H743ZI.menu.startadr.F08100000.upload.maximum_data_size=1015808
+Nucleo_H743ZI.menu.startadr.F08100000.upload.maximum_data_size=131072
 Nucleo_H743ZI.menu.startadr.F08100000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x100000
 Nucleo_H743ZI.menu.startadr.F08100000.build.ldscript={build.ldscript_pre}_0810.ld
 Nucleo_H743ZI.menu.startadr.F08100000.upload.uploadadr=0x08100000
@@ -651,7 +670,7 @@ Nucleo_H743ZI.menu.startadr.F08100000.upload.vect=0x08100000
 
 Nucleo_H743ZI.menu.startadr.F08140000=flash 5:0x08140000(256k)
 Nucleo_H743ZI.menu.startadr.F08140000.upload.maximum_size=262144
-Nucleo_H743ZI.menu.startadr.F08140000.upload.maximum_data_size=1015808
+Nucleo_H743ZI.menu.startadr.F08140000.upload.maximum_data_size=131072
 Nucleo_H743ZI.menu.startadr.F08140000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x140000
 Nucleo_H743ZI.menu.startadr.F08140000.build.ldscript={build.ldscript_pre}_0814.ld
 Nucleo_H743ZI.menu.startadr.F08140000.upload.uploadadr=0x08140000
@@ -659,7 +678,7 @@ Nucleo_H743ZI.menu.startadr.F08140000.upload.vect=0x08140000
 
 Nucleo_H743ZI.menu.startadr.F08180000=flash 6:0x08180000(256k)
 Nucleo_H743ZI.menu.startadr.F08180000.upload.maximum_size=262144
-Nucleo_H743ZI.menu.startadr.F08180000.upload.maximum_data_size=1015808
+Nucleo_H743ZI.menu.startadr.F08180000.upload.maximum_data_size=131072
 Nucleo_H743ZI.menu.startadr.F08180000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x180000
 Nucleo_H743ZI.menu.startadr.F08180000.build.ldscript={build.ldscript_pre}_0818.ld
 Nucleo_H743ZI.menu.startadr.F08180000.upload.uploadadr=0x08180000
@@ -667,23 +686,23 @@ Nucleo_H743ZI.menu.startadr.F08180000.upload.vect=0x08180000
 
 Nucleo_H743ZI.menu.startadr.F081C0000=flash 7:0x081C0000(256k)
 Nucleo_H743ZI.menu.startadr.F081C0000.upload.maximum_size=262144
-Nucleo_H743ZI.menu.startadr.F081C0000.upload.maximum_data_size=1015808
+Nucleo_H743ZI.menu.startadr.F081C0000.upload.maximum_data_size=131072
 Nucleo_H743ZI.menu.startadr.F081C0000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x1C0000
 Nucleo_H743ZI.menu.startadr.F081C0000.build.ldscript={build.ldscript_pre}_081C.ld
 Nucleo_H743ZI.menu.startadr.F081C0000.upload.uploadadr=0x081C0000
 Nucleo_H743ZI.menu.startadr.F081C0000.upload.vect=0x081C0000
 
-Nucleo_H743ZI.menu.startadr.F08000000=flash(256k WithRamBoot)
+Nucleo_H743ZI.menu.startadr.F08000000=flash(WithRamBoot 128kRAM used Only)
 Nucleo_H743ZI.menu.startadr.F08000000.upload.maximum_size=262144
-Nucleo_H743ZI.menu.startadr.F08000000.upload.maximum_data_size=524288
+Nucleo_H743ZI.menu.startadr.F08000000.upload.maximum_data_size=131072
 Nucleo_H743ZI.menu.startadr.F08000000.build.extra_flags={build.extra_flags0} -DCHK_JUMP_TO_SRAM
 Nucleo_H743ZI.menu.startadr.F08000000.build.ldscript={build.ldscript_pre}_0800.ld
 Nucleo_H743ZI.menu.startadr.F08000000.upload.uploadadr=0x08000000
 Nucleo_H743ZI.menu.startadr.F08000000.upload.vect=0x08000000
 
-Nucleo_H743ZI.menu.startadr.R20000000=Ram_D1 0:0x24000000(512K+512k use bootloader only)
+Nucleo_H743ZI.menu.startadr.R20000000=Ram_D1 0:0x24000000(512K+128k use bootloader only)
 Nucleo_H743ZI.menu.startadr.R20000000.upload.maximum_size=524288
-Nucleo_H743ZI.menu.startadr.R20000000.upload.maximum_data_size=524288
+Nucleo_H743ZI.menu.startadr.R20000000.upload.maximum_data_size=131072
 Nucleo_H743ZI.menu.startadr.R20000000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x4000000 -DVECT_TAB_SRAM
 Nucleo_H743ZI.menu.startadr.R20000000.build.ldscript={build.ldscript_pre}_RAM0.ld
 Nucleo_H743ZI.menu.startadr.R20000000.upload.uploadadr=0x24000000
@@ -692,6 +711,7 @@ Nucleo_H743ZI.menu.startadr.R20000000.upload.vect=0x24000000
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 Nucleo_H743ZI.menu.log.default=Release(no-exceptions)
 Nucleo_H743ZI.menu.log.default.build.log_level=-fno-exceptions
+Nucleo_H743ZI.menu.log.Release=Release(exceptions)
 Nucleo_H743ZI.menu.log.fatal=FATAL
 Nucleo_H743ZI.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 Nucleo_H743ZI.menu.log.error=ERROR
@@ -727,11 +747,14 @@ NUCLEO_L476.build.extra_flags0=-DSTM32L476RG
 NUCLEO_L476.build.ldscript_pre=ld/L476xG
 NUCLEO_L476.massstorage_drive=NODE_L476RG
 
-NUCLEO_L476.menu.clock_source.bypass=HSE_BYPASS_Clock_Source
-NUCLEO_L476.menu.clock_source.bypass.build.f_cpu={build.f_cpuhse} -DUSE_HSEBYPASS -DHSE_VALUE=8000000
+NUCLEO_L476.menu.clock_source.msi=HSE_Disable(MSI)
+NUCLEO_L476.menu.clock_source.msi.build.f_cpu={build.f_cpuhsi} -DUSE_MSI
 
 NUCLEO_L476.menu.clock_source.hsi=HSE_Disable(HSI)
 NUCLEO_L476.menu.clock_source.hsi.build.f_cpu={build.f_cpuhsi} -DUSE_HSI
+
+NUCLEO_L476.menu.clock_source.bypass=HSE_BYPASS_Clock_Source(If SB50 closed)
+NUCLEO_L476.menu.clock_source.bypass.build.f_cpu={build.f_cpuhse} -DUSE_HSEBYPASS -DHSE_VALUE=8000000
 
 NUCLEO_L476.menu.clock_source.hse8m=HSE_Crystal(If 8M crystal is installed)
 NUCLEO_L476.menu.clock_source.hse8m.build.f_cpu={build.f_cpuhse} -DUSE_HSE -DHSE_VALUE=8000000
@@ -826,6 +849,7 @@ NUCLEO_L476.upload.tool=stlink_upload
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 NUCLEO_L476.menu.log.default=Release(no-exceptions)
 NUCLEO_L476.menu.log.default.build.log_level=-fno-exceptions
+NUCLEO_L476.menu.log.Release=Release(exceptions)
 NUCLEO_L476.menu.log.fatal=FATAL
 NUCLEO_L476.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 NUCLEO_L476.menu.log.error=ERROR
@@ -841,7 +865,7 @@ NUCLEO_L476.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 
 #################################### NUCLEO_L4R5 ############################################
 # Nucleo 144 board
-NUCLEO_L4R5.name=Nucleo-L4R5ZI(120M)[LPUART1_bps:230400]
+NUCLEO_L4R5.name=Nucleo-L4R5ZI(120M)[LPUART1]
 NUCLEO_L4R5.vid.0=0x0483
 NUCLEO_L4R5.pid.0=0x374B
 
@@ -861,13 +885,13 @@ NUCLEO_L4R5.build.extra_flags0=-DSTM32L4R5ZI
 NUCLEO_L4R5.build.ldscript_pre=ld/L4R5xI
 NUCLEO_L4R5.massstorage_drive=NODE_L4R5ZI
 
-NUCLEO_L4R5.menu.clock_source.msi=MSI
+NUCLEO_L4R5.menu.clock_source.msi=HSE_Disable(MSI)
 NUCLEO_L4R5.menu.clock_source.msi.build.f_cpu={build.f_cpuhsi} -DUSE_MSI
 
 NUCLEO_L4R5.menu.clock_source.hsi=HSE_Disable(HSI)
 NUCLEO_L4R5.menu.clock_source.hsi.build.f_cpu={build.f_cpuhsi} -DUSE_HSI
 
-NUCLEO_L4R5.menu.clock_source.bypass=HSE_BYPASS_Clock_Source(if SB148 on)
+NUCLEO_L4R5.menu.clock_source.bypass=HSE_BYPASS_Clock_Source(if SB148 closed)
 NUCLEO_L4R5.menu.clock_source.bypass.build.f_cpu={build.f_cpuhse} -DUSE_HSEBYPASS -DHSE_VALUE=8000000
 
 NUCLEO_L4R5.menu.clock_source.hse8m=HSE_Crystal(If 8M crystal is installed)
@@ -963,6 +987,7 @@ NUCLEO_L4R5.upload.tool=stlink_upload
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 NUCLEO_L4R5.menu.log.default=Release(no-exceptions)
 NUCLEO_L4R5.menu.log.default.build.log_level=-fno-exceptions
+NUCLEO_L4R5.menu.log.Release=Release(exceptions)
 NUCLEO_L4R5.menu.log.fatal=FATAL
 NUCLEO_L4R5.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 NUCLEO_L4R5.menu.log.error=ERROR
@@ -1026,6 +1051,7 @@ DISCOVERY_L053C8.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=Se
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 DISCOVERY_L053C8.menu.log.default=Release(no-exceptions)
 DISCOVERY_L053C8.menu.log.default.build.log_level=-fno-exceptions
+DISCOVERY_L053C8.menu.log.Release=Release(exceptions)
 DISCOVERY_L053C8.menu.log.fatal=FATAL
 DISCOVERY_L053C8.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 DISCOVERY_L053C8.menu.log.error=ERROR
@@ -1108,6 +1134,7 @@ DISCOVERY_L152R.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=Ser
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 DISCOVERY_L152R.menu.log.default=Release(no-exceptions)
 DISCOVERY_L152R.menu.log.default.build.log_level=-fno-exceptions
+DISCOVERY_L152R.menu.log.Release=Release(exceptions)
 DISCOVERY_L152R.menu.log.fatal=FATAL
 DISCOVERY_L152R.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 DISCOVERY_L152R.menu.log.error=ERROR
@@ -1166,6 +1193,7 @@ DISCOVERY_F303VC.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUART2
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 DISCOVERY_F303VC.menu.log.default=Release(no-exceptions)
 DISCOVERY_F303VC.menu.log.default.build.log_level=-fno-exceptions
+DISCOVERY_F303VC.menu.log.Release=Release(exceptions)
 DISCOVERY_F303VC.menu.log.fatal=FATAL
 DISCOVERY_F303VC.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 DISCOVERY_F303VC.menu.log.error=ERROR
@@ -1231,6 +1259,7 @@ DISCOVERY_F407VG.menu.usb.SerialMSC.build.extra_flags_usb=-DMENU_USB_MASS_STORAG
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 DISCOVERY_F407VG.menu.log.default=Release(no-exceptions)
 DISCOVERY_F407VG.menu.log.default.build.log_level=-fno-exceptions
+DISCOVERY_F407VG.menu.log.Release=Release(exceptions)
 DISCOVERY_F407VG.menu.log.fatal=FATAL
 DISCOVERY_F407VG.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 DISCOVERY_F407VG.menu.log.error=ERROR
@@ -1296,6 +1325,7 @@ DISCOVERY_F429ZI.upload.tool=stlink_upload
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 DISCOVERY_F429ZI.menu.log.default=Release(no-exceptions)
 DISCOVERY_F429ZI.menu.log.default.build.log_level=-fno-exceptions
+DISCOVERY_F429ZI.menu.log.Release=Release(exceptions)
 DISCOVERY_F429ZI.menu.log.fatal=FATAL
 DISCOVERY_F429ZI.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 DISCOVERY_F429ZI.menu.log.error=ERROR
@@ -1361,6 +1391,7 @@ DISCOVERY_F746NG.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=Se
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 DISCOVERY_F746NG.menu.log.default=Release(no-exceptions)
 DISCOVERY_F746NG.menu.log.default.build.log_level=-fno-exceptions
+DISCOVERY_F746NG.menu.log.Release=Release(exceptions)
 DISCOVERY_F746NG.menu.log.fatal=FATAL
 DISCOVERY_F746NG.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 DISCOVERY_F746NG.menu.log.error=ERROR
@@ -1434,6 +1465,7 @@ F030F.menu.upload_method.serialMethod.upload.tool=serial_upload
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 F030F.menu.log.default=Release(no-exceptions)
 F030F.menu.log.default.build.log_level=-fno-exceptions
+F030F.menu.log.Release=Release(exceptions)
 F030F.menu.log.fatal=FATAL
 F030F.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 F030F.menu.log.error=ERROR
@@ -1553,6 +1585,7 @@ MapleMini.menu.jtag_swd.Disabled.build.extra_flags_jtag=-DMENU_DEBUG_DISABLED
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 MapleMini.menu.log.default=Release(no-exceptions)
 MapleMini.menu.log.default.build.log_level=-fno-exceptions
+MapleMini.menu.log.Release=Release(exceptions)
 MapleMini.menu.log.fatal=FATAL
 MapleMini.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 MapleMini.menu.log.error=ERROR
@@ -1710,6 +1743,7 @@ BluePill.menu.jtag_swd.Disabled.build.extra_flags_jtag=-DMENU_DEBUG_DISABLED
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 BluePill.menu.log.default=Release(no-exceptions)
 BluePill.menu.log.default.build.log_level=-fno-exceptions
+BluePill.menu.log.Release=Release(exceptions)
 BluePill.menu.log.fatal=FATAL
 BluePill.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 BluePill.menu.log.error=ERROR
@@ -1783,6 +1817,7 @@ L152C.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 L152C.menu.log.default=Release(no-exceptions)
 L152C.menu.log.default.build.log_level=-fno-exceptions
+L152C.menu.log.Release=Release(exceptions)
 L152C.menu.log.fatal=FATAL
 L152C.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 L152C.menu.log.error=ERROR
@@ -1964,6 +1999,7 @@ GD103RB.menu.jtag_swd.Disabled.build.extra_flags_jtag=-DMENU_DEBUG_DISABLED
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 GD103RB.menu.log.default=Release(no-exceptions)
 GD103RB.menu.log.default.build.log_level=-fno-exceptions
+GD103RB.menu.log.Release=Release(exceptions)
 GD103RB.menu.log.fatal=FATAL
 GD103RB.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 GD103RB.menu.log.error=ERROR
@@ -2145,6 +2181,7 @@ GD103RE.menu.jtag_swd.Disabled.build.extra_flags_jtag=-DMENU_DEBUG_DISABLED
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 GD103RE.menu.log.default=Release(no-exceptions)
 GD103RE.menu.log.default.build.log_level=-fno-exceptions
+GD103RE.menu.log.Release=Release(exceptions)
 GD103RE.menu.log.fatal=FATAL
 GD103RE.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 GD103RE.menu.log.error=ERROR
@@ -2242,16 +2279,15 @@ F103RB.menu.osc_speed.speed_hsi0=8M(HSI)_48M
 F103RB.menu.osc_speed.speed_hsi0.build.f_cpu=48000000L -DUSE_HSI
 
 #---------------------------- UPLOAD METHODS ---------------------------
-F103RB.menu.upload_method.STLinkMethod=STLink 
-F103RB.menu.upload_method.STLinkMethod.upload.protocol=STLink
-F103RB.menu.upload_method.STLinkMethod.upload.tool=stlink_upload
-F103RB.menu.upload_method.STLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
-
 F103RB.menu.upload_method.jLinkMethod=JLink
 F103RB.menu.upload_method.jLinkMethod.upload.tool=jlink_upload
 F103RB.menu.upload_method.jLinkMethod.upload.protocol=jlink
 F103RB.menu.upload_method.jLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
 
+F103RB.menu.upload_method.STLinkMethod=STLink 
+F103RB.menu.upload_method.STLinkMethod.upload.protocol=STLink
+F103RB.menu.upload_method.STLinkMethod.upload.tool=stlink_upload
+F103RB.menu.upload_method.STLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
 
 F103RB.menu.upload_method.serialMethod=Serial [TX/PA9, RX/PA10, BOOT0=1]
 F103RB.menu.upload_method.serialMethod.upload.protocol=maple_serial
@@ -2301,6 +2337,7 @@ F103RB.menu.jtag_swd.Disabled.build.extra_flags_jtag=-DMENU_DEBUG_DISABLED
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 F103RB.menu.log.default=Release(no-exceptions)
 F103RB.menu.log.default.build.log_level=-fno-exceptions
+F103RB.menu.log.Release=Release(exceptions)
 F103RB.menu.log.fatal=FATAL
 F103RB.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 F103RB.menu.log.error=ERROR
@@ -2440,16 +2477,15 @@ F103RE.menu.osc_speed.speed_hsi0=8M(HSI)_48M
 F103RE.menu.osc_speed.speed_hsi0.build.f_cpu=48000000L -DUSE_HSI
 
 #---------------------------- UPLOAD METHODS ---------------------------
-F103RE.menu.upload_method.STLinkMethod=STLink 
-F103RE.menu.upload_method.STLinkMethod.upload.protocol=STLink
-F103RE.menu.upload_method.STLinkMethod.upload.tool=stlink_upload
-F103RE.menu.upload_method.STLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
-
 F103RE.menu.upload_method.jLinkMethod=JLink
 F103RE.menu.upload_method.jLinkMethod.upload.tool=jlink_upload
 F103RE.menu.upload_method.jLinkMethod.upload.protocol=jlink
 F103RE.menu.upload_method.jLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
 
+F103RE.menu.upload_method.STLinkMethod=STLink 
+F103RE.menu.upload_method.STLinkMethod.upload.protocol=STLink
+F103RE.menu.upload_method.STLinkMethod.upload.tool=stlink_upload
+F103RE.menu.upload_method.STLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
 
 F103RE.menu.upload_method.serialMethod=Serial [TX/PA9, RX/PA10, BOOT0=1]
 F103RE.menu.upload_method.serialMethod.upload.protocol=maple_serial
@@ -2499,6 +2535,7 @@ F103RE.menu.jtag_swd.Disabled.build.extra_flags_jtag=-DMENU_DEBUG_DISABLED
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 F103RE.menu.log.default=Release(no-exceptions)
 F103RE.menu.log.default.build.log_level=-fno-exceptions
+F103RE.menu.log.Release=Release(exceptions)
 F103RE.menu.log.fatal=FATAL
 F103RE.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 F103RE.menu.log.error=ERROR
@@ -2513,7 +2550,7 @@ F103RE.menu.log.trace=TRACE
 F103RE.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 
 ##################################F103V board##############################################
-F103V.name=F103V(72M)
+F103V.name=F103VC/D/E(72M)
 F103V.vid.0=0x067B
 F103V.pid.0=0x2303
 
@@ -2701,6 +2738,7 @@ F103V.menu.jtag_swd.Disabled.build.extra_flags_jtag=-DMENU_DEBUG_DISABLED
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 F103V.menu.log.default=Release(no-exceptions)
 F103V.menu.log.default.build.log_level=-fno-exceptions
+F103V.menu.log.Release=Release(exceptions)
 F103V.menu.log.fatal=FATAL
 F103V.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 F103V.menu.log.error=ERROR
@@ -2866,6 +2904,7 @@ F107V.menu.jtag_swd.Disabled.build.extra_flags_jtag=-DMENU_DEBUG_DISABLED
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 F107V.menu.log.default=Release(no-exceptions)
 F107V.menu.log.default.build.log_level=-fno-exceptions
+F107V.menu.log.Release=Release(exceptions)
 F107V.menu.log.fatal=FATAL
 F107V.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 F107V.menu.log.error=ERROR
@@ -2880,7 +2919,7 @@ F107V.menu.log.trace=TRACE
 F107V.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 
 ###################################### F103Z ##########################################
-F103Z.name=F103Z(72M)
+F103Z.name=F103ZC/D/E(72M)
 
 F103Z.serial.disableDTR=true
 F103Z.serial.disableRTS=true
@@ -2893,7 +2932,7 @@ F103Z.build.core=arduino
 F103Z.build.series=STM32F1
 F103Z.build.f_cpu=72000000L
 
-F103Z.menu.subboard.F103ZE1=HY_RedBull_V2[F103ZE]
+F103Z.menu.subboard.F103ZE1=HY_RedBull_V2[F103ZC/D/E]
 F103Z.menu.subboard.F103ZE1.upload.maximum_size=524288
 F103Z.menu.subboard.F103ZE1.upload.maximum_data_size=524288
 F103Z.menu.subboard.F103ZE1.upload.device=STM32F103ZE
@@ -2907,7 +2946,7 @@ F103Z.menu.subboard.F103ZE1.upload.tool=jlink_upload
 F103Z.menu.subboard.F103ZE1.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUART1
 
 
-F103Z.menu.subboard.F103ZE2=HASEE_V3[F103ZE]
+F103Z.menu.subboard.F103ZE2=HASEE_V3[F103ZC/D/E]
 F103Z.menu.subboard.F103ZE2.upload.maximum_size=524288
 F103Z.menu.subboard.F103ZE2.upload.maximum_data_size=65536
 F103Z.menu.subboard.F103ZE2.upload.device=STM32F103ZE
@@ -2922,7 +2961,7 @@ F103Z.menu.subboard.F103ZE2.upload.tool=stlink_upload
 F103Z.menu.subboard.F103ZE2.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUART1
 
 
-F103Z.menu.subboard.DOFLYE=DOFLYE_M3S[F103ZE CH340]
+F103Z.menu.subboard.DOFLYE=DOFLYE_M3S[F103ZC/D/E CH340]
 F103Z.menu.subboard.DOFLYE.upload.maximum_size=524288
 F103Z.menu.subboard.DOFLYE.upload.maximum_data_size=65536
 F103Z.menu.subboard.DOFLYE.upload.device=STM32F103ZE
@@ -2936,7 +2975,7 @@ F103Z.menu.subboard.DOFLYE.upload.tool=serial_upload
 F103Z.menu.subboard.DOFLYE.upload.altID=CH340
 F103Z.menu.subboard.DOFLYE.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUART1
 
-F103Z.menu.subboard.BITV30=BIT_V30[F103ZE CH340]
+F103Z.menu.subboard.BITV30=BIT_V30[F103ZC/D/E CH340]
 F103Z.menu.subboard.BITV30.upload.maximum_size=524288
 F103Z.menu.subboard.BITV30.upload.maximum_data_size=65536
 F103Z.menu.subboard.BITV30.upload.device=STM32F103ZE
@@ -3112,6 +3151,7 @@ F103Z.menu.jtag_swd.Disabled.build.extra_flags_jtag=-DMENU_DEBUG_DISABLED
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 F103Z.menu.log.default=Release(no-exceptions)
 F103Z.menu.log.default.build.log_level=-fno-exceptions
+F103Z.menu.log.Release=Release(exceptions)
 F103Z.menu.log.fatal=FATAL
 F103Z.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 F103Z.menu.log.error=ERROR
@@ -3270,6 +3310,7 @@ F401S.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 F401S.menu.log.default=Release(no-exceptions)
 F401S.menu.log.default.build.log_level=-fno-exceptions
+F401S.menu.log.Release=Release(exceptions)
 F401S.menu.log.fatal=FATAL
 F401S.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 F401S.menu.log.error=ERROR
@@ -3465,6 +3506,7 @@ F407xE.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 F407xE.menu.log.default=Release(no-exceptions)
 F407xE.menu.log.default.build.log_level=-fno-exceptions
+F407xE.menu.log.Release=Release(exceptions)
 F407xE.menu.log.fatal=FATAL
 F407xE.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 F407xE.menu.log.error=ERROR
@@ -3704,6 +3746,7 @@ F407xG.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
 #-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
 F407xG.menu.log.default=Release(no-exceptions)
 F407xG.menu.log.default.build.log_level=-fno-exceptions
+F407xG.menu.log.Release=Release(exceptions)
 F407xG.menu.log.fatal=FATAL
 F407xG.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 F407xG.menu.log.error=ERROR
@@ -3716,6 +3759,194 @@ F407xG.menu.log.debug=DEBUG
 F407xG.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
 F407xG.menu.log.trace=TRACE
 F407xG.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
+
+################################### F429/Z/I #############################################
+f429xG.name=F429xG(180M)
+
+f429xG.vid.0=0x1a86
+f429xG.pid.0=0x7523
+
+f429xG.vid.1=0x1366
+f429xG.pid.1=0x0105
+
+f429xG.serial.disableDTR=true
+f429xG.serial.disableRTS=true
+f429xG.upload.uploadadr=0x08000000
+f429xG.upload.vect=0x08000000
+
+f429xG.build.mcu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+f429xG.build.core=arduino
+f429xG.build.board=IGT6CORE
+f429xG.build.series=STM32F4
+f429xG.build.f_cpu=180000000L
+
+f429xG.menu.subboard.IGT6_CORE=F429IG_CORE[GREEN]
+f429xG.menu.subboard.IGT6_CORE.upload.maximum_size=1232896
+f429xG.menu.subboard.IGT6_CORE.upload.maximum_data_size=131072
+f429xG.menu.subboard.IGT6_CORE.build.variant=F429IG_CORE
+f429xG.menu.subboard.IGT6_CORE.build.board=IGT6CORE
+f429xG.menu.subboard.IGT6_CORE.build.extra_flags0=-DSTM32F429IG -DHSE_VALUE=8000000
+f429xG.menu.subboard.IGT6_CORE.build.ldscript_pre=ld/f429xG
+f429xG.menu.subboard.IGT6_CORE.upload.device=STM32F429IG
+#default upload method
+f429xG.menu.subboard.IGT6_CORE.upload.protocol=STLink
+f429xG.menu.subboard.IGT6_CORE.upload.tool=stlink_upload
+f429xG.menu.subboard.IGT6_CORE.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUART1
+
+f429xG.menu.startadr.default=flash(1024k+128k)
+f429xG.menu.startadr.default.build.extra_flags={build.extra_flags0}
+
+f429xG.menu.startadr.F08020000=flash 1:0x08020000(128k)
+f429xG.menu.startadr.F08020000.upload.maximum_size=131072
+f429xG.menu.startadr.F08020000.upload.maximum_data_size=131072
+f429xG.menu.startadr.F08020000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x20000
+f429xG.menu.startadr.F08020000.build.ldscript={build.ldscript_pre}_0802.ld
+f429xG.menu.startadr.F08020000.upload.uploadadr=0x08020000
+f429xG.menu.startadr.F08020000.upload.vect=0x08020000
+
+f429xG.menu.startadr.F08040000=flash 2:0x08040000(128k)
+f429xG.menu.startadr.F08040000.upload.maximum_size=131072
+f429xG.menu.startadr.F08040000.upload.maximum_data_size=131072
+f429xG.menu.startadr.F08040000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x40000
+f429xG.menu.startadr.F08040000.build.ldscript={build.ldscript_pre}_0804.ld
+f429xG.menu.startadr.F08040000.upload.uploadadr=0x08040000
+f429xG.menu.startadr.F08040000.upload.vect=0x08040000
+
+f429xG.menu.startadr.F08060000=flash 3:0x08060000(128k)
+f429xG.menu.startadr.F08060000.upload.maximum_size=131072
+f429xG.menu.startadr.F08060000.upload.maximum_data_size=131072
+f429xG.menu.startadr.F08060000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x60000
+f429xG.menu.startadr.F08060000.build.ldscript={build.ldscript_pre}_0806.ld
+f429xG.menu.startadr.F08060000.upload.uploadadr=0x08060000
+f429xG.menu.startadr.F08060000.upload.vect=0x08060000
+
+f429xG.menu.startadr.F08080000=flash 4:0x08080000(128k)
+f429xG.menu.startadr.F08080000.upload.maximum_size=131072
+f429xG.menu.startadr.F08080000.upload.maximum_data_size=131072
+f429xG.menu.startadr.F08080000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x80000
+f429xG.menu.startadr.F08080000.build.ldscript={build.ldscript_pre}_0808.ld
+f429xG.menu.startadr.F08080000.upload.uploadadr=0x08080000
+f429xG.menu.startadr.F08080000.upload.vect=0x08080000
+
+f429xG.menu.startadr.F080A0000=flash 5:0x080A0000(128k)
+f429xG.menu.startadr.F080A0000.upload.maximum_size=131072
+f429xG.menu.startadr.F080A0000.upload.maximum_data_size=131072
+f429xG.menu.startadr.F080A0000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0xA0000
+f429xG.menu.startadr.F080A0000.build.ldscript={build.ldscript_pre}_080A.ld
+f429xG.menu.startadr.F080A0000.upload.uploadadr=0x080A0000
+f429xG.menu.startadr.F080A0000.upload.vect=0x080A0000
+
+f429xG.menu.startadr.F080C0000=flash 6:0x080C0000(128k)
+f429xG.menu.startadr.F080C0000.upload.maximum_size=131072
+f429xG.menu.startadr.F080C0000.upload.maximum_data_size=131072
+f429xG.menu.startadr.F080C0000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0xC0000
+f429xG.menu.startadr.F080C0000.build.ldscript={build.ldscript_pre}_080C.ld
+f429xG.menu.startadr.F080C0000.upload.uploadadr=0x080C0000
+f429xG.menu.startadr.F080C0000.upload.vect=0x080C0000
+
+f429xG.menu.startadr.F080E0000=flash 7:0x080E0000(128k)
+f429xG.menu.startadr.F080E0000.upload.maximum_size=131072
+f429xG.menu.startadr.F080E0000.upload.maximum_data_size=131072
+f429xG.menu.startadr.F080E0000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0xE0000
+f429xG.menu.startadr.F080E0000.build.ldscript={build.ldscript_pre}_080E.ld
+f429xG.menu.startadr.F080E0000.upload.uploadadr=0x080E0000
+f429xG.menu.startadr.F080E0000.upload.vect=0x080E0000
+
+f429xG.menu.startadr.F08000000=flash(WithRamBoot 32kRAM used Only)
+f429xG.menu.startadr.F08000000.upload.maximum_size=131072
+f429xG.menu.startadr.F08000000.upload.maximum_data_size=32768
+f429xG.menu.startadr.F08000000.build.extra_flags={build.extra_flags0} -DCHK_JUMP_TO_SRAM
+f429xG.menu.startadr.F08000000.build.ldscript={build.ldscript_pre}_0800.ld
+f429xG.menu.startadr.F08000000.upload.uploadadr=0x08000000
+f429xG.menu.startadr.F08000000.upload.vect=0x08000000
+
+f429xG.menu.startadr.R20000000=Sram 0:0x20000000(96K+32K BOOT=11 St/Jlink uploader only)
+f429xG.menu.startadr.R20000000.upload.maximum_size=98304
+f429xG.menu.startadr.R20000000.upload.maximum_data_size=32768
+f429xG.menu.startadr.R20000000.build.extra_flags={build.extra_flags0} -DVECT_TAB_OFFSET=0x0000 -DVECT_TAB_SRAM
+f429xG.menu.startadr.R20000000.build.ldscript={build.ldscript_pre}_RAM0.ld
+f429xG.menu.startadr.R20000000.upload.uploadadr=0x20000000
+f429xG.menu.startadr.R20000000.upload.vect=0x20000000
+
+f429xG.menu.extern_lib.NONE=NONE
+f429xG.menu.extern_lib.STemWin=STemWin
+f429xG.menu.extern_lib.STemWin.build.extra_lib={build.system.path}/EXTRALIB/STemWin/STemWin532_CM4_GCC.a
+f429xG.menu.extern_lib.STemWin.build.extra_flags_os=-DOS_SUPPORT=0
+f429xG.menu.extern_lib.STemWinOS=STemWin_OS
+f429xG.menu.extern_lib.STemWinOS.build.extra_lib={build.system.path}/EXTRALIB/STemWin/STemWin532_CM4_OS_GCC.a
+f429xG.menu.extern_lib.STemWinOS.build.extra_flags_os=-DOS_SUPPORT=1
+
+#-------------------------------------- UPLOAD METHODS ----------------------------------------#
+f429xG.menu.upload_method.STLinkMethod=STLink
+f429xG.menu.upload_method.STLinkMethod.upload.protocol=STLink
+f429xG.menu.upload_method.STLinkMethod.upload.tool=stlink_upload
+f429xG.menu.upload_method.STLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
+
+f429xG.menu.upload_method.jLinkMethod=JLink
+f429xG.menu.upload_method.jLinkMethod.upload.tool=jlink_upload
+f429xG.menu.upload_method.jLinkMethod.upload.protocol=jlink
+f429xG.menu.upload_method.jLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
+
+f429xG.menu.upload_method.MassStorageMethod=MassStorage [STLINK V2.1]
+f429xG.menu.upload_method.MassStorageMethod.upload.protocol=
+f429xG.menu.upload_method.MassStorageMethod.upload.tool=nucleoFlasher
+
+f429xG.menu.upload_method.serialMethod=Serial [TX/PA9, RX/PA10, BOOT0=1]
+f429xG.menu.upload_method.serialMethod.upload.protocol=maple_serial
+f429xG.menu.upload_method.serialMethod.upload.tool=serial_upload
+f429xG.menu.upload_method.serialMethod.upload.altID=UNUSED
+f429xG.menu.upload_method.serialMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUART1
+
+f429xG.menu.upload_method.serialMethod2=Serial [CH340 AutoLoad]
+f429xG.menu.upload_method.serialMethod2.upload.protocol=maple_serial
+f429xG.menu.upload_method.serialMethod2.upload.tool=serial_upload
+f429xG.menu.upload_method.serialMethod2.upload.altID=CH340
+f429xG.menu.upload_method.serialMethod2.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUART1
+
+f429xG.menu.upload_method.serialMethod1=Serial [PL2303 AutoLoad]
+f429xG.menu.upload_method.serialMethod1.upload.protocol=maple_serial
+f429xG.menu.upload_method.serialMethod1.upload.tool=serial_upload
+f429xG.menu.upload_method.serialMethod1.upload.altID=PL2303
+f429xG.menu.upload_method.serialMethod1.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUART1
+
+f429xG.menu.upload_method.BMPMethod=BMP (Black Magic Probe)
+f429xG.menu.upload_method.BMPMethod.upload.protocol=gdb_bmp
+f429xG.menu.upload_method.BMPMethod.upload.tool=bmp_upload
+
+f429xG.menu.usb.Disabled=Disabled USB
+f429xG.menu.usb.SerialUSB=Serial [Virtual COM port,PA11/12]
+f429xG.menu.usb.SerialUSB.build.extra_flags_usb=-DMENU_USB_SERIAL
+f429xG.menu.usb.SerialMSC=Mass storage
+f429xG.menu.usb.SerialMSC.build.extra_flags_usb=-DMENU_USB_MASS_STORAGE
+f429xG.menu.usb.Composite=Composite[CDC+MSC]
+f429xG.menu.usb.Composite.build.extra_flags_usb=-DMENU_USB_IAD
+
+f429xG.menu.serial.SerialUART1=SerialUART1
+f429xG.menu.serial.SerialUART1.build.extra_flags_serial=-DMENU_SERIAL=SerialUART1
+f429xG.menu.serial.SerialUART2=SerialUART2
+f429xG.menu.serial.SerialUART2.build.extra_flags_serial=-DMENU_SERIAL=SerialUART2
+f429xG.menu.serial.SerialUART3=SerialUART3
+f429xG.menu.serial.SerialUART3.build.extra_flags_serial=-DMENU_SERIAL=SerialUART3
+f429xG.menu.serial.SerialUSB=SerialUSB
+f429xG.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
+#f429xG.menu.serial.Automatic=Automatically selected based on upload method
+
+#-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
+f429xG.menu.log.default=Release(no-exceptions)
+f429xG.menu.log.default.build.log_level=-fno-exceptions
+f429xG.menu.log.Release=Release(exceptions)
+f429xG.menu.log.fatal=FATAL
+f429xG.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
+f429xG.menu.log.error=ERROR
+f429xG.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
+f429xG.menu.log.warning=WARNING
+f429xG.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
+f429xG.menu.log.info=INFO
+f429xG.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
+f429xG.menu.log.debug=DEBUG
+f429xG.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
+f429xG.menu.log.trace=TRACE
+f429xG.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 
 ###################################### F746S ##########################################
 # Discovery F746IG board
@@ -3815,6 +4046,7 @@ F746S.menu.upload_method.jLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL
 
 F746S.menu.log.default=Release(no-exceptions)
 F746S.menu.log.default.build.log_level=-fno-exceptions
+F746S.menu.log.Release=Release(exceptions)
 F746S.menu.log.fatal=FATAL
 F746S.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
 F746S.menu.log.error=ERROR

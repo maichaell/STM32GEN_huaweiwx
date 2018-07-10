@@ -6,7 +6,7 @@
 #          modify by huawei 2016 2017
 # ------------------------------
 
-name=STM32(HALMX & LL)
+name=STM32(HAL & LL)
 
 version=1.8.5
 
