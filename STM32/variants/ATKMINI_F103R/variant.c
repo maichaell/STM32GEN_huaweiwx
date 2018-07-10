@@ -118,3 +118,8 @@ void SystemClock_Config(void) {
   HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_INT_PRIORITY, 0);
 }
 #endif
+
+//void initVariant() {
+
+//}
+

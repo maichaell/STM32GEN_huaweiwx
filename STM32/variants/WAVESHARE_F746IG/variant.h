@@ -12,13 +12,14 @@
 
 /*KEYs*/
 #define  BOARD_NR_KEY     6
-#define  BOTTON           PA0 
-#define  BOTTON1 		  PG2  //
-#define  BOTTON2   		  PG3  //
-#define  BOTTON3  		  PD4  //
-#define  BOTTON4   		  PD5  //
-#define  BOTTON5   		  PI11 //BOTTON_SEL
-#define  BOTTON_MASK      0x01
+#define  BUTTON           PA0 
+#define  SYS_WKUP1	PA0 /*for lowPower*/
+#define  BUTTON1 		  PG2  //
+#define  BUTTON2   		  PG3  //
+#define  BUTTON3  		  PD4  //
+#define  BUTTON4   		  PD5  //
+#define  BUTTON5   		  PI11 //BUTTON_SEL
+#define  BUTTON_MASK      0x01
 
 /*spi*/
 #define MOSI PA7

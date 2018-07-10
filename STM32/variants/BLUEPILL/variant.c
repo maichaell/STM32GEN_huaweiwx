@@ -67,7 +67,7 @@ void SystemClock_Config(void) {
 
     LL_RCC_SetUSBClockSource(LL_RCC_USB_CLKSOURCE_PLL_DIV_1_5);
 
-    while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL);
+    while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL){};
 
 	LL_Init1msTick(72000000);
     LL_SYSTICK_SetClkSource(LL_SYSTICK_CLKSOURCE_HCLK);

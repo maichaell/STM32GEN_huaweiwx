@@ -44,3 +44,7 @@ void SystemClock_Config(void) {
 #endif
   HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_INT_PRIORITY, 0);
 }
+
+void setHeapAtCCram(void){
+ setHeap((unsigned char*)(0x10000000), (unsigned char*)(0x10000000 + 64*1024));
+}

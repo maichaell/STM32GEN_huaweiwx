@@ -1,4 +1,5 @@
 #include "stm32_def.h"
+//#include "bsp_sdram.h"
 
 void SystemClock_Config(void) __weak;
 void SystemClock_Config(void) {
@@ -45,13 +46,3 @@ void SystemClock_Config(void) {
 	HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_INT_PRIORITY, 0);
 }
 
-//#if defined(DATA_IN_ExtSDRAM)
-//void preinitVariant() {
-     //Set heap to external SDRAM
-//}
-//#endif 
-
-extern void setHeap(unsigned char* s, unsigned char* e);
-void setHeapAtSram(void){
-     setHeap((unsigned char*)0xC0000000, (unsigned char*)(0xC0000000 + 8 * 1024 * 1024));
-}

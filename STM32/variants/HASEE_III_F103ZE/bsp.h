@@ -49,8 +49,8 @@
 
 // SRAM BANK1_3
 #ifdef HAVE_SRAM
-#define SRAM_START            ((uint32_t)(0x60000000 | 0x08000000))  /*FSMC_BANK1_3*/
-#define SRAM_LENGTH			  ((uint32_t)(2*256*1024))               /*25616 256*16*/ 
+#define SRAM_START            (0x60000000 | 0x08000000)  /*FSMC_BANK1_3*/
+#define SRAM_LENGTH			  (2*256*1024)               /*25616 256*16*/ 
 #endif
 
 //nor

@@ -9,9 +9,9 @@
 #define  STM32_LED_BUILTIN_ACTIVE_HIGH
 
 #define  BOARD_NR_KEY        1
-#define  BOTTON              PC13 
-#define  BOTTON_MASK         0x01
-#define  KEYS_LIST  	BOTTON
+#define  BUTTON              PC13 
+#define  BUTTON_MASK         0x01
+#define  KEYS_LIST  	BUTTON
 
 
 #define MOSI PA7

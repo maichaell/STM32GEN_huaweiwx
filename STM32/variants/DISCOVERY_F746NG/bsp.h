@@ -38,13 +38,13 @@
 #ifndef __BSP_H
 #define __BSP_H
 
-#define SDRAM_DEVICE_ADDR  ((uint32_t)0xC0000000)
-#define SDRAM_DEVICE_SIZE  ((uint32_t)0x800000)  /* SDRAM device size in MBytes */
+#define SDRAM_DEVICE_ADDR      0xC0000000U
+#define SDRAM_DEVICE_SIZE      0x800000U  /* SDRAM device size in MBytes */
 
 #define HAVE_SDRAM
 #define SDRAM_START            SDRAM_DEVICE_ADDR
 #define SDRAM_LENGTH		   SDRAM_DEVICE_SIZE 
-#define SDRAM_END              ((uint32_t)(SDRAM_START+SDRAM_LENGTH))
+#define SDRAM_END              (SDRAM_START+SDRAM_LENGTH)
 
 
 #ifdef __cplusplus
