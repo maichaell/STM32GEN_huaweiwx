@@ -1,22 +1,26 @@
-/**  nand_test.ino   nand_test for this board:
-      ARMFLY_F407ZG
-      HASEE_III_F103ZE
-      REDBULL_V2_F103ZE
-   Allocate 256k ram, and write to Serial the results
+/*  nand_test.ino arduino style nandflash.
+      This boards tested:
+       ARMFLY_F407ZG       HY27UF082G2A
+       HASEE_III_F103ZE    K9F1G08U0A
+       REDBULL_V2_F103ZE   K9F1208U0C
 */
-#include <NandFlash.h>
+
 #include "bsp.h"
+#include <stm32Nand.h>
+STM32NAND& myNAND = STM32NAND::getInstance();
 
 #define led1 LED_BUILTIN
 void setup() {
   NAND_IDTypeDef  nand_id;
   pinMode(led1, OUTPUT);
   Serial.begin(115200);
+  delay(200);
   Serial.println("NAND FLASH ID:");
-  delay(100);
+  delay(200);
+
   uint8_t status;
-  BSP_NAND_Init();
-  status = BSP_NAND_Read_ID(&nand_id);
+  myNAND.Init();
+  status = myNAND.readID(&nand_id);
 
   if (status != HAL_OK) Serial.println("id read err");
   else Serial.println("id read OK");
@@ -58,7 +62,7 @@ void setup() {
     Serial.println("Type = Unknow");
   }
   Serial.println("\nok!\n");
- }
+}
 
 void loop() {
   digitalToggle(led1);

@@ -6,29 +6,21 @@
 # Datatypes (KEYWORD1)
 #######################################
 #nand
-NANDFLASH	KEYWORD1
+
+STM32NAND	KEYWORD1
 NAND_AddressTypeDef	KEYWORD1
 NAND_IDTypeDef	KEYWORD1
-LCD_StatusTypeDef	KEYWORD1
-LCD_DrvTypeDef	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 ##bsp nand
-BSP_NAND_Init	KEYWORD2
-BSP_NAND_ReadData	KEYWORD2
-BSP_NAND_WriteData	KEYWORD2
-BSP_NAND_EraseBlock	KEYWORD2
-BSP_NAND_EraseChip	KEYWORD2
-BSP_NAND_ReadID	KEYWORD2
 
 ##nand arduino
 Init	KEYWORD2
 readData	KEYWORD2
 writeData	KEYWORD2
 eraseBlock	KEYWORD2
-eraseChip	KEYWORD2
 readID	KEYWORD2
 
 #######################################

@@ -1,15 +1,15 @@
 /**
   ******************************************************************************
-  * @file    stm3210e_eval_sram.h
+  * @file    stm3210e_eval_nand.h
   * @author  MCD Application Team
   * @version V7.0.0
   * @date    14-April-2017
   * @brief   This file contains the common defines and functions prototypes for
-  *          the stm3210e_eval_sram.c driver.
+  *          the stm3210e_eval_nand.c driver.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -37,8 +37,11 @@
   */ 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32_EVAL_SRAM_H
-#define __STM32_EVAL_SRAM_H
+#ifndef __STM32_EVAL_NAND_H
+#define __STM32_EVAL_NAND_H
+#if __has_include("bsp.h")
+ #include "bsp.h"
+#endif
 
 #ifdef __cplusplus
  extern "C" {
@@ -55,48 +58,47 @@
   * @{
   */
     
-/** @addtogroup STM3210E_EVAL_SRAM
+/** @addtogroup STM3210E_EVAL_NAND
   * @{
   */    
 
 /* Exported constants --------------------------------------------------------*/ 
-/** @defgroup STM3210E_EVAL_SRAM_Exported_Constants STM3210E EVAL SRAM Exported Constants
+/** @defgroup STM3210E_EVAL_NAND_Exported_Constants STM3210E EVAL NAND Exported Constants
   * @{
   */
+ 
+/** 
+  * @brief  NAND status structure definition  
+  */     
+#define   NAND_OK         0x00U
+
+#define NAND_DEVICE_ADDR  ((uint32_t)NAND_DEVICE1)  
   
 /** 
-  * @brief  SRAM status structure definition  
-  */     
-#define   SRAM_OK         0x00
-#define   SRAM_ERROR      0x01
-
+  * @brief  FSMC NAND memory parameters  
+  */
+#ifndef   NAND_PAGE_SIZE
+#define NAND_PAGE_SIZE             ((uint16_t)0x0200) /* 512 bytes per page w/o Spare Area */
+#define NAND_BLOCK_SIZE            ((uint16_t)0x0020) /* 32x512 bytes pages per block */
+#define NAND_PLANE_SIZE            ((uint16_t)0x0400) /* 1024 Block per plane */
+#define NAND_SPARE_AREA_SIZE       ((uint16_t)0x0010) /* last 16 bytes as spare area */
+#define NAND_MAX_PLANE             ((uint16_t)0x1000) /* 4 planes of 1024 block */
+#endif
 /**
   * @}
-  */ 
-SRAM_HandleTypeDef sramHandle;
-  
+  */
+
 /* Exported functions --------------------------------------------------------*/
 
-/** @addtogroup STM3210E_EVAL_SRAM_Exported_Functions
-  * @{
-  */    
-//uint8_t BSP_SRAM_Init(void);
-#define BSP_SRAM_Init	STM_FSMC_SRAM_Init 
-uint8_t BSP_SRAM_ReadData(uint32_t uwStartAddress, uint16_t *pData, uint32_t uwDataSize);
-//uint8_t BSP_SRAM_ReadData_DMA(uint32_t uwStartAddress, uint16_t *pData, uint32_t uwDataSize);
-uint8_t BSP_SRAM_WriteData(uint32_t uwStartAddress, uint16_t *pData, uint32_t uwDataSize);
-//uint8_t BSP_SRAM_WriteData_DMA(uint32_t uwStartAddress, uint16_t *pData, uint32_t uwDataSize);
-//void    BSP_SRAM_DMA_IRQHandler(void);
-//void    BSP_SRAM_MspInit(void);
 
 /**
   * @}
-  */ 
-
+  */
+  
 /**
   * @}
   */ 
-
+     
 /**
   * @}
   */ 
@@ -107,9 +109,35 @@ uint8_t BSP_SRAM_WriteData(uint32_t uwStartAddress, uint16_t *pData, uint32_t uw
 
 #ifdef __cplusplus
 }
+
+extern NAND_HandleTypeDef nandHandle;
+
+class STM32NAND
+{
+  public:
+
+    static STM32NAND& getInstance() {
+      static STM32NAND instance; // Guaranteed to be destroyed. Instantiated on first use.
+      return instance;
+    }
+    
+	STM32NAND(STM32NAND const&)        = delete;
+    void operator=(STM32NAND const&)  = delete;
+	
+    uint8_t Init(void){STM_FSMC_NAND_Init();return HAL_OK;};
+	uint8_t readData(NAND_AddressTypeDef BlockAddress, uint8_t *pData, uint32_t uwNumPage){return HAL_NAND_Read_Page_8b(&nandHandle, &BlockAddress, pData, uwNumPage);};
+	uint8_t writeData(NAND_AddressTypeDef BlockAddress, uint8_t *pData, uint32_t uwNumPage){return HAL_NAND_Write_Page_8b(&nandHandle, &BlockAddress, pData, uwNumPage);};
+	uint8_t eraseBlock(NAND_AddressTypeDef BlockAddress){return HAL_NAND_Erase_Block(&nandHandle, &BlockAddress);};
+	uint8_t readID(NAND_IDTypeDef *pNAND_ID){return HAL_NAND_Read_ID(&nandHandle, pNAND_ID);};
+
+  private:
+    STM32NAND(void){};
+
+};
+
 #endif
 
-#endif /* __STM3210E_EVAL_SRAM_H */
+#endif /* __STM3210E_EVAL_NAND_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

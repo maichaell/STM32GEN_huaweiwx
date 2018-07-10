@@ -5,19 +5,25 @@
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
-#sram
+#extram
+STM32EXTRAM	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 #BSP sram
-BSP_SRAM_ReadData	KEYWORD2  
-BSP_SRAM_WriteData	KEYWORD2
-STM_FSMC_SRAM_Init	KEYWORD2
+getRamBaseAddress	KEYWORD2  
+getRamByteLength	KEYWORD2
+setHeapAtExtRam	KEYWORD2
+perused	KEYWORD2
+deInit	KEYWORD2
+setBank	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
 #SRAM
 SRAM_START	LITERAL1
-SRAM_LENTH	LITERAL1
+SDRAM_START	LITERAL1
+SRAM_LENGTH	LITERAL1
+SDRAM_LENGTH	LITERAL1

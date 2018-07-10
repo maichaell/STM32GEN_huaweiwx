@@ -101,14 +101,14 @@
 /** @addtogroup STM3210E_EVAL_NOR_Exported_Functions
   * @{
   */  
-uint8_t NORFLASHInit(void);
-uint8_t NORFLASHReadData(uint32_t uwStartAddress, uint16_t *pData, uint32_t uwDataSize);
-uint8_t NORFLASHWriteData(uint32_t uwStartAddress, uint16_t *pData, uint32_t uwDataSize);
-uint8_t NORFLASHProgramData(uint32_t uwStartAddress, uint16_t *pData, uint32_t uwDataSize);
-uint8_t NORFLASHEraseBlock(uint32_t BlockAddress);
-uint8_t NORFLASHEraseChip(void);
-uint8_t NORFLASHReadID(NOR_IDTypeDef *pNOR_ID);
-void NORFLASHReturnToReadMode(void);
+uint8_t NOR_Init(void);
+uint8_t NOR_ReadData(uint32_t uwStartAddress, uint16_t *pData, uint32_t uwDataSize);
+uint8_t NOR_WriteData(uint32_t uwStartAddress, uint16_t *pData, uint32_t uwDataSize);
+uint8_t NOR_ProgramData(uint32_t uwStartAddress, uint16_t *pData, uint32_t uwDataSize);
+uint8_t NOR_EraseBlock(uint32_t BlockAddress);
+uint8_t NOR_EraseChip(void);
+uint8_t NOR_ReadID(NOR_IDTypeDef *pNOR_ID);
+void NOR_ReturnToReadMode(void);
 
 /**
   * @}
@@ -129,11 +129,13 @@ void NORFLASHReturnToReadMode(void);
 #ifdef __cplusplus
 }
 
-class NORFLASH
+class STM32NOR
 {
   public:
-	
-	NORFLASH(){};
+    static STM32NOR& getInstance() {
+      static STM32NOR instance; // Guaranteed to be destroyed. Instantiated on first use.
+      return instance;
+    }
     uint8_t Init(void){return NOR_Init();};
 	uint8_t readData(uint32_t uwStartAddress, uint16_t *pData, uint32_t uwDataSize){
 		return NOR_ReadData(uwStartAddress, pData, uwDataSize);};
@@ -145,7 +147,16 @@ class NORFLASH
 	uint8_t eraseChip(void){return NOR_EraseChip();};
 	uint8_t readID(NOR_IDTypeDef *pNOR_ID){return NOR_ReadID(pNOR_ID);};
 	void returnToReadMode(void){NOR_ReturnToReadMode();};
+	
+    inline uint32_t getNorAddr(void){
+		return NOR_DEVICE_ADDR;
+	}
+    inline uint32_t getNorLength(void){
+		return NOR_DEVICE_LENGTH;
+	}
+	
   private:   
+    STM32NOR(void){};
 
 };
 

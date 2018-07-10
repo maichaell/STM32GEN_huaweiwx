@@ -4,11 +4,12 @@
    Allocate 256k ram, and write to Serial the results
 */
 
-#include <NorFlash.h>
 #include "bsp.h"
 
+#include <stm32Nor.h>
+STM32NOR& myNOR = STM32NOR::getInstance();
+
 #define led1 LED_BUILTIN
-NORFLASH myNOR;
 void setup() {
   NOR_IDTypeDef  nor_id;
   nor_id.Manufacturer_Code=0;

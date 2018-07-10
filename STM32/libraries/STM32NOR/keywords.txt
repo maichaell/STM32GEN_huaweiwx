@@ -6,7 +6,7 @@
 # Datatypes (KEYWORD1)
 #######################################
 #nor
-NORFLASH	KEYWORD1
+STM32NOR	KEYWORD1
 NOR_IDTypeDef	KEYWORD1
 
 #######################################
@@ -14,13 +14,13 @@ NOR_IDTypeDef	KEYWORD1
 #######################################
 #BSP nor
 STM_FSMC_NOR_Init	KEYWORD2
-BSP_NOR_ReadData	KEYWORD2  
-BSP_NOR_WriteData	KEYWORD2
-BSP_NOR_ReadID	KEYWORD2
-BSP_NOR_ReturnToReadMode	KEYWORD2
-BSP_NOR_ProgramData	KEYWORD2
-BSP_NOR_EraseBlock	KEYWORD2
-BSP_NOR_EraseChip	KEYWORD2
+NOR_ReadData	KEYWORD2  
+NOR_WriteData	KEYWORD2
+NOR_ReadID	KEYWORD2
+NOR_ReturnToReadMode	KEYWORD2
+NOR_ProgramData	KEYWORD2
+NOR_EraseBlock	KEYWORD2
+NOR_EraseChip	KEYWORD2
 
 #arduino
 Init	KEYWORD2

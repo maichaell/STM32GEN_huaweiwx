@@ -3,7 +3,7 @@
       REDBULL_V2_F103ZE
    Allocate 256k ram, and write to Serial the results
 */
-#include <NorFlash.h>
+#include <stm32Nor.h>
 #include "bsp.h"
 
 #define led1 LED_BUILTIN
