@@ -133,3 +133,49 @@ void assert_failed(uint8_t* file, uint32_t line)
 		yield();
 };
 #endif
+
+#if 1
+/**
+* @brief This function handles Hard fault interrupt.
+*/
+void HardFault_Handler(void)
+{
+#ifdef USE_FULL_ASSERT
+	debug("\r\nHardFault!");
+#endif
+	while(1);	
+}
+
+/**
+* @brief This function handles Memory management fault.
+*/
+void MemManage_Handler(void)
+{
+#ifdef USE_FULL_ASSERT
+	debug("\r\nMemManageFault!");
+#endif
+	while(1);	
+}
+
+/**
+* @brief This function handles Pre-fetch fault, memory access fault.
+*/
+void BusFault_Handler(void)
+{
+#ifdef USE_FULL_ASSERT
+	debug("\r\nBusFault!");
+#endif
+	while(1);	
+}
+
+/**
+* @brief This function handles Undefined instruction or illegal state.
+*/
+void UsageFault_Handler(void)
+{
+#ifdef USE_FULL_ASSERT
+	debug("\r\nUsageFault!");
+#endif
+	while(1);	
+}
+#endif
