@@ -37,45 +37,69 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f429i_discovery_sdram.h"
+#include "bsp.h"
 
-/** @addtogroup BSP
-  * @{
-  */ 
-
-/** @addtogroup STM32F429I_DISCOVERY
-  * @{
-  */
-  
-/** @defgroup STM32F429I_DISCOVERY_SDRAM STM32F429I DISCOVERY SDRAM
-  * @{
-*/ 
-
-/** @defgroup STM32F429I_DISCOVERY_SDRAM_Private_Types_Definitions STM32F429I DISCOVERY SDRAM Private Types Definitions
-  * @{
-  */
 /**
-  * @}
-  */ 
-
-/** @defgroup STM32F429I_DISCOVERY_SDRAM_Private_Defines STM32F429I DISCOVERY SDRAM Private Defines
-  * @{
-  */
-/**
-  * @}
+  * @brief  FMC SDRAM Memory Width
   */  
+/* #define SDRAM_MEMORY_WIDTH   FMC_SDRAM_MEM_BUS_WIDTH_8 */
+#define SDRAM_MEMORY_WIDTH      FMC_SDRAM_MEM_BUS_WIDTH_16
 
-/** @defgroup STM32F429I_DISCOVERY_SDRAM_Private_Macros STM32F429I DISCOVERY SDRAM Private Macros
-  * @{
-  */ 
 /**
-  * @}
+  * @brief  FMC SDRAM CAS Latency
   */  
+/* #define SDRAM_CAS_LATENCY    FMC_SDRAM_CAS_LATENCY_2 */
+#define SDRAM_CAS_LATENCY       FMC_SDRAM_CAS_LATENCY_3 
+
+/**
+  * @brief  FMC SDRAM Memory clock period
+  */  
+#define SDCLOCK_PERIOD          FMC_SDRAM_CLOCK_PERIOD_2    /* Default configuration used with LCD */
+/* #define SDCLOCK_PERIOD       FMC_SDRAM_CLOCK_PERIOD_3 */
+
+/**
+  * @brief  FMC SDRAM Memory Read Burst feature
+  */  
+#define SDRAM_READBURST         FMC_SDRAM_RBURST_DISABLE    /* Default configuration used with LCD */
+/* #define SDRAM_READBURST      FMC_SDRAM_RBURST_ENABLE */
+
+/**
+  * @brief  FMC SDRAM Bank Remap
+  */    
+/* #define SDRAM_BANK_REMAP */
+
+/* Set the refresh rate counter */
+/* (15.62 us x Freq) - 20 */
+#define REFRESH_COUNT           ((uint32_t)1386)   /* SDRAM refresh counter */
+#define SDRAM_TIMEOUT           ((uint32_t)0xFFFF)
+
+/* DMA definitions for SDRAM DMA transfer */
+#define __DMAx_CLK_ENABLE       __DMA2_CLK_ENABLE
+#define SDRAM_DMAx_CHANNEL      DMA_CHANNEL_0
+#define SDRAM_DMAx_STREAM       DMA2_Stream0
+#define SDRAM_DMAx_IRQn         DMA2_Stream0_IRQn
+#define SDRAM_DMAx_IRQHandler   DMA2_Stream0_IRQHandler
+
+/**
+  * @brief  FMC SDRAM Mode definition register defines
+  */
+#define SDRAM_MODEREG_BURST_LENGTH_1             ((uint16_t)0x0000)
+#define SDRAM_MODEREG_BURST_LENGTH_2             ((uint16_t)0x0001)
+#define SDRAM_MODEREG_BURST_LENGTH_4             ((uint16_t)0x0002)
+#define SDRAM_MODEREG_BURST_LENGTH_8             ((uint16_t)0x0004)
+#define SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL      ((uint16_t)0x0000)
+#define SDRAM_MODEREG_BURST_TYPE_INTERLEAVED     ((uint16_t)0x0008)
+#define SDRAM_MODEREG_CAS_LATENCY_2              ((uint16_t)0x0020)
+#define SDRAM_MODEREG_CAS_LATENCY_3              ((uint16_t)0x0030)
+#define SDRAM_MODEREG_OPERATING_MODE_STANDARD    ((uint16_t)0x0000)
+#define SDRAM_MODEREG_WRITEBURST_MODE_PROGRAMMED ((uint16_t)0x0000)
+#define SDRAM_MODEREG_WRITEBURST_MODE_SINGLE     ((uint16_t)0x0200)
 
 /** @defgroup STM32F429I_DISCOVERY_SDRAM_Private_Variables STM32F429I DISCOVERY SDRAM Private Variables
   * @{
   */
-static SDRAM_HandleTypeDef SdramHandle;
+  
+SDRAM_HandleTypeDef sdramHandle;
 static FMC_SDRAM_TimingTypeDef Timing;
 static FMC_SDRAM_CommandTypeDef Command;
 /**
@@ -100,7 +124,7 @@ static void MspInit(void);
 void BSP_SDRAM_Init(void)
 {
   /* SDRAM device configuration */
-  SdramHandle.Instance = FMC_SDRAM_DEVICE;
+  sdramHandle.Instance = FMC_SDRAM_DEVICE;
 
   /* FMC Configuration -------------------------------------------------------*/
   /* FMC SDRAM Bank configuration */
@@ -121,22 +145,22 @@ void BSP_SDRAM_Init(void)
   Timing.RCDDelay             = 2;
   
   /* FMC SDRAM control configuration */
-  SdramHandle.Init.SDBank             = FMC_SDRAM_BANK2;
+  sdramHandle.Init.SDBank             = FMC_SDRAM_BANK2;
   /* Row addressing: [7:0] */
-  SdramHandle.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_8;
+  sdramHandle.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_8;
   /* Column addressing: [11:0] */
-  SdramHandle.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_12;
-  SdramHandle.Init.MemoryDataWidth    = SDRAM_MEMORY_WIDTH;
-  SdramHandle.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
-  SdramHandle.Init.CASLatency         = SDRAM_CAS_LATENCY;
-  SdramHandle.Init.WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
-  SdramHandle.Init.SDClockPeriod      = SDCLOCK_PERIOD;
-  SdramHandle.Init.ReadBurst          = SDRAM_READBURST;
-  SdramHandle.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_1;
+  sdramHandle.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_12;
+  sdramHandle.Init.MemoryDataWidth    = SDRAM_MEMORY_WIDTH;
+  sdramHandle.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
+  sdramHandle.Init.CASLatency         = SDRAM_CAS_LATENCY;
+  sdramHandle.Init.WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
+  sdramHandle.Init.SDClockPeriod      = SDCLOCK_PERIOD;
+  sdramHandle.Init.ReadBurst          = SDRAM_READBURST;
+  sdramHandle.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_1;
                     
   /* SDRAM controller initialization */
   MspInit();
-  HAL_SDRAM_Init(&SdramHandle, &Timing);
+  HAL_SDRAM_Init(&sdramHandle, &Timing);
   
   /* SDRAM initialization sequence */
   BSP_SDRAM_Initialization_sequence(REFRESH_COUNT);
@@ -157,7 +181,7 @@ void BSP_SDRAM_Initialization_sequence(uint32_t RefreshCount)
   Command.ModeRegisterDefinition  = 0;
 
   /* Send the command */
-  HAL_SDRAM_SendCommand(&SdramHandle, &Command, SDRAM_TIMEOUT);
+  HAL_SDRAM_SendCommand(&sdramHandle, &Command, SDRAM_TIMEOUT);
 
   /* Step 2: Insert 100 us minimum delay */ 
   /* Inserted delay is equal to 1 ms due to systick time base unit (ms) */
@@ -170,7 +194,7 @@ void BSP_SDRAM_Initialization_sequence(uint32_t RefreshCount)
   Command.ModeRegisterDefinition  = 0;
 
   /* Send the command */
-  HAL_SDRAM_SendCommand(&SdramHandle, &Command, SDRAM_TIMEOUT);  
+  HAL_SDRAM_SendCommand(&sdramHandle, &Command, SDRAM_TIMEOUT);  
   
   /* Step 4: Configure an Auto Refresh command */ 
   Command.CommandMode             = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
@@ -179,7 +203,7 @@ void BSP_SDRAM_Initialization_sequence(uint32_t RefreshCount)
   Command.ModeRegisterDefinition  = 0;
 
   /* Send the command */
-  HAL_SDRAM_SendCommand(&SdramHandle, &Command, SDRAM_TIMEOUT);
+  HAL_SDRAM_SendCommand(&sdramHandle, &Command, SDRAM_TIMEOUT);
   
   /* Step 5: Program the external memory mode register */
   tmpmrd = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_1          |
@@ -194,11 +218,11 @@ void BSP_SDRAM_Initialization_sequence(uint32_t RefreshCount)
   Command.ModeRegisterDefinition  = tmpmrd;
 
   /* Send the command */
-  HAL_SDRAM_SendCommand(&SdramHandle, &Command, SDRAM_TIMEOUT);
+  HAL_SDRAM_SendCommand(&sdramHandle, &Command, SDRAM_TIMEOUT);
   
   /* Step 6: Set the refresh rate counter */
   /* Set the device refresh rate */
-  HAL_SDRAM_ProgramRefreshRate(&SdramHandle, RefreshCount); 
+  HAL_SDRAM_ProgramRefreshRate(&sdramHandle, RefreshCount); 
 }
 
 /**
@@ -209,7 +233,7 @@ void BSP_SDRAM_Initialization_sequence(uint32_t RefreshCount)
   */
 void BSP_SDRAM_ReadData(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDataSize)
 {
-  HAL_SDRAM_Read_32b(&SdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize); 
+  HAL_SDRAM_Read_32b(&sdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize); 
 }
 
 /**
@@ -220,7 +244,7 @@ void BSP_SDRAM_ReadData(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDat
   */
 void BSP_SDRAM_ReadData_DMA(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDataSize)
 {
-  HAL_SDRAM_Read_DMA(&SdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize);     
+  HAL_SDRAM_Read_DMA(&sdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize);     
 }
   
 /**
@@ -232,10 +256,10 @@ void BSP_SDRAM_ReadData_DMA(uint32_t uwStartAddress, uint32_t *pData, uint32_t u
 void BSP_SDRAM_WriteData(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDataSize) 
 {
   /* Disable write protection */
-  HAL_SDRAM_WriteProtection_Disable(&SdramHandle);
+  HAL_SDRAM_WriteProtection_Disable(&sdramHandle);
   
   /*Write 32-bit data buffer to SDRAM memory*/
-  HAL_SDRAM_Write_32b(&SdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize);
+  HAL_SDRAM_Write_32b(&sdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize);
 }
 
 /**
@@ -246,7 +270,7 @@ void BSP_SDRAM_WriteData(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDa
   */
 void BSP_SDRAM_WriteData_DMA(uint32_t uwStartAddress, uint32_t *pData, uint32_t uwDataSize) 
 {
-  HAL_SDRAM_Write_DMA(&SdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize); 
+  HAL_SDRAM_Write_DMA(&sdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize); 
 }
 
 /**
@@ -256,7 +280,7 @@ void BSP_SDRAM_WriteData_DMA(uint32_t uwStartAddress, uint32_t *pData, uint32_t 
   */  
 HAL_StatusTypeDef BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd)
 {
-  return(HAL_SDRAM_SendCommand(&SdramHandle, SdramCmd, SDRAM_TIMEOUT));
+  return(HAL_SDRAM_SendCommand(&sdramHandle, SdramCmd, SDRAM_TIMEOUT));
 }
 
 /**
@@ -264,7 +288,7 @@ HAL_StatusTypeDef BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd)
   */
 void BSP_SDRAM_DMA_IRQHandler(void)
 {
-  HAL_DMA_IRQHandler(SdramHandle.hdma); 
+  HAL_DMA_IRQHandler(sdramHandle.hdma); 
 }
 
 /**
@@ -274,7 +298,7 @@ static void MspInit(void)
 {
   static DMA_HandleTypeDef dmaHandle;
   GPIO_InitTypeDef GPIO_InitStructure;
-  SDRAM_HandleTypeDef  *hsdram = &SdramHandle;
+  SDRAM_HandleTypeDef  *hsdram = &sdramHandle;
 
   /* Enable FMC clock */
   __FMC_CLK_ENABLE();
@@ -383,20 +407,20 @@ static void MspInit(void)
   HAL_NVIC_EnableIRQ(SDRAM_DMAx_IRQn);
 }
 
-/**
-  * @}
-  */
+#ifndef DATA_IN_ExtSDRAM
+void initVariant() {
+	BSP_SDRAM_Init();
+//  setHeapAtSram();
+}
+#endif
 
-/**
-  * @}
-  */
+extern void setHeap(unsigned char* s, unsigned char* e);
 
-/**
-  * @}
-  */
+void setHeapAtSram(void){
+ setHeap((unsigned char*)SDRAM_START, (unsigned char*)(SDRAM_START +SDRAM_LENGTH));
+}
 
-/**
-  * @}
-  */
-
+void setHeapAtCCram(void){
+ setHeap((unsigned char*)(0x10000000), (unsigned char*)(0x10000000 + 64*1024));
+}
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
