@@ -1,7 +1,7 @@
 /*
   AdvancedTimedWakeup
 
-  This sketch demonstrates the usage of Internal Interrupts to wakeup a chip in deep sleep mode.
+  This sketch demonstrates the usage of Internal RTC alarm Interrupts to wakeup a chip in deep sleep mode.
 
   In this sketch:
   - RTC date and time are configured.
@@ -9,6 +9,20 @@
   which increment a value and reload alarm with 'atime' offset.
 
   This example code is in the public domain.
+  
+  Note:
+  * **Idle mode**: low wake-up latency (µs range) (e.g. ARM WFI). Memories and
+      voltage supplies are retained. Minimal power saving mainly on the core itself.
+  * **sleep mode**: low wake-up latency (µs range) (e.g. ARM WFI), Memories and
+      voltage supplies are retained. Minimal power saving mainly on the core itself but
+      higher than idle mode.
+
+  * **deep sleep mode**: medium latency (ms range), clocks are gated to reduced. Memories
+      and voltage supplies are retained. If supported, Peripherals wake-up is possible (UART, I2C ...).
+
+  * **shutdown mode**: high wake-up latency (posible hundereds of ms or second
+      timeframe), voltage supplies are cut except always-on domain, memory content
+      are lost and system basically reboots.
 */
 
 #include "STM32LowPower.h"
@@ -41,17 +55,30 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 
   Serial.begin(115200);
-  delay(1000);
+  delay(1000); /* wait for serial ready */
   Serial.println("AlarmTimer Wakeup a chip in deep sleep mode");
+  
+#if 0
+  /* Increase the startup loop  for connection jlink or stlink debugger.
+     Because in sleep mode, stlink or jlink disconnected to chip
+  */
   Serial.println("Please input any key begin demo.........");
-
-/* Increase the startup loop  for connection jlink or stlink debugger.
- * Because in sleep mode, stlink or jlink disconnected to chip
- */
- while (!Serial.available()) {
+  while (!Serial.available()) {
     digitalToggle(LED_BUILTIN);
     delay(100);
   }
+#else
+  Serial.println("Press BUTTON while reboot into arduino upload mode");
+  pinMode(BUTTON, INPUT);
+
+  if ( digitalRead(BUTTON) == (BUTTON_MASK & 0x01)) {
+    Serial.println("Nucleo can be  upload now");
+    while (1) {
+      digitalToggle(LED_BUILTIN);
+      delay(100);
+    }
+  }
+#endif
   
   // Configure low power
   LowPower.begin();
@@ -65,8 +92,13 @@ void loop() {
   Serial.print("Alarm Match: ");
   Serial.print(alarmMatch_counter);
   Serial.println(" times.");
-  delay(1000);
-  LowPower.deepSleep();
+  Serial.flush();
+  
+/* selected onenof: */    
+//  LowPower.idle(); 
+//  LowPower.sleep(); 
+  LowPower.deepSleep(); 
+  
   digitalToggle(LED_BUILTIN);
 }
 
