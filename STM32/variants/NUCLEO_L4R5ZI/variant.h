@@ -13,7 +13,7 @@
 #define  BUTTON_MASK         0x01
 /*wkup_pins def*/
 #ifdef PWR_WAKEUP_PIN1
-#define  	SYS_WKUP1 PA0
+#define  SYS_WKUP1 PA0
 #endif
 #ifdef PWR_WAKEUP_PIN2
 #define  SYS_WKUP2 PC13

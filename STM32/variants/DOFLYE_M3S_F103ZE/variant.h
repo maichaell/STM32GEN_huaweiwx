@@ -15,7 +15,7 @@
 #define BUTTON1	PE4  //0
 #define BUTTON2	PE3  //0
 #define BUTTON3	PE2  //0
-#define  BUTTON_MASK    0x01
+#define BUTTON_MASK    0x01
 
 #define MOSI PA7
 #define MISO PA6

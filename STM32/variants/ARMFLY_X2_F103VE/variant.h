@@ -11,6 +11,7 @@
 #define BOARD_NR_KEY 8
 #define BUTTON	 PA0
 #define SYS_WKUP1 			PA0 /*for lowPower*/
+
 #define BUTTON_LEFT	 BUTTON
 #define BUTTON1	 PA1
 #define BUTTON_UP	 BUTTON1

@@ -19,6 +19,10 @@
 #define BUTTON3	PD3
 #define BUTTON_MASK         0x00
 
+
+/*WKUP*/
+#define SYS_WKUP1 	PA0 /*for lowPower*/
+
 /*spi*/
 #define MOSI PA7
 #define MISO PA6
