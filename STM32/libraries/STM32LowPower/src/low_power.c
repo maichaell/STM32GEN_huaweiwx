@@ -91,7 +91,7 @@ void LowPower_EnableWakeUpPin(uint32_t pin, uint32_t mode) {
   uint32_t wkup_pin;
 
   switch (pin) {
-#ifdef SYS_WKUP1
+#if defined(PWR_WAKEUP_PIN1) && defined(SYS_WKUP1)
     case SYS_WKUP1 :
       wkup_pin = PWR_WAKEUP_PIN1;
 #ifdef PWR_WAKEUP_PIN1_HIGH
@@ -102,7 +102,7 @@ void LowPower_EnableWakeUpPin(uint32_t pin, uint32_t mode) {
       break;
 #endif /* PWR_WAKEUP_PIN1 */
 
-#ifdef SYS_WKUP2
+#if defined(PWR_WAKEUP_PIN2) && defined(SYS_WKUP2)
     case SYS_WKUP2 :
       wkup_pin = PWR_WAKEUP_PIN2;
 #ifdef PWR_WAKEUP_PIN2_HIGH
@@ -113,7 +113,7 @@ void LowPower_EnableWakeUpPin(uint32_t pin, uint32_t mode) {
       break;
 #endif /* PWR_WAKEUP_PIN2 */
 
-#ifdef SYS_WKUP3
+#if defined(PWR_WAKEUP_PIN3) && defined(SYS_WKUP3)
     case SYS_WKUP3 :
       wkup_pin = PWR_WAKEUP_PIN3;
 #ifdef PWR_WAKEUP_PIN3_HIGH
@@ -124,7 +124,7 @@ void LowPower_EnableWakeUpPin(uint32_t pin, uint32_t mode) {
       break;
 #endif /* PWR_WAKEUP_PIN3 */
 
-#ifdef SYS_WKUP4
+#if defined(PWR_WAKEUP_PIN4) && defined(SYS_WKUP4)
     case SYS_WKUP4 :
       wkup_pin = PWR_WAKEUP_PIN4;
 #ifdef PWR_WAKEUP_PIN4_HIGH
@@ -135,7 +135,7 @@ void LowPower_EnableWakeUpPin(uint32_t pin, uint32_t mode) {
       break;
 #endif /* PWR_WAKEUP_PIN4 */
 
-#ifdef SYS_WKUP5
+#if defined(PWR_WAKEUP_PIN5) && defined(SYS_WKUP5)
     case SYS_WKUP5 :
       wkup_pin = PWR_WAKEUP_PIN5;
 #ifdef PWR_WAKEUP_PIN5_HIGH
@@ -146,7 +146,7 @@ void LowPower_EnableWakeUpPin(uint32_t pin, uint32_t mode) {
       break;
 #endif /* PWR_WAKEUP_PIN5 */
 
-#ifdef SYS_WKUP6
+#if defined(PWR_WAKEUP_PIN6) && defined(SYS_WKUP6)
     case SYS_WKUP6 :
       wkup_pin = PWR_WAKEUP_PIN6;
 #ifdef PWR_WAKEUP_PIN6_HIGH
@@ -157,20 +157,20 @@ void LowPower_EnableWakeUpPin(uint32_t pin, uint32_t mode) {
       break;
 #endif /* PWR_WAKEUP_PIN6 */
 
-#ifdef SYS_WKUP7
+#if defined(PWR_WAKEUP_PIN7) && defined(SYS_WKUP7)
     case SYS_WKUP7 :
       wkup_pin = PWR_WAKEUP_PIN7;
       break;
 #endif /* PWR_WAKEUP_PIN7 */
 
-#ifdef SYS_WKUP8
+#if defined(PWR_WAKEUP_PIN8) && defined(SYS_WKUP8)
     case SYS_WKUP8 :
       wkup_pin = PWR_WAKEUP_PIN8;
       break;
 #endif /* PWR_WAKEUP_PIN8 */
 
    default :
-     return;
+      return;
   }
   HAL_PWR_EnableWakeUpPin(wkup_pin);
 }
@@ -330,6 +330,7 @@ void LowPower_EnableWakeUpUart(UART_HandleTypeDef *handle, void (*FuncPtr)( void
   * @param  obj : pointer to serial_t structure
   * @retval None
   */
+extern void _Error_Handler(char* file, uint32_t line);
 
 void Lowpower_uartConfig(UART_HandleTypeDef *handle)
 {
@@ -346,7 +347,7 @@ void Lowpower_uartConfig(UART_HandleTypeDef *handle)
     RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct)!= HAL_OK) {
-      Error_Handler();
+      _Error_Handler(__FILE__, __LINE__);
     }
   }
   
@@ -384,10 +385,11 @@ void Lowpower_uartConfig(UART_HandleTypeDef *handle)
       }
   }
 #endif
+
 #if defined(LPUART1_BASE) && defined(__HAL_RCC_LPUART1_CONFIG)
   else if(handle->Instance == LPUART1){
       if (__HAL_RCC_GET_LPUART1_SOURCE() != RCC_LPUART1CLKSOURCE_HSI) {
-        __HAL_RCC_LPUART1_CONFIG(RCC_UART5CLKSOURCE_HSI);
+        __HAL_RCC_LPUART1_CONFIG(RCC_LPUART1CLKSOURCE_HSI);
       }
   }
 #endif

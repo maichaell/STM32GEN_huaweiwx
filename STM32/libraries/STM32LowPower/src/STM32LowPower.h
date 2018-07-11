@@ -81,7 +81,7 @@ public:
   void attachInterruptWakeup(uint32_t pin, voidFuncPtrVoid callback, uint32_t mode);
 
   void enableWakeupFrom(HardwareSerial *serial, voidFuncPtrVoid callback);
-  void enableWakeupFrom(STM32RTC *rtc, voidFuncPtr callback, void *data = NULL);
+  void enableWakeupFrom(STM32RTC *rtc, voidFuncPtrVoidPtr callback, void *data = NULL);
 
 private:
   enum LP_Mode: uint8_t

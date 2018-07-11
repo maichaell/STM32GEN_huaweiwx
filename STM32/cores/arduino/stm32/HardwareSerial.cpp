@@ -219,10 +219,10 @@ void HardwareSerial::begin(const uint32_t baud) {
 
 
 #if defined(HAL_PWR_MODULE_ENABLED) && defined(UART_IT_WUF)
-#  if __has_include("low_power.h") /*if used STM32LowPower lib*/
-extern "C" void Lowpower_uartConfig_(USART_TypeDef *instance);
-#define USE_LOWPOWER
-#  endif
+extern "C" {
+ void Lowpower_uartConfig(UART_HandleTypeDef *handle) __weak;
+ void Lowpower_uartConfig(UART_HandleTypeDef *handle){ }
+}
 #endif
 /**
   * @brief  Function called to configure the uart interface for low power
@@ -231,9 +231,9 @@ extern "C" void Lowpower_uartConfig_(USART_TypeDef *instance);
   */
 void HardwareSerial::configForLowPower(void)
 {
-#ifdef USE_LOWPOWER
+#if defined(HAL_PWR_MODULE_ENABLED) && defined(UART_IT_WUF)
   end();
-  Lowpower_uartConfig_(this->instance);
+  Lowpower_uartConfig(handle);
   this->begin(handle->Init.BaudRate);
 #endif
 }

@@ -40,7 +40,7 @@
 #define __LOW_POWER_H__
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32_def.h"
+#include "Arduino.h"
 
 #ifdef HAL_PWR_MODULE_ENABLED
 
@@ -48,7 +48,7 @@
  extern "C" {
 #endif
 
-typedef void (*voidFuncPtrVoid)( void ) ;
+typedef void (*voidFuncPtrVoid)() ;
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/

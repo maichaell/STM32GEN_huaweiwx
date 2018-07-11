@@ -157,7 +157,8 @@ void STM32LowPower::enableWakeupFrom(HardwareSerial *serial, voidFuncPtrVoid cal
   * @param  data: optional pointer to callback data parameters (default NULL).
   * @retval None
   */
-void STM32LowPower::enableWakeupFrom(STM32RTC *rtc, voidFuncPtr callback, void *data)
+  
+void STM32LowPower::enableWakeupFrom(STM32RTC *rtc, voidFuncPtrVoidPtr callback, void *data)
 {
   if(rtc == NULL) {
     rtc = &(STM32RTC::getInstance());
