@@ -737,7 +737,8 @@ typedef unsigned long	DWORD;
 DWORD get_fattime (void)
 {
  DWORD RetVal;
- uint8_t year, month, day,wday,hours, minutes, seconds, subSeconds;
+ uint8_t  year, month, day,wday,hours, minutes, seconds;
+ uint32_t subSeconds;
  hourAM_PM_t period;
  
  RTC_GetDate(&year, &month, &day, &wday);
