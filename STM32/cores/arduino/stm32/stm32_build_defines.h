@@ -174,7 +174,7 @@
  #define RCC_PRIORITY     STM32_INT_PRIORITY
 #endif
 #ifndef EXTI_PRIORITY
- #define EXTI_PRIORITY    STM32_INT_PRIORITY
+ #define EXTI_PRIORITY    MAX_PRIORITY
 #endif
 #ifndef DMA1_PRIORITY    /*F0 9~11*/
  #define DMA1_PRIORITY     STM32_INT_PRIORITY
@@ -204,7 +204,7 @@
  #define SDIO_PRIORITY    STM32_INT_PRIORITY-1
 #endif
 #ifndef DMA2_PRIORITY
- #define DMA2_PRIORITY     STM32_INT_PRIORITY
+ #define DMA2_PRIORITY    STM32_INT_PRIORITY
 #endif
 
 #else  //F1/2/3/4/7 L1/4
@@ -240,7 +240,7 @@
 #define RCC_PRIORITY     STM32_INT_PRIORITY
 #endif
 #ifndef EXTI_PRIORITY	/*f1 6~10,23,40*/
-#define EXTI_PRIORITY    MAX_PRIORITY+1  //f1 6~9 button  use 0x0f
+#define EXTI_PRIORITY    MAX_PRIORITY  //f1 6~9 button  use 0x0f
 #endif
 #ifndef DMA1_PRIORITY   /*f1 11~17*/
 #define DMA1_PRIORITY    STM32_INT_PRIORITY
