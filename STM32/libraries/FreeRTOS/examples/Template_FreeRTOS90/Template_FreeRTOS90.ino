@@ -55,9 +55,15 @@ void setup() {
   vTaskStartScheduler();  //FreeRTOS start and never return!
 }
 
-// the loop function runs over and over again forever
+/*  ----------------------------------- idle hook  attention --------------------------
+    1  loop() function is a idle hook. (set configUSE_IDLE_HOOK to 1 enable it)
+    2  idle loop has a very small stack.(check or set configMINIMAL_STACK_SIZE)
+    3  loop must never block.
+---------------------------------------------------------------------------------------*/
 void loop() {
-  /*
-    !!! this no runed in FreeRTOS  !!!
-  */
+  while (1) {
+    // idel hook code begin;
+	
+    // idel hook code end;
+  }
 }

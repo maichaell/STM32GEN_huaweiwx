@@ -12,7 +12,7 @@
  *   
  *    2017.12 by huaweiwx@sina.com
  */
- 
+
 #ifndef __HALSPECELCONFIG_H__
 #define __HALSPECELCONFIG_H__
 
@@ -20,12 +20,12 @@
 
 //---------------------------------------- for FreeRTOS overload ---------------------------------------------------------
 
-#if 0
-
 #ifdef  configUSE_COUNTING_SEMAPHORES
 #undef  configUSE_COUNTING_SEMAPHORES
 #define configUSE_COUNTING_SEMAPHORES   1
 #endif
+
+#if 0
 
 #ifdef  INCLUDE_vTaskDelayUntil
 #undef  INCLUDE_vTaskDelayUntil

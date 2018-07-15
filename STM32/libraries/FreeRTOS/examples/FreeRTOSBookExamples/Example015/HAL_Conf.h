@@ -20,28 +20,9 @@
 
 //---------------------------------------- for FreeRTOS overload ---------------------------------------------------------
 
-#if 0
-
 #ifdef  configUSE_COUNTING_SEMAPHORES
 #undef  configUSE_COUNTING_SEMAPHORES
-#define configUSE_COUNTING_SEMAPHORES   1
-#endif
-
-#ifdef  INCLUDE_vTaskDelayUntil
-#undef  INCLUDE_vTaskDelayUntil
-#define INCLUDE_vTaskDelayUntil      	1
-#endif
-
-#ifdef   configUSE_IDLE_HOOK
-# undef  configUSE_IDLE_HOOK 
-# define configUSE_IDLE_HOOK   			1
-#endif
-
-#ifdef   configUSE_TICK_HOOK
-# undef  configUSE_TICK_HOOK
-# define configUSE_TICK_HOOK            1
-#endif
-
+#define configUSE_COUNTING_SEMAPHORES      1
 #endif
 
 #endif

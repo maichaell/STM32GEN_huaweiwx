@@ -23,13 +23,13 @@
 #if 0
 
 #ifdef  configUSE_COUNTING_SEMAPHORES
-#undef  configUSE_COUNTING_SEMAPHORES
-#define configUSE_COUNTING_SEMAPHORES   1
+# undef  configUSE_COUNTING_SEMAPHORES
+# define configUSE_COUNTING_SEMAPHORES   1
 #endif
 
 #ifdef  INCLUDE_vTaskDelayUntil
-#undef  INCLUDE_vTaskDelayUntil
-#define INCLUDE_vTaskDelayUntil      	1
+# undef  INCLUDE_vTaskDelayUntil
+# define INCLUDE_vTaskDelayUntil      	1
 #endif
 
 #ifdef   configUSE_IDLE_HOOK

@@ -88,7 +88,6 @@
  *     contains the typedefs required to build FreeRTOS.  Read the instructions
  *     in FreeRTOS/source/stdint.readme for more information.
  */
-#include "stm32_def.h"
  /* READ COMMENT ABOVE. */
 
 #ifdef __cplusplus
@@ -96,12 +95,15 @@ extern "C" {
 #endif
 
 /* Application specific configuration options. */
-//#include "FreeRTOSConfig.h"
-#if __has_include("configs/FreeRTOSConfig.h")  //
+#if __has_include("FreeRTOSConfig.h")
+#   include "FreeRTOSConfig.h"
+#elif __has_include("configs/FreeRTOSConfig.h")  //
 #   include "configs/FreeRTOSConfig.h"
-#else
+#else /*FreeRTOS default define file*/
 #   include "FreeRTOS/default/FreeRTOSConfig.h"
 #endif
+
+#include "stm32_def.h"
 
 /* Basic FreeRTOS definitions. */
 #include "projdefs.h"
