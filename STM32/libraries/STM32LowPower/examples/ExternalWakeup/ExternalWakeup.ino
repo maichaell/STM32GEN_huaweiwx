@@ -78,7 +78,7 @@ void setup() {
 }
 
 void loop() {
-  for (int i = 0; i < repetitions; i++) {
+  for (int i = 0; i < 4; i++) {
     digitalToggle(LED_BUILTIN);
     delay(200);
   }
@@ -91,10 +91,11 @@ void loop() {
   //  LowPower.idle();    /*all gpio pin can wakeup from idle and sleep*/
   //  LowPower.sleep();
   LowPower.deepSleep();  /* If the Gpio pin is a Wake up pin activate it for deepSleep (standby stm32) */
-  //  LowPower.shutdown();    /* wkpin is SYS_WKUPx */
+  //  LowPower.shutdown();  /* wkpin is SYS_WKUPx only. exp:PA0 */
 
   //if shutdown, wakeup to reboot and not run to here
-  Serial.println("wakeup."); /*all gpio pin can wakeup from idle and sleep*/
+  Serial.print(repetitions); /*all gpio pin can wakeup from idle and sleep*/
+  Serial.println("  wakeup."); /*all gpio pin can wakeup from idle and sleep*/
 }
 
 void repetitionsIncrease() {

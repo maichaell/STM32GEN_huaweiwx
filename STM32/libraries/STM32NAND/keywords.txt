@@ -7,9 +7,6 @@
 #######################################
 #nand
 
-STM32NAND	KEYWORD1
-NAND_AddressTypeDef	KEYWORD1
-NAND_IDTypeDef	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
