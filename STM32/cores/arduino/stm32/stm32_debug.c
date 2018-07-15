@@ -28,6 +28,19 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
 
+static void errorBlink(int n) {
+  noInterrupts();
+  pinMode(LED_BUILTIN, OUTPUT);
+  for (;;) {
+    int i;
+    for (i = 0; i < 2*n; i++) {
+      digitalToggle(LED_BUILTIN);
+      delay(200);
+    }
+    delay(3000);
+  }
+}
+
 //debug_if add by huaweiwx@sina.com  2017.12.8
 void debug(const char *format, ...) {
     va_list args;
@@ -35,6 +48,7 @@ void debug(const char *format, ...) {
     vfprintf(stderr, format, args);
     va_end(args);
 }
+
 
 //debug_if add by huaweiwx@sina.com  2017.12.8
 void debug_if(int condition, const char *format, ...) {	
@@ -141,9 +155,12 @@ void assert_failed(uint8_t* file, uint32_t line)
 void HardFault_Handler(void)
 {
 #ifdef USE_FULL_ASSERT
-	debug("\r\nHardFault!");
+	while(1){
+	  errorBlink(1);
+	};
+#else
+    while(1);	
 #endif
-	while(1);	
 }
 
 /**
@@ -152,9 +169,12 @@ void HardFault_Handler(void)
 void MemManage_Handler(void)
 {
 #ifdef USE_FULL_ASSERT
-	debug("\r\nMemManageFault!");
+	while(1){
+	  errorBlink(2);
+	};
+#else
+    while(1);	
 #endif
-	while(1);	
 }
 
 /**
@@ -163,9 +183,12 @@ void MemManage_Handler(void)
 void BusFault_Handler(void)
 {
 #ifdef USE_FULL_ASSERT
-	debug("\r\nBusFault!");
+	while(1){
+	  errorBlink(3);
+	};
+#else
+    while(1);	
 #endif
-	while(1);	
 }
 
 /**
@@ -174,8 +197,11 @@ void BusFault_Handler(void)
 void UsageFault_Handler(void)
 {
 #ifdef USE_FULL_ASSERT
-	debug("\r\nUsageFault!");
+	while(1){
+	  errorBlink(4);
+	};
+#else
+    while(1);	
 #endif
-	while(1);	
 }
 #endif

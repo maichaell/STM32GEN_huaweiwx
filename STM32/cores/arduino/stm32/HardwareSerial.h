@@ -110,6 +110,30 @@ extern HardwareSerial SerialUART6;
 #define Serial6 SerialUART6
 #endif
 
+#if defined(USART7) || defined(UART7)
+#if (USE_SERIAL7)
+extern HardwareSerial SerialUART7;
+#define Serial7 SerialUART7
+#endif
+#endif
+
+#if defined(USART8) || defined(UART8)
+#if (USE_SERIAL8)
+extern HardwareSerial SerialUART7;
+#define Serial8 SerialUART8
+#endif
+#endif
+
+#if defined(UART9) && (USE_SERIAL9)
+extern HardwareSerial SerialUART9;
+#define Serial9 SerialUART9
+#endif
+
+#if defined(UART10) && (USE_SERIAL10)
+extern HardwareSerial SerialUART10;
+#define Serial10 SerialUART10
+#endif
+
 #if defined(LPUART1) && (USE_LPUART1)
 extern HardwareSerial SerialLPUART1;
 #define LPSerial1 SerialLPUART1

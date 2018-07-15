@@ -3,13 +3,9 @@
 #ifndef STM32_BUILD_DEFINES_H
 #define STM32_BUILD_DEFINES_H
 
-
 #if __has_include("hal_conf.h")
 # include "hal_conf.h"
-#endif
-
-#if __has_include("configs/hal_conf.h")
-#undef __HALSPECELCONFIG_H__
+#elif __has_include("configs/hal_conf.h")
 # include "configs/hal_conf.h"
 #endif
 
@@ -82,6 +78,22 @@
 
 #ifndef USE_SERIAL6
 #define USE_SERIAL6 1
+#endif
+
+#ifndef USE_SERIAL7
+#define USE_SERIAL7 0
+#endif
+
+#ifndef USE_SERIAL8
+#define USE_SERIAL8 0
+#endif
+
+#ifndef USE_SERIAL9
+#define USE_SERIAL9 0
+#endif
+
+#ifndef USE_SERIAL10
+#define USE_SERIAL10 0
 #endif
 
 #ifndef USE_LPUART1
