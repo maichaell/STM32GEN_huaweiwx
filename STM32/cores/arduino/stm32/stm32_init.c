@@ -26,12 +26,7 @@ extern void SystemClock_Config(void);
 
 void init() {
   HAL_Init();
-
   SystemClock_Config();
-
-#ifdef STM32F1
-  __HAL_RCC_AFIO_CLK_ENABLE();
-#endif
 }
 
 
@@ -46,6 +41,33 @@ void SysTick_Handler(void) {
   HAL_IncTick();
   HAL_SYSTICK_IRQHandler();
 #endif
+}
+
+void HAL_MspInit(void)
+{
+#ifdef STM32F1
+  __HAL_RCC_AFIO_CLK_ENABLE();
+#endif
+
+#if (defined(STM32L0)||defined(STM32F0))
+  /* SVCall_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(SVC_IRQn, CORTEX_INT_PRIORITY, 0);
+	
+#else	
+  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
+  /* System interrupt init*/
+  /* MemoryManagement_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(MemoryManagement_IRQn, CORTEX_INT_PRIORITY, 0);
+  /* BusFault_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(BusFault_IRQn, CORTEX_INT_PRIORITY, 0);
+  /* UsageFault_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(UsageFault_IRQn, CORTEX_INT_PRIORITY, 0);
+  /* SVCall_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(SVCall_IRQn, CORTEX_INT_PRIORITY, 0);
+  /* DebugMonitor_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DebugMonitor_IRQn, CORTEX_INT_PRIORITY, 0);
+#endif  
+
 }
 
 /*move to hooks.c huawei 2018.1.30*/
