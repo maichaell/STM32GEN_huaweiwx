@@ -11,10 +11,10 @@
 
 /******************** BUTTON ************************/
 #define  BOARD_NR_KEY		4                     
-#define  BUTTON		PF6
-#define  BUTTON1	PF7
-#define  BUTTON2	PF8
-#define  BUTTON3	PF9
+#define  BUTTON		PF9     /* K0/S3 */
+#define  BUTTON1	PF8     /* K1/S2 */
+#define  BUTTON2	PF7     /* K2/S1 */
+#define  BUTTON3	PF6     /* K3/S0 */
 #define  BUTTON_MASK         0x00
 /*WKUP*/
 #define SYS_WKUP1 	PA0 /*for lowPower*/
