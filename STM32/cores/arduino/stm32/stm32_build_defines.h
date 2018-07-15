@@ -23,6 +23,15 @@
 #ifndef BOOTLOADER	/*chech & go if avalible */
 #define BOOTLOADER  0
 #endif
+//debug
+#ifndef USE_ERRORBLINK
+#  ifdef USE_FULL_ASSERT
+    #define USE_ERRORBLINK 1
+#  else
+    #define USE_ERRORBLINK 0
+#  endif
+#endif	
+
 
 //USB
 

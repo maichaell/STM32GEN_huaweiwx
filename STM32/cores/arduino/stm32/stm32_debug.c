@@ -27,17 +27,35 @@
 #pragma GCC diagnostic ignored "-Wformat"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
+//------------------------------------------------------------------------------
+/** calibration factor for delayMS */
+#define CAL_FACTOR (F_CPU/7000)
+/** delay between led error flashes
+ * \param[in] millis milliseconds to delay
+ */
+static void delayMS(uint32_t millis) {
+  uint32_t iterations = millis * CAL_FACTOR;
+  uint32_t i;
+  for(i = 0; i < iterations; ++i) {
+    asm volatile("nop\n\t");
+  }
+}
 
-static void errorBlink(int n) {
+void errorLedBlink(int n) {
   noInterrupts();
   pinMode(LED_BUILTIN, OUTPUT);
+  int h = n /10;
+  int l = n % 10;
   for (;;) {
-    int i;
-    for (i = 0; i < 2*n; i++) {
+	for  (uint8_t i = 0; i < 2*h; i++) {
       digitalToggle(LED_BUILTIN);
-      delay(200);
+      delayMS(500);
+    }  
+    for (uint8_t i = 0; i < 2*l; i++) {
+      digitalToggle(LED_BUILTIN);
+      delayMS(200);
     }
-    delay(3000);
+    delayMS(2000);
   }
 }
 
@@ -148,16 +166,13 @@ void assert_failed(uint8_t* file, uint32_t line)
 };
 #endif
 
-#if 1
-/**
+ /**
 * @brief This function handles Hard fault interrupt.
 */
 void HardFault_Handler(void)
 {
-#ifdef USE_FULL_ASSERT
-	while(1){
-	  errorBlink(1);
-	};
+#if USE_ERRORBLINK
+	errorLedBlink(31);
 #else
     while(1);	
 #endif
@@ -168,10 +183,8 @@ void HardFault_Handler(void)
 */
 void MemManage_Handler(void)
 {
-#ifdef USE_FULL_ASSERT
-	while(1){
-	  errorBlink(2);
-	};
+#if USE_ERRORBLINK
+	errorLedBlink(32);
 #else
     while(1);	
 #endif
@@ -182,10 +195,8 @@ void MemManage_Handler(void)
 */
 void BusFault_Handler(void)
 {
-#ifdef USE_FULL_ASSERT
-	while(1){
-	  errorBlink(3);
-	};
+#if USE_ERRORBLINK
+	errorLedBlink(33);
 #else
     while(1);	
 #endif
@@ -196,12 +207,9 @@ void BusFault_Handler(void)
 */
 void UsageFault_Handler(void)
 {
-#ifdef USE_FULL_ASSERT
-	while(1){
-	  errorBlink(4);
-	};
+#if USE_ERRORBLINK
+	errorLedBlink(34);
 #else
     while(1);	
 #endif
 }
-#endif

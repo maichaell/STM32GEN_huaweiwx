@@ -43,6 +43,8 @@
 extern "C" {
 #endif
 
+void errorLedBlink(int n);
+
 //Returns the name of the pin: "PA4" or "1 (PB3)"
 char *stm32PinName(uint8_t pin);
 

@@ -40,11 +40,16 @@ static void delayMS(uint32_t millis) {
 static void errorBlink(int n) {
   noInterrupts();
   pinMode(LED_BUILTIN, OUTPUT);
+  int h = n /10;
+  int l = n % 10;
   for (;;) {
-    int i;
-    for (i = 0; i < 2*n; i++) {
+	for  (uint8_t i = 0; i < 2*h; i++) {
       digitalToggle(LED_BUILTIN);
-      delayMS(300);
+      delayMS(500);
+    }  
+    for (uint8_t i = 0; i < 2*l; i++) {
+      digitalToggle(LED_BUILTIN);
+      delayMS(200);
     }
     delayMS(2000);
   }
@@ -63,8 +68,8 @@ void vApplicationMallocFailedHook( void )
     configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h.  It is a hook
     function that will get called if a call to pvPortMalloc() fails.*/
     //taskDISABLE_INTERRUPTS();
-#ifdef USE_FULL_ASSERT
-  errorBlink(5);
+#if USE_ERRORBLINK
+  errorBlink(22);
 #else
 	for(;;);
 #endif
@@ -79,8 +84,8 @@ void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
     configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook
     function is called if a stack overflow is detected. */
     //taskDISABLE_INTERRUPTS();
-#ifdef USE_FULL_ASSERT
-	errorBlink(6);
+#if USE_ERRORBLINK
+	errorBlink(23);
 #else
 	for(;;);
 #endif

@@ -63,7 +63,11 @@ void HAL_MspInit(void)
   /* UsageFault_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(UsageFault_IRQn, CORTEX_INT_PRIORITY, 0);
   /* SVCall_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SVCall_IRQn, CORTEX_INT_PRIORITY, 0);
+#if defined(STM32L1)  
+  HAL_NVIC_SetPriority(SVC_IRQn, CORTEX_INT_PRIORITY, 0);
+#else
+  HAL_NVIC_SetPriority(SVCall_IRQn, CORTEX_INT_PRIORITY, 0);	
+#endif	
   /* DebugMonitor_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DebugMonitor_IRQn, CORTEX_INT_PRIORITY, 0);
 #endif  
