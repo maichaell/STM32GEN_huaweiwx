@@ -347,7 +347,7 @@ void Lowpower_uartConfig(UART_HandleTypeDef *handle)
     RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct)!= HAL_OK) {
-      _Error_Handler(__FILE__, __LINE__);
+      _Error_Handler(__FILENAME__, __LINE__);
     }
   }
   

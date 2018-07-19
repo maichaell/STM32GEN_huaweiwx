@@ -1,5 +1,5 @@
-# STM32LowPower
-Arduino library to support STM32 Low Power(低功耗).
+# STM32LowPower Lib
+Arduino library to support STM32 Low Power(低功耗库).
 
 ## API
 
@@ -52,7 +52,6 @@ The board will restart when exit the shutdown mode.
 * **`void sleep(uint32_t millis)`**:  进入睡眠(sleep)模式
 * **`void deepSleep(uint32_t millis)`**:  进入深度睡眠(deep sleep)模式
 * **`void shutdown(uint32_t millis)`**:  进入停机(shutdown)模式
-
 **参数**  millis (可选): 在退出该模式前的毫秒数，最小1000 ms. 通过RTC 的 alarm 模式 唤醒板子在 millis 毫秒后。
 
 * **`void attachInterruptWakeup(uint32_t pin, voidFuncPtrVoid callback, uint32_t mode)`**: 设置 GPIO pin 中断，通过该pin 中断从(idle/sleep/deepsleep)唤醒, 如果该脚配置为唤醒源(见相关文档)，如PA0)则可从shutdowm模式唤醒板子。
