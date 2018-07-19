@@ -84,9 +84,6 @@ task.h is included from an application file. */
 
 #include "../../include/FreeRTOS.h"
 
-#ifndef USE_HEAP
-   #define USE_HEAP 4
-#endif   
 #if USE_HEAP == 1
 
 #include "../../include/task.h"

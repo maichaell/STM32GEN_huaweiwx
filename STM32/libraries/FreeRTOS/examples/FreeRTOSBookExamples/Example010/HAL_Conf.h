@@ -20,9 +20,20 @@
 
 //---------------------------------------- for FreeRTOS overload ---------------------------------------------------------
 
-#ifdef  configUSE_COUNTING_SEMAPHORES
 #undef  configUSE_COUNTING_SEMAPHORES
-#define configUSE_COUNTING_SEMAPHORES      1
-#endif
+#define configUSE_COUNTING_SEMAPHORES   1
 
+
+#if 0
+#undef  INCLUDE_vTaskDelayUntil
+#define INCLUDE_vTaskDelayUntil 1
+
+#undef   configUSE_IDLE_HOOK 
+#define  configUSE_IDLE_HOOK 1
+
+#undef  configUSE_TICK_HOOK
+#define configUSE_TICK_HOOK  1
+
+#endif  /* 0 */
+#endif  /*__HALSPECELCONFIG_H__*/
 #endif

@@ -71,16 +71,16 @@ void calibrate() {
   uint32_t t = micros();
   burnCPU(1000);
   t = micros() - t;
-  cal = (TICK_USEC*1000*cal)/t;
+  cal = (TICK_USEC * 1000 * cal) / t;
 }
 //------------------------------------------------------------------------------
 // print helpers
 void printTask(task_t* task) {
-    Serial.print(task->period);
-    Serial.write(',');
-    Serial.print(task->cpu);
-    Serial.write(',');
-    Serial.println(task->priority);
+  Serial.print(task->period);
+  Serial.write(',');
+  Serial.print(task->cpu);
+  Serial.write(',');
+  Serial.println(task->priority);
 }
 void done(const char* msg, task_t* task, TickType_t now) {
   vTaskSuspendAll();
@@ -89,7 +89,7 @@ void done(const char* msg, task_t* task, TickType_t now) {
   Serial.println(now);
   Serial.print("Task: ");
   printTask(task);
-  while(1);
+  while (1);
 }
 //------------------------------------------------------------------------------
 // start tasks at 1000 ticks
@@ -127,7 +127,7 @@ void setup() {
   portBASE_TYPE s;  // task create status
 
   Serial.begin(115200);
-  while(!Serial) {}
+  while (!Serial) {}
   delay(1000); /*wait serial ready*/
   Serial.println("Rate Monotonic Scheduling Examples.");
   Serial.println("Cases 1 and 3 should fail");
@@ -157,41 +157,37 @@ void setup() {
 
   uint32_t t = micros();
   burnCPU(1000);
-  Serial.println(micros() -t);
+  Serial.println(micros() - t);
   Serial.println("Starting tasks - period and CPU in ticks");
   Serial.println("Period,CPU,Priority");
   Serial.flush();
   for (int i = 0; i < n; i++) {
     printTask(&tasks[i]);
-    cpuUse += tasks[i].cpu/(float)tasks[i].period;
+    cpuUse += tasks[i].cpu / (float)tasks[i].period;
 
     s = xTaskCreate(task, NULL, 200, (void*)&tasks[i], tasks[i].priority, NULL);
     if (s != pdPASS) {
       Serial.println("task create failed");
-      while(1);
+      while (1);
     }
   }
   Serial.print("CPU use %: ");
-  Serial.println(cpuUse*100);
+  Serial.println(cpuUse * 100);
   Serial.print("Liu and Layland bound %: ");
   Serial.println(LiuLayland[n - 1]);
 
   // start tasks
   vTaskStartScheduler();
   Serial.println("Scheduler failed");
-  while(1);
+  while (1);
 }
 
-/*  ----------------------------------- idle hook  attention --------------------------
-    1  loop() function is a idle hook. (set configUSE_IDLE_HOOK to 1 enable it)
-    2  idle loop has a very small stack.(check or set configMINIMAL_STACK_SIZE)
-    3  loop must never block.
----------------------------------------------------------------------------------------*/
+/****************  default idle hook callback if configUSE_IDLE_HOOK ***************************
+ * 1  STM32GENERIC loop() is call by default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
+ * 2  Idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)                 * 
+ * 3  Loop must never block.                                                                   * 
+ * 4  This default idle hook can be overload by vApplicationIdleHook()                         * 
+ ***********************************************************************************************/
 void loop() {
-  while (1) {
-    // idel hook code begin;
-	
-	
-    // idel hook code end;
-  }
+  for(;;){} //This example Not used.
 }

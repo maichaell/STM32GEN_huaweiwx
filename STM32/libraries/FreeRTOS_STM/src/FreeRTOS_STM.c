@@ -13,54 +13,19 @@
 	function, because it is the responsibility of the idle task to clean up
 	memory allocated by the kernel to any task that has since been deleted. 
 */
-	
+
 void  __attribute__((weak)) vApplicationIdleHook( void ) {
   void loop();
   loop();
 }
-
-//------------------------------------------------------------------------------
-/** calibration factor for delayMS */
-#define CAL_FACTOR (F_CPU/7000)
-/** delay between led error flashes
- * \param[in] millis milliseconds to delay
- */
-static void delayMS(uint32_t millis) {
-  uint32_t iterations = millis * CAL_FACTOR;
-  uint32_t i;
-  for(i = 0; i < iterations; ++i) {
-    asm volatile("nop\n\t");
-  }
-}
-//------------------------------------------------------------------------------
-/** Blink error pattern
- *
- * \param[in] n  number of short pulses
- */
-static void errorBlink(int n) {
-  noInterrupts();
-  pinMode(LED_BUILTIN, OUTPUT);
-  int h = n /10;
-  int l = n % 10;
-  for (;;) {
-	for  (uint8_t i = 0; i < 2*h; i++) {
-      digitalToggle(LED_BUILTIN);
-      delayMS(500);
-    }  
-    for (uint8_t i = 0; i < 2*l; i++) {
-      digitalToggle(LED_BUILTIN);
-      delayMS(200);
-    }
-    delayMS(2000);
-  }
-}
-//------------------------------------------------------------------------------
 /** assertBlink
  * Blink one short pulse every two seconds if configASSERT fails.
 */
-void assertBlink() {
-  errorBlink(1);
-}
+extern void errorLedBlink(int n);
+
+//void assertBlink() {
+//  errorLedBlink(1);
+//}
 
 void vApplicationMallocFailedHook( void )
 {
@@ -69,7 +34,7 @@ void vApplicationMallocFailedHook( void )
     function that will get called if a call to pvPortMalloc() fails.*/
     //taskDISABLE_INTERRUPTS();
 #if USE_ERRORBLINK
-  errorBlink(22);
+	errorLedBlink(22);
 #else
 	for(;;);
 #endif
@@ -85,7 +50,7 @@ void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
     function is called if a stack overflow is detected. */
     //taskDISABLE_INTERRUPTS();
 #if USE_ERRORBLINK
-	errorBlink(23);
+	errorLedBlink(23);
 #else
 	for(;;);
 #endif

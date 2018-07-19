@@ -1,5 +1,6 @@
 /*
-  Example 13. Using a Counting Semaphore to Synchronize a Task with an Interrupt  使用计数信号量将任务与中断同步
+  Example 13. Using a Counting Semaphore to Synchronize a Task with an Interrupt
+              使用计数信号量将任务与中断同步
 
   FreeRTOS.org V9.0.0 - Copyright (C) 2003-2017 Richard Barry.
 
@@ -164,5 +165,14 @@ static portBASE_TYPE xHigherPriorityTaskWoken;
   from an ISR! */
   portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
 }
-//---------------------------------------------------------------
-void loop() {}
+
+
+/****************  default idle hook callback if configUSE_IDLE_HOOK ***************************
+ * 1  STM32GENERIC loop() is call by default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
+ * 2  Idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)                 * 
+ * 3  Loop must never block.                                                                   * 
+ * 4  This default idle hook can be overload by vApplicationIdleHook()                         * 
+ ***********************************************************************************************/
+void loop() {
+  for(;;){} //This example Not used.
+}

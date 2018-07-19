@@ -1,5 +1,6 @@
 /*
-  Example 10. Blocking When Receiving From a Queue  从队列接收时阻塞
+  Example 10. Blocking When Receiving From a Queue
+			  从队列接收时阻塞
 
   FreeRTOS.org V9.0.0 - Copyright (C) 2003-2017 Richard Barry.
 
@@ -164,9 +165,16 @@ const TickType_t xTicksToWait = 100 / portTICK_PERIOD_MS;
     }
   }
 }
-//------------------------------------------------------------------------------
-void loop() {}
 
+/****************  default idle hook callback if configUSE_IDLE_HOOK ***************************
+ * 1  STM32GENERIC loop() is call by default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
+ * 2  Idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)                 * 
+ * 3  Loop must never block.                                                                   * 
+ * 4  This default idle hook can be overload by vApplicationIdleHook()                         * 
+ ***********************************************************************************************/
+void loop() {
+  for(;;){} //This example Not used.
+}
 
 
 

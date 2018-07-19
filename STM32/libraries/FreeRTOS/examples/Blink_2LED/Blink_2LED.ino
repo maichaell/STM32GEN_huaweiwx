@@ -32,8 +32,7 @@ static void myTask1(void  __attribute__ ((unused)) *argument)
   /*Task setup*/
   pinMode(LED, OUTPUT);
 
-  Serial.begin(115200);
-
+ 
   uint32_t i = 0;
   /* USER CODE BEGIN Task1 */
   /* Infinite loop */
@@ -69,35 +68,36 @@ static void myTask2(void __attribute__ ((unused)) *argument)
 
 // the setup function runs once when you press reset or power the board.
 void setup() {
+    Serial.begin(115200);
+    delay(1000);
   //  osThreadDef(task1Name, myTask1, osPriorityNormal, 0, 128);
   //  myTask1Handle=osThreadCreate(osThread(task1Name), NULL);
   xTaskCreate(myTask1,
               NULL,
               configMINIMAL_STACK_SIZE,
               NULL,
-              3,
+              tskIDLE_PRIORITY + 2,
               NULL);
 #if defined(LED1_BUILTIN)
   xTaskCreate(myTask2,
               NULL,
               configMINIMAL_STACK_SIZE,
               NULL,
-              3,
+              tskIDLE_PRIORITY + 1,
               NULL);
 #endif
-  // osKernelStart(); 
+  // osKernelStart();
   vTaskStartScheduler();  //FreeRTOS start and never return!
-}
 
-//----------------------------------- idle hook -------------------------------------
-//1  idle hook enable(set configUSE_IDLE_HOOK to 1) 
-//2  idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)
-//3  loop must never block: in for(;;) or while(1)
+  _Error_Handler(__FILENAME__, __LINE__);
+  }
+
+/****************  default idle hook callback if configUSE_IDLE_HOOK ***************************
+ * 1  STM32GENERIC loop() is default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
+ * 2  idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)         * 
+ * 3  loop must never block.                                                           *
+ * 4  This default idle hook can be overload by vApplicationIdleHook()                 * 
+ ***************************************************************************************/
 void loop() {
-  for(;;){
-    // idel hook code begin;
-	
-	
-    // idel hook code end;
-	}
+  for(;;){} //This example Not used.
 }

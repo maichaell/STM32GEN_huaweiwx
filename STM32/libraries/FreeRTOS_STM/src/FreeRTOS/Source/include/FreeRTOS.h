@@ -413,7 +413,11 @@ extern "C" {
 #endif
 
 #ifndef configCHECK_FOR_STACK_OVERFLOW
+#if USE_ERRORBLINK
+	#define configCHECK_FOR_STACK_OVERFLOW 1
+#else
 	#define configCHECK_FOR_STACK_OVERFLOW 0
+#endif
 #endif
 
 /* The following event macros are embedded in the kernel API calls. */
@@ -689,7 +693,11 @@ extern "C" {
 #endif
 
 #ifndef configUSE_MALLOC_FAILED_HOOK
+#if USE_ERRORBLINK
+	#define configUSE_MALLOC_FAILED_HOOK 1
+#else
 	#define configUSE_MALLOC_FAILED_HOOK 0
+#endif
 #endif
 
 #ifndef portPRIVILEGE_BIT
@@ -1062,6 +1070,8 @@ typedef struct xSTATIC_TIMER
 	#endif
 
 } StaticTimer_t;
+
+extern void assertMsg(char* file,int line);
 
 #ifdef __cplusplus
 }

@@ -84,9 +84,12 @@ task.h is included from an application file. */
 #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
 
 #include "../../include/FreeRTOS.h"
+
+
 #ifndef USE_HEAP
-   #define USE_HEAP 4
-#endif   
+	#define  USE_HEAP 4
+#endif
+
 #if USE_HEAP == 4
 
 #include "../../include/task.h"

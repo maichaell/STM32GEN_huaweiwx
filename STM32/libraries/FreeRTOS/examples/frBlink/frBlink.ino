@@ -25,6 +25,7 @@ SemaphoreHandle_t sem;
 */
 // Declare the thread function for thread 1.
 static void Thread1(void* arg) {
+  UNUSED(arg);
   while (1) {
 
     // Wait for signal from thread 2.
@@ -40,6 +41,7 @@ static void Thread1(void* arg) {
 */
 // Declare the thread function for thread 2.
 static void Thread2(void* arg) {
+  UNUSED(arg);
 
   pinMode(LED_PIN, OUTPUT);
 
@@ -63,14 +65,15 @@ void setup() {
 
   Serial.begin(115200);
   delay(1000);
+  
   // initialize semaphore
   sem = xSemaphoreCreateCounting(1, 0);
 
   // create task at priority two
-  s1 = xTaskCreate(Thread1, NULL, configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+  s1 = xTaskCreate(Thread1, NULL, configMINIMAL_STACK_SIZE, NULL,tskIDLE_PRIORITY + 2,NULL);
 
   // create task at priority one
-  s2 = xTaskCreate(Thread2, NULL, configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+  s2 = xTaskCreate(Thread2, NULL, configMINIMAL_STACK_SIZE, NULL,tskIDLE_PRIORITY + 1,NULL);
 
   // check for creation errors
   if (sem == NULL || s1 != pdPASS || s2 != pdPASS ) {
@@ -85,15 +88,10 @@ void setup() {
   while (1);
 }
 
-//----------------------------------- idle hook -------------------------------------
-//1  idle hook enable(set configUSE_IDLE_HOOK to 1) 
-//2  idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)
-//3  loop must never block: in for(;;) or while(1)
-void loop() {
-  for(;;){
-    // idel hook code begin;
-	
-	
-    // idel hook code end;
-	}
-}
+/********************  default idle hook  if configUSE_IDLE_HOOK ***********************
+ * 1  STM32GENERIC loop() is default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
+ * 2  idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)         * 
+ * 3  loop must never block.                                                           *
+ * 4  This default idle hook can be overload by vApplicationIdleHook()                 * 
+ ***************************************************************************************/
+void loop() {}

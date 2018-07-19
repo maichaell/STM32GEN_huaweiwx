@@ -18,6 +18,7 @@ volatile  uint16_t tmin = 0XFFFF;
 
 //------------------------------------------------------------------------------
 static void vJitter(void *pvParameters) {
+  UNUSED(pvParameters);
   // initialize tlast
   vTaskDelay(1);
   uint32_t tlast = micros();
@@ -34,6 +35,7 @@ static void vJitter(void *pvParameters) {
 //------------------------------------------------------------------------------
 uint8_t np = 10;
 static void vPrintTask(void *pvParameters) {
+  UNUSED(pvParameters);
   for (;;) {
     // delay one second
     vTaskDelay(configTICK_RATE_HZ);
@@ -78,16 +80,12 @@ void setup() {
   while (1);
 }
 
-/*  ----------------------------------- idle hook  attention --------------------------
-    1  loop() function is a idle hook. (set configUSE_IDLE_HOOK to 1 enable it)
-    2  idle loop has a very small stack.(check or set configMINIMAL_STACK_SIZE)
-    3  loop must never block.
----------------------------------------------------------------------------------------*/
+/****************  default idle hook callback if configUSE_IDLE_HOOK ***************************
+ * 1  STM32GENERIC loop() is call by default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
+ * 2  Idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)                 * 
+ * 3  Loop must never block.                                                                   * 
+ * 4  This default idle hook can be overload by vApplicationIdleHook()                         * 
+ ***********************************************************************************************/
 void loop() {
-  while (1) {
-    // idel hook code begin;
-	
-	
-    // idel hook code end;
-  }
+  for(;;){} //This example Not used.
 }

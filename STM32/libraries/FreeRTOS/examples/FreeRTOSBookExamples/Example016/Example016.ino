@@ -1,5 +1,6 @@
 /*
-  Example 16. Re-writing vPrintString() to Use a Gatekeeper Task   重新编写 vPrintString()以使用网关守卫任务
+  Example 16. Re-writing vPrintString() to Use a Gatekeeper Task
+  重新编写 vPrintString()以使用网关守卫任务
   
   FreeRTOS.org V9.0.0 - Copyright (C) 2003-2017 Richard Barry.
   This file is part of the FreeRTOS.org distribution.
@@ -116,7 +117,10 @@ static void prvStdioGatekeeperTask( void *pvParameters )
     /* Now simply go back to wait for the next message. */
   }
 }
-/*-----------------------------------------------------------*/
+
+/******************   vApplicationTickHook   **********************************
+ *  Use vApplicationTickHook must set configUSE_TICK_HOOK  1                  *
+ ******************************************************************************/
 extern "C" {
   void vApplicationTickHook( void );
   void vApplicationTickHook( void ) // FreeRTOS expects C linkage
@@ -167,16 +171,13 @@ static void prvPrintTask( void *pvParameters )
   }
 }
 
-//----------------------------------- idle hook -------------------------------------
-//1  idle hook enable(set configUSE_IDLE_HOOK to 1) 
-//2  idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)
-//3  loop must never block: in for(;;) or while(1)
-void loop() {
-  for(;;){
-    // idel hook code begin;
-	
-	
-    // idel hook code end;
-	}
-}
 
+/****************  default idle hook callback if configUSE_IDLE_HOOK ***************************
+ * 1  STM32GENERIC loop() is call by default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
+ * 2  Idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)                 * 
+ * 3  Loop must never block.                                                                   * 
+ * 4  This default idle hook can be overload by vApplicationIdleHook()                         * 
+ ***********************************************************************************************/
+void loop() {
+  for(;;){} //This example Not used.
+}

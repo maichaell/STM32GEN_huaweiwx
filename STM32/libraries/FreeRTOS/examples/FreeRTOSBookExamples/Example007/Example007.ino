@@ -91,8 +91,8 @@ void vTaskFunction( void *pvParameters )
 }
 /*-----------------------------------------------------------*/
 
-/* Idle hook functions MUST be called vApplicationIdleHook(), take no parameters,
-  and return void. */
+//------------------  vApplicationIdleHook: default idle hook ----------------
+//
 extern "C" {
   void vApplicationIdleHook( void );
   void vApplicationIdleHook( void ) // FreeRTOS expects C linkage
@@ -101,6 +101,14 @@ extern "C" {
     ulIdleCycleCount++;
   }
 }
-//------------------------------------------------------------------------------
-void loop() {}
 
+
+/****************  default idle hook callback if configUSE_IDLE_HOOK ***************************
+ * 1  STM32GENERIC loop() is call by default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
+ * 2  Idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)                 * 
+ * 3  Loop must never block.                                                                   * 
+ * 4  This default idle hook can be overload by vApplicationIdleHook()                         * 
+ ***********************************************************************************************/
+void loop() {
+  for(;;){} //This example Not used.
+}

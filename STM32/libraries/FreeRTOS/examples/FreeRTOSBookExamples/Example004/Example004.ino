@@ -1,5 +1,6 @@
 /*
-  Example  4. Using the Blocked state to create a delay   使用阻止状态创建延迟
+  Example  4. Using the Blocked state to create a delay
+              使用阻止状态创建延迟
 
   FreeRTOS.org V9.0.0 - Copyright (C) 2003-2017 Richard Barry.
 
@@ -24,8 +25,8 @@
   the source code for any proprietary components.  See the licensing section
   of http://www.FreeRTOS.org for full details of how and when the exception
   can be applied.
-
 */
+
 #include "FreeRTOS.h"
 
 /* Demo includes. */
@@ -81,6 +82,13 @@ char *pcTaskName;
     vTaskDelay( 250 / portTICK_PERIOD_MS );
   }
 }
-//------------------------------------------------------------------------------
-void loop() {}
 
+/****************  default idle hook callback if configUSE_IDLE_HOOK ***************************
+ * 1  STM32GENERIC loop() is call by default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
+ * 2  Idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)                 * 
+ * 3  Loop must never block.                                                                   * 
+ * 4  This default idle hook can be overload by vApplicationIdleHook()                         * 
+ ***********************************************************************************************/
+void loop() {
+  for(;;){} //This example Not used.
+}

@@ -1,5 +1,6 @@
 /*
-  Example  5. Converting the example tasks to use vTaskDelayUntil() 将示例任务转换为使用 vTaskDelayUntil ()
+  Example 5. Converting the example tasks to use vTaskDelayUntil()
+              将示例任务转换为使用 vTaskDelayUntil ()
   
   FreeRTOS.org V9.0.0 - Copyright (C) 2003-2017 Richard Barry.
 
@@ -93,12 +94,13 @@ TickType_t xLastWakeTime;
   }
 }
 
-//----------------------------------- idle hook -------------------------------------
-//1  idle hook enable(set configUSE_IDLE_HOOK to 1) 
-//2  idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)
-//3  loop must never block: in for(;;) or while(1)
+
+/****************  default idle hook callback if configUSE_IDLE_HOOK ***************************
+ * 1  STM32GENERIC loop() is call by default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
+ * 2  Idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)                 * 
+ * 3  Loop must never block.                                                                   * 
+ * 4  This default idle hook can be overload by vApplicationIdleHook()                         * 
+ ***********************************************************************************************/
 void loop() {
-  for(;;);// not used
+  for(;;){} //This example Not used.
 }
-
-

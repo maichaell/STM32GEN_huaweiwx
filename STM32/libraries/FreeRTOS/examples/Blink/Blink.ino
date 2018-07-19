@@ -1,5 +1,5 @@
 /*
-  LED_FreeRTOS90.ino
+  Blink.ino
   Turns on 2 LEDs on/off use LEDClass, demo running in FreeRTOS V9.0.
 
   Most Arduinos have an on-board LED you can control. On the Uno and
@@ -8,7 +8,7 @@
   the documentation at http://www.arduino.cc
 
   This example code is in the public domain.
-  modified for STM32 HALMX   by huaweiwx@sina.com , May 2 2017
+  modified for STM32GENERIC   by huaweiwx@sina.com , May 2 2017
 */
 
 #include <FreeRTOS.h>
@@ -55,28 +55,26 @@ void setup() {
               NULL,
               configMINIMAL_STACK_SIZE,
               NULL,
-              3,
+              tskIDLE_PRIORITY + 1,
               NULL);
 #if defined(LED1_BUILTIN)
   xTaskCreate(myTask2,
               NULL,
               configMINIMAL_STACK_SIZE,
               NULL,
-              3,
+              tskIDLE_PRIORITY + 2,
               NULL);
 #endif
   vTaskStartScheduler();  //FreeRTOS start and never return!
+  _Error_Handler(__FILENAME__, __LINE__);
 }
 
-//----------------------------------- idle hook -------------------------------------
-//1  idle hook enable(set configUSE_IDLE_HOOK to 1) 
-//2  idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)
-//3  loop must never block: in for(;;) or while(1)
+/****************  default idle hook callback if configUSE_IDLE_HOOK ***************************
+ * 1  STM32GENERIC loop() is call by default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
+ * 2  Idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)                 * 
+ * 3  Loop must never block.                                                                   * 
+ * 4  This default idle hook can be overload by vApplicationIdleHook()                         * 
+ ***********************************************************************************************/
 void loop() {
-  for(;;){
-    // idel hook code begin;
-	
-	
-    // idel hook code end;
-	}
+  for(;;){} //This example Not used.
 }
