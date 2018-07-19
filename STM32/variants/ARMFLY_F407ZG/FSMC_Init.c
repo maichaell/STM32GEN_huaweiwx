@@ -166,7 +166,7 @@ void STM_FSMC_LCD_TimeSet(uint8_t _as, uint8_t _ds)
 
   if (HAL_SRAM_Init(&fsmcLcdHandle, &Timing, NULL) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    _Error_Handler(__FILENAME__, __LINE__);
   }
 }
 
@@ -216,7 +216,7 @@ void STM_FSMC_SRAM_Init(void)
 
   if (HAL_SRAM_Init(&sramHandle, &Timing, NULL) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    _Error_Handler(__FILENAME__, __LINE__);
   }
  
 }
@@ -277,22 +277,20 @@ void STM_FSMC_LCD_Init(void)
 #endif	
 }
 
-//void preinitVariant() {
-
-//}
+//void preinitVariant() {}
 
 #ifndef DATA_IN_ExtSRAM
 void initVariant() {
 	STM_FSMC_SRAM_Init();
-//  setHeapAtSram();
 }
 #endif
 
+#if USE_EXTRAMSYSMALLOC
 extern void setHeap(unsigned char* s, unsigned char* e);
 void setHeapAtSram(void){
  setHeap((unsigned char*)SRAM_START, (unsigned char*)(SRAM_START +SRAM_LENGTH));
 }
-
 void setHeapAtCCram(void){
  setHeap((unsigned char*)(0x10000000), (unsigned char*)(0x10000000 + 64*1024));
 }
+#endif

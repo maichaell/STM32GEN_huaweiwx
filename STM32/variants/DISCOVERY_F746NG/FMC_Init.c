@@ -494,10 +494,12 @@ __weak void BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
 }
 
 
+#if USE_EXTRAMSYSMALLOC
 extern void setHeap(unsigned char* s, unsigned char* e);
 void setHeapAtSram(void){
 //    setHeap((unsigned char*)0xC0000000, (unsigned char*)(0xC0000000 + 8 * 1024 * 1024));
  setHeap((unsigned char*)SDRAM_START, (unsigned char*)(SDRAM_END));
 }
-  
+#endif
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

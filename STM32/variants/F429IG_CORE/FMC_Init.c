@@ -50,7 +50,7 @@ void BSP_SDRAM_Init(void)
   Timing.RCDDelay             = 2;
   
   /* FMC SDRAM control configuration */
-  sdramHandle.Init.SDBank             = FMC_SDRAM_BANK1;
+  sdramHandle.Init.SDBank             = SDRAM_BANK;
   /* Row addressing: [7:0] */
   sdramHandle.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_8;
   /* Column addressing: [11:0] */
@@ -275,6 +275,7 @@ void initVariant() {
 }
 #endif
 
+#if USE_EXTRAMSYSMALLOC
 extern void setHeap(unsigned char* s, unsigned char* e);
 
 void setHeapAtSram(void){
@@ -284,3 +285,4 @@ void setHeapAtSram(void){
 void setHeapAtCCram(void){
  setHeap((unsigned char*)(0x10000000), (unsigned char*)(0x10000000 + 64*1024));
 }
+#endif

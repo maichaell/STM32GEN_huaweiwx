@@ -38,11 +38,7 @@ void SystemClock_Config(void) {
     LL_SetSystemCoreClock(48000000);
 
     /* SysTick_IRQn interrupt configuration */
-#if FREERTOS
-  HAL_NVIC_SetPriority(PendSV_IRQn, SYSTICK_INT_PRIORITY, 0);
-#endif
   HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_INT_PRIORITY, 0);
-  
   LL_SYSTICK_EnableIT();  //for LL enableIT huaweiwx@sina.com 2018.3.1
 }
 
@@ -74,11 +70,7 @@ void SystemClock_Config(void) {
     LL_SetSystemCoreClock(72000000);
 
     /* SysTick_IRQn interrupt configuration */
-#if FREERTOS
-  HAL_NVIC_SetPriority(PendSV_IRQn, SYSTICK_INT_PRIORITY, 0);
-#endif
   HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_INT_PRIORITY, 0);
-  
   LL_SYSTICK_EnableIT();   //for LL enableIT huaweiwx@sina.com 2018.3.1
 }
 

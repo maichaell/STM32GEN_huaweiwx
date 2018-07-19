@@ -70,11 +70,12 @@ void HAL_MspInit(void)
 #endif	
   /* DebugMonitor_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DebugMonitor_IRQn, CORTEX_INT_PRIORITY, 0);
-#endif  
+#endif
 
+  HAL_NVIC_SetPriority(PendSV_IRQn, SYSTICK_INT_PRIORITY, 0); /*move to here from variant.c huawei 2018.7.17*/
 }
 
-/*move to hooks.c huawei 2018.1.30*/
+
 //void Error_Handler() {
 
 //}

@@ -122,6 +122,11 @@ void              BSP_SDRAM_DMA_IRQHandler(void);
 }
 #endif
 
+#if USE_EXTRAMSYSMALLOC
+void setHeapAtSram(void);
+void setHeapAtCCram(void);
+#endif
+
 #endif /* __STM32F429I_DISCOVERY_SDRAM_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

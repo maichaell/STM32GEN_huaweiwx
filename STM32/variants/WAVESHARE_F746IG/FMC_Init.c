@@ -498,9 +498,11 @@ void initVariant() {
 }
 #endif
 
+#if USE_EXTRAMSYSMALLOC
 extern void setHeap(unsigned char* s, unsigned char* e);
 void setHeapAtSram(void){
  setHeap((unsigned char*)SDRAM_START, (unsigned char*)(SDRAM_END));
 }
-  
+#endif
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

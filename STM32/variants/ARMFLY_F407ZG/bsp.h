@@ -49,6 +49,12 @@
 #define SRAM_LENGTH			  (1*1024*1024)  
 #define SRAM_END              (SRAM_START+SRAM_LENGTH)
 extern SRAM_HandleTypeDef sramHandle;
+
+#if USE_EXTRAMSYSMALLOC
+void setHeapAtSram(void);
+void setHeapAtCCram(void);
+#endif
+
 #endif
 
 //have not norflash

@@ -12,7 +12,7 @@
 #define SYS_WKUP1 			PA0 /*for lowPower*/
 #define BUTTON_MASK         0x01
 
-  
+
 
 #define MOSI PA7
 #define MISO PA6

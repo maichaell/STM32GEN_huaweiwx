@@ -66,4 +66,8 @@ void STM_FSMC_SRAM_Init(void);
 } //extern "C"
 #endif
 
+#if USE_EXTRAMSYSMALLOC
+void setHeapAtSram(void);
+#endif
+
 #endif   //__BSP_H__

@@ -154,6 +154,11 @@ void              BSP_SDRAM_DMA_IRQHandler(void);
 #define SDRAM_START  0xC0000000U  /*for arduino*/
 #define SDRAM_LENGTH   0x800000U  /*for arduino*/
 
+#if USE_EXTRAMSYSMALLOC
+void setHeapAtSram(void);
+void setHeapAtCCram(void);
+#endif
+
 
 #endif /* __BSP_H */
 
