@@ -3,27 +3,32 @@
 #ifndef STM32_BUILD_DEFINES_H
 #define STM32_BUILD_DEFINES_H
 
-#if __has_include("hal_conf.h")
-# include "hal_conf.h"
-#elif __has_include("configs/hal_conf.h")
-# include "configs/hal_conf.h"
+#if __has_include("HAL_Conf.h")
+# include "HAL_Conf.h"
+#elif __has_include("configs/HAL_Conf.h")
+# include "configs/HAL_Conf.h"
 #endif
 
 /***************  HAL_Conf default here ******************/
 //default defines,  overriden by HAL_Conf.h in sketch path
 //OS
 #ifndef FREERTOS /*running with freertos*/
-#define FREERTOS    0
+# define FREERTOS    0
 #endif
 
-#ifndef UCOSII	/*running with ucosii*/
-#define UCOSII      0
+#ifndef  UCOSII	/*running with ucosii*/
+# define UCOSII      0
 #endif
 
 #ifndef BOOTLOADER	/*chech & go if avalible */
-#define BOOTLOADER  0
+# define BOOTLOADER  0
 #endif
-//debug
+
+//core
+#ifndef USE_BITCONSTANTS
+# define USE_BITCONSTANTS 1
+#endif
+
 #ifndef USE_ERRORBLINK
 #  ifdef USE_FULL_ASSERT
     #define USE_ERRORBLINK 1
@@ -32,9 +37,12 @@
 #  endif
 #endif	
 
+#ifndef USE_EXTRAMSYSMALLOC
+# define USE_EXTRAMSYSMALLOC 1
+#endif
 
+//devices
 //USB
-
 #ifndef USE_USBSERIAL
 # ifdef MENU_USB_SERIAL
 #   define USE_USBSERIAL 1
