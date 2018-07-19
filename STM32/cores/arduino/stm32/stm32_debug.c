@@ -29,7 +29,11 @@
 
 //------------------------------------------------------------------------------
 /** calibration factor for delayMS */
-#define CAL_FACTOR (F_CPU/7000)
+#if defined(STM32F7)||defined(STM32H7)
+# define CAL_FACTOR (F_CPU/2000)
+#else
+# define CAL_FACTOR (F_CPU/7000)
+#endif
 /** delay between led error flashes
  * \param[in] millis milliseconds to delay
  */
@@ -41,21 +45,47 @@ static void delayMS(uint32_t millis) {
   }
 }
 
+static void nblink(int n, int l){
+  if(l){	
+	for  (uint8_t i = 0; i < 2*n; i++) {
+      digitalToggle(LED_BUILTIN);
+      delayMS(250);
+    }
+  }else{
+    for (uint8_t i = 0; i < n; i++) {
+      digitalToggle(LED_BUILTIN);
+      delayMS(10);
+      digitalToggle(LED_BUILTIN);
+      delayMS(240);
+    }
+  }
+}
+
 void errorLedBlink(int n) {
   noInterrupts();
   pinMode(LED_BUILTIN, OUTPUT);
-  int h = n /10;
+#if (LED_BUILTIN_MASK & 0x01)
+  digitalWrite(LED_BUILTIN,LOW);
+#else
+  digitalWrite(LED_BUILTIN,HIGH);
+#endif
+
+  int t = n / 1000;
+  int h = n % 1000;
+  int d = h % 100;
   int l = n % 10;
+
+  h /= 100;
+  d /= 10;
+
+  if(l == 0) l = 10;
+  
   for (;;) {
-	for  (uint8_t i = 0; i < 2*h; i++) {
-      digitalToggle(LED_BUILTIN);
-      delayMS(500);
-    }  
-    for (uint8_t i = 0; i < 2*l; i++) {
-      digitalToggle(LED_BUILTIN);
-      delayMS(200);
-    }
-    delayMS(2000);
+	nblink(t,1);	  
+	nblink(h,0);
+	nblink(d,1);
+    nblink(l,0);
+	delayMS(1000);
   }
 }
 
@@ -149,10 +179,14 @@ char *stm32PinName(uint8_t pin) {
 void _Error_Handler(char* file, uint32_t line) __weak;
 void _Error_Handler(char* file, uint32_t line){
 #ifdef USE_FULL_ASSERT
+  #if USE_ERRORBLINK
+    errorLedBlink(line);
+  #else	
 	debug("\r\nerrFailed! File:'%s' on Line:%d",file,line);
-#endif
 	while(1)
 		yield();	
+  #endif
+#endif
 }
 
 #ifdef USE_FULL_ASSERT
@@ -160,9 +194,13 @@ void _Error_Handler(char* file, uint32_t line){
 void assert_failed(uint8_t* file, uint32_t line) __weak;
 void assert_failed(uint8_t* file, uint32_t line)
 {
+#if USE_ERRORBLINK
+    errorLedBlink(line);
+#else	
 	debug("\r\nAssert failed! File: '%s' on Line:%d",(char *)file,line);
 	while(1)
 		yield();
+#endif
 };
 #endif
 
