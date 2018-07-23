@@ -18,105 +18,109 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
-  
-  2018.1.8 change SerialUART to HardwareSerial, comptatible with arduino stl libs and some apps huaweiwx@sina.com
+
+  2018.1.8 change SerialUART to HardwareSerial comptatible with arduino stl libs 
+           and some apps modified by huaweiwx@sina.com
+  2018.7.22 Thanks csnol!  modifyed begin(baud) to begin(baud, config) parm config(optional)
+           comptatible with arduino official implementation. by huaweiwx@sina.com
 */
 
 /**
- * TODO: Check if txBuffer is NULL in every method
- * TODO: generate different BUFFER_SIZE values for different boards based on available memory
- * TODO: add alternate pin selection functions
- * TODO: add constructor with custom buffer parameter
- */
+   TODO: Check if txBuffer is NULL in every method
+   TODO: generate different BUFFER_SIZE values for different boards based on available memory
+   TODO: add alternate pin selection functions
+   TODO: add constructor with custom buffer parameter
+*/
+
 #include "HardwareSerial.h"
 #include "stm32_gpio_af.h"
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 /**
- * Set the underlying UART instance.
- */
+   Set the underlying UART instance.
+*/
 HardwareSerial::HardwareSerial(USART_TypeDef *instance) {
-    this->instance = instance;
+  this->instance = instance;
 }
 
 /**
- * Arduino always instantiates the Serial object.
- *
- * To save memory, this implementation will:
- * - not use any memory if begin() is never called
- * - use statically allocated memory, if begin() is called exactly in one HardwareSerials.
- * - use statically allocated memory for the first, and malloc() for any subsequent calls to begin() on DIFFERENT HardwareSerials.
- */
+   Arduino always instantiates the Serial object.
 
-void HardwareSerial::begin(const uint32_t baud) {
+   To save memory, this implementation will:
+   - not use any memory if begin() is never called
+   - use statically allocated memory, if begin() is called exactly in one HardwareSerials.
+   - use statically allocated memory for the first, and malloc() for any subsequent calls to begin() on DIFFERENT HardwareSerials.
+*/
+
+void HardwareSerial::begin(const uint32_t baud, uint8_t config) {
   if (txBuffer == NULL) {
-	static uint8_t tx[BUFFER_SIZE];
-	static uint8_t static_tx_used = 0;
+    static uint8_t tx[BUFFER_SIZE];
+    static uint8_t static_tx_used = 0;
 
-	if (!static_tx_used) {
-	  txBuffer = (uint8_t*)tx;
-		static_tx_used = true;
-	} else {
-	  txBuffer = (uint8_t*)malloc(BUFFER_SIZE);
-	}
+    if (!static_tx_used) {
+      txBuffer = (uint8_t*)tx;
+      static_tx_used = true;
+    } else {
+      txBuffer = (uint8_t*)malloc(BUFFER_SIZE);
+    }
   }
 
   if (rxBuffer == NULL) {
-  	static uint8_t rx[BUFFER_SIZE];
-  	static uint8_t static_rx_used = 0;
+    static uint8_t rx[BUFFER_SIZE];
+    static uint8_t static_rx_used = 0;
 
-  	if (!static_rx_used) {
-  	  rxBuffer = (uint8_t*)rx;
-  		static_rx_used = true;
-  	} else {
-  	  rxBuffer = (uint8_t*)malloc(BUFFER_SIZE);
-  	}
+    if (!static_rx_used) {
+      rxBuffer = (uint8_t*)rx;
+      static_rx_used = true;
+    } else {
+      rxBuffer = (uint8_t*)malloc(BUFFER_SIZE);
+    }
   }
 
   if (handle == NULL) {
-  	static UART_HandleTypeDef h = {};
-  	static uint8_t static_handle_used = 0;
+    static UART_HandleTypeDef h = {};
+    static uint8_t static_handle_used = 0;
 
-  	if (!static_handle_used) {
-  		handle = &h;
-  	static_handle_used = true;
-  	} else {
-  		handle = (UART_HandleTypeDef*)malloc(sizeof(UART_HandleTypeDef));
-  	}
+    if (!static_handle_used) {
+      handle = &h;
+      static_handle_used = true;
+    } else {
+      handle = (UART_HandleTypeDef*)malloc(sizeof(UART_HandleTypeDef));
+    }
   }
 
   handle->Instance = instance;
-  
+
 #if defined(USART1) && (USE_SERIAL1)
   if (handle->Instance == USART1) {
     __HAL_RCC_USART1_FORCE_RESET();
     __HAL_RCC_USART1_RELEASE_RESET();
     __HAL_RCC_USART1_CLK_ENABLE();
     HAL_NVIC_SetPriority(USART1_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART1_IRQn); 
+    HAL_NVIC_EnableIRQ(USART1_IRQn);
   }
 #endif
-  
+
 #if defined(USART2) && (USE_SERIAL2)
   if (handle->Instance == USART2) {
     __HAL_RCC_USART2_FORCE_RESET();
     __HAL_RCC_USART2_RELEASE_RESET();
     __HAL_RCC_USART2_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART2_IRQn, USART_PRIORITY, 0); 
-    HAL_NVIC_EnableIRQ(USART2_IRQn); 
+    HAL_NVIC_SetPriority(USART2_IRQn, USART_PRIORITY, 0);
+    HAL_NVIC_EnableIRQ(USART2_IRQn);
   }
 #endif
-  
+
 #if defined(USART3) && (USE_SERIAL3)
   if (handle->Instance == USART3) {
     __HAL_RCC_USART3_FORCE_RESET();
     __HAL_RCC_USART3_RELEASE_RESET();
     __HAL_RCC_USART3_CLK_ENABLE();
     HAL_NVIC_SetPriority(USART3_IRQn, USART_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART3_IRQn); 
+    HAL_NVIC_EnableIRQ(USART3_IRQn);
   }
 #endif
-  
+
 #if defined(UART4) && (USE_SERIAL4)
   if (handle->Instance == UART4) {
     __HAL_RCC_UART4_FORCE_RESET();
@@ -131,11 +135,11 @@ void HardwareSerial::begin(const uint32_t baud) {
     __HAL_RCC_USART4_FORCE_RESET();
     __HAL_RCC_USART4_RELEASE_RESET();
     __HAL_RCC_USART4_CLK_ENABLE();
-    HAL_NVIC_SetPriority(USART4_IRQn, USART_PRIORITY, 0); 
-    HAL_NVIC_EnableIRQ(USART4_IRQn); 
+    HAL_NVIC_SetPriority(USART4_IRQn, USART_PRIORITY, 0);
+    HAL_NVIC_EnableIRQ(USART4_IRQn);
   }
 #endif
-  
+
 #if defined(UART5) && (USE_SERIAL5)
   if (handle->Instance == UART5) {
     __HAL_RCC_UART5_FORCE_RESET();
@@ -243,46 +247,91 @@ void HardwareSerial::begin(const uint32_t baud) {
     __HAL_RCC_LPUART1_CLK_ENABLE();
     HAL_NVIC_SetPriority(LPUART1_IRQn, USART_PRIORITY, 0);
     HAL_NVIC_EnableIRQ(LPUART1_IRQn);
-	
-    if((txPin < 0xff) && (rxPin <0xff))
-       stm32AfLPUARTInit(instance, 
-                  variant_pin_list[rxPin].port,
-				  variant_pin_list[rxPin].pinMask,
-                  variant_pin_list[txPin].port,
-				  variant_pin_list[txPin].pinMask);
-    else			  
-       stm32AfLPUARTInit(instance, NULL,0,NULL,0);
 
-   }
-   else
-	if((txPin < 0xff) && (rxPin <0xff))
-		stm32AfUARTInit(instance, 
-					variant_pin_list[rxPin].port,
-					variant_pin_list[rxPin].pinMask,
-					variant_pin_list[txPin].port,
-					variant_pin_list[txPin].pinMask);
-	else			  
-		stm32AfUARTInit(instance, NULL,0,NULL,0);	   
- 
+    if ((txPin < 0xff) && (rxPin < 0xff))
+      stm32AfLPUARTInit(instance,
+                        variant_pin_list[rxPin].port,
+                        variant_pin_list[rxPin].pinMask,
+                        variant_pin_list[txPin].port,
+                        variant_pin_list[txPin].pinMask);
+    else
+      stm32AfLPUARTInit(instance, NULL, 0, NULL, 0);
+
+  }
+  else if ((txPin < 0xff) && (rxPin < 0xff))
+    stm32AfUARTInit(instance,
+                    variant_pin_list[rxPin].port,
+                    variant_pin_list[rxPin].pinMask,
+                    variant_pin_list[txPin].port,
+                    variant_pin_list[txPin].pinMask);
+  else
+    stm32AfUARTInit(instance, NULL, 0, NULL, 0);
+
 #else
-  if((txPin < 0xff) && (rxPin <0xff))
-    stm32AfUARTInit(instance, 
-                  variant_pin_list[rxPin].port,
-				  variant_pin_list[rxPin].pinMask,
-                  variant_pin_list[txPin].port,
-				  variant_pin_list[txPin].pinMask);
-  else			  
-    stm32AfUARTInit(instance, NULL,0,NULL,0);
+  if ((txPin < 0xff) && (rxPin < 0xff))
+    stm32AfUARTInit(instance,
+                    variant_pin_list[rxPin].port,
+                    variant_pin_list[rxPin].pinMask,
+                    variant_pin_list[txPin].port,
+                    variant_pin_list[txPin].pinMask);
+  else
+    stm32AfUARTInit(instance, NULL, 0, NULL, 0);
 #endif
- 
- 
-  handle->Init.BaudRate = baud; 
-  handle->Init.WordLength = UART_WORDLENGTH_8B;
-  handle->Init.StopBits = UART_STOPBITS_1; 
-  handle->Init.Parity = UART_PARITY_NONE; 
-  handle->Init.Mode = UART_MODE_TX_RX; 
-  handle->Init.HwFlowCtl = UART_HWCONTROL_NONE; 
-  
+
+/*from Arduino_Core*/
+  uint32_t databits = 0;
+  _config = config;
+ switch (config & 0x07) {
+    //    case 0x02:
+    //      databits = 6;
+    //      break;
+    case 0x04:
+      databits = 7;
+      break;
+    case 0x06:
+      databits = 8;
+      break;
+    default:
+      databits = 0;
+      break;
+  }
+  if ((config & 0x30) == 0x30) {
+    handle->Init.Parity = UART_PARITY_ODD;
+    databits++;
+  } else if ((config & 0x20) == 0x20) {
+    handle->Init.Parity = UART_PARITY_EVEN;
+    databits++;
+  } else {
+    handle->Init.Parity = UART_PARITY_NONE;
+  }
+  if ((config & 0x08) == 0x08) {
+    handle->Init.StopBits = UART_STOPBITS_2;
+  } else {
+    handle->Init.StopBits = UART_STOPBITS_1;
+  }
+  handle->Init.BaudRate = baud;
+  switch (databits) {
+#ifdef UART_WORDLENGTH_7B
+    case 7:
+      handle->Init.WordLength = UART_WORDLENGTH_7B;
+      break;
+#endif
+    case 8:
+      handle->Init.WordLength = UART_WORDLENGTH_8B;
+      break;
+    case 9:
+      handle->Init.WordLength = UART_WORDLENGTH_9B;
+      break;
+    default:
+      databits = 0;
+      break;
+  }
+/*from Arduino_Core*/
+
+
+  handle->Init.Mode = UART_MODE_TX_RX;
+  handle->Init.HwFlowCtl = UART_HWCONTROL_NONE;
+
 #if defined(LPUART1) && (USE_LPUART1) // && defined(STM32L4)
   if (handle->Instance == LPUART1) {
     handle->Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
@@ -293,44 +342,44 @@ void HardwareSerial::begin(const uint32_t baud) {
 # endif
 
     if (handle->Init.BaudRate <= 9600) {
-#ifdef STM32L0		  
-        HAL_UARTEx_EnableClockStopMode(handle);
-#endif		
-        HAL_UARTEx_EnableStopMode(handle);
+# ifdef STM32L0
+      HAL_UARTEx_EnableClockStopMode(handle);
+# endif
+      HAL_UARTEx_EnableStopMode(handle);
     } else {
-#ifdef STM32L0
-        HAL_UARTEx_DisableClockStopMode(handle);
-#endif
-        HAL_UARTEx_DisableStopMode(handle);
+# ifdef STM32L0
+      HAL_UARTEx_DisableClockStopMode(handle);
+# endif
+      HAL_UARTEx_DisableStopMode(handle);
     }
 
-  }	
+  }
   HAL_UART_Init(handle);
 # if defined(USART_CR1_FIFOEN) /* L4R5/7 */
   HAL_UARTEx_SetTxFifoThreshold(handle, UART_TXFIFO_THRESHOLD_1_8);
   HAL_UARTEx_SetRxFifoThreshold(handle, UART_RXFIFO_THRESHOLD_1_8);
 # endif
 
-#else  
-  handle->Init.OverSampling = UART_OVERSAMPLING_16; 
+#else
+  handle->Init.OverSampling = UART_OVERSAMPLING_16;
   HAL_UART_Init(handle);
 #endif
- 
-   HAL_UART_Receive_IT(handle, &receive_buffer, 1);
+
+  HAL_UART_Receive_IT(handle, &receive_buffer, 1);
 }
 
 
 #if defined(HAL_PWR_MODULE_ENABLED) && defined(UART_IT_WUF)
 extern "C" {
- void Lowpower_uartConfig(UART_HandleTypeDef *handle) __weak;
- void Lowpower_uartConfig(UART_HandleTypeDef *handle){ }
+  void Lowpower_uartConfig(UART_HandleTypeDef *handle) __weak;
+  void Lowpower_uartConfig(UART_HandleTypeDef *handle) { }
 }
 #endif
 /**
-  * @brief  Function called to configure the uart interface for low power
-  * @param  obj : pointer to serial_t structure
-  * @retval None
-  */
+    @brief  Function called to configure the uart interface for low power
+    @param  obj : pointer to serial_t structure
+    @retval None
+*/
 void HardwareSerial::configForLowPower(void)
 {
 #if defined(HAL_PWR_MODULE_ENABLED) && defined(UART_IT_WUF)
@@ -341,28 +390,28 @@ void HardwareSerial::configForLowPower(void)
 }
 
 void HardwareSerial::end(void) {
-	flush();
+  flush();
 #if defined(USART1) && (USE_SERIAL1)
   if (handle->Instance == USART1) {
     HAL_NVIC_DisableIRQ(USART1_IRQn);
     __HAL_RCC_USART1_CLK_DISABLE();
   }
 #endif
-  
+
 #if defined(USART2) && (USE_SERIAL2)
   if (handle->Instance == USART2) {
-    HAL_NVIC_DisableIRQ(USART2_IRQn); 
+    HAL_NVIC_DisableIRQ(USART2_IRQn);
     __HAL_RCC_USART2_CLK_DISABLE();
   }
 #endif
-  
+
 #if defined(USART3) && (USE_SERIAL3)
   if (handle->Instance == USART3) {
-    HAL_NVIC_DisableIRQ(USART3_IRQn); 
+    HAL_NVIC_DisableIRQ(USART3_IRQn);
     __HAL_RCC_USART3_CLK_DISABLE();
   }
 #endif
-  
+
 #if defined(UART4) && (USE_SERIAL4)
   if (handle->Instance == UART4) {
     HAL_NVIC_DisableIRQ(UART4_IRQn);
@@ -371,11 +420,11 @@ void HardwareSerial::end(void) {
 #endif
 #if defined(USART4) && (USE_SERIAL4)
   if (handle->Instance == USART4) {
-    HAL_NVIC_DisableIRQ(USART4_IRQn); 
+    HAL_NVIC_DisableIRQ(USART4_IRQn);
     __HAL_RCC_USART4_CLK_DISABLE();
   }
 #endif
-  
+
 #if defined(UART5) && (USE_SERIAL5)
   if (handle->Instance == UART5) {
     HAL_NVIC_DisableIRQ(UART5_IRQn);
@@ -438,7 +487,7 @@ void HardwareSerial::end(void) {
     HAL_NVIC_DisableIRQ(LPUART1_IRQn);
     __HAL_RCC_LPUART1_CLK_DISABLE();
   }
-#endif   
+#endif
 }
 
 int HardwareSerial::available() {
@@ -446,12 +495,12 @@ int HardwareSerial::available() {
   return BUFFER_SIZE + rxEnd - rxStart;
 }
 
-int HardwareSerial::availableForWrite() {  
-    return txEnd != txStart;  
-}  
+int HardwareSerial::availableForWrite() {
+  return txEnd != txStart;
+}
 
 int HardwareSerial::peek() {
-    if (available()) {
+  if (available()) {
     return rxBuffer[rxStart % BUFFER_SIZE];
   } else {
     return -1;
@@ -459,8 +508,8 @@ int HardwareSerial::peek() {
 }
 
 void HardwareSerial::flush() {
-    
-    while(txEnd % BUFFER_SIZE != txStart % BUFFER_SIZE);
+
+  while (txEnd % BUFFER_SIZE != txStart % BUFFER_SIZE);
 }
 
 int HardwareSerial::read() {
@@ -472,8 +521,8 @@ int HardwareSerial::read() {
 }
 
 size_t HardwareSerial::write(const uint8_t c) {
-  while((txEnd + 1) % BUFFER_SIZE == txStart % BUFFER_SIZE);
-  
+  while ((txEnd + 1) % BUFFER_SIZE == txStart % BUFFER_SIZE);
+
   txBuffer[txEnd % BUFFER_SIZE] = c;
   txEnd++;
   if (txEnd % BUFFER_SIZE == (txStart + 1) % BUFFER_SIZE) {
@@ -483,16 +532,16 @@ size_t HardwareSerial::write(const uint8_t c) {
 }
 
 void HardwareSerial::stm32SetRX(uint8_t rx) {
-    rxPin = rx;
+  rxPin = rx;
 }
 
 void HardwareSerial::stm32SetTX(uint8_t tx) {
-    txPin = tx;
+  txPin = tx;
 }
 
-void HardwareSerial::setPins(uint8_t tx,uint8_t rx) {
-    txPin = tx;
-    rxPin = rx;
+void HardwareSerial::setPins(uint8_t tx, uint8_t rx) {
+  txPin = tx;
+  rxPin = rx;
 }
 //// Interrupt
 
