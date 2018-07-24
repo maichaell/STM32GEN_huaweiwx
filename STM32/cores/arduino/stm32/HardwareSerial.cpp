@@ -385,7 +385,7 @@ void HardwareSerial::configForLowPower(void)
 #if defined(HAL_PWR_MODULE_ENABLED) && defined(UART_IT_WUF)
   end();
   Lowpower_uartConfig(handle);
-  this->begin(handle->Init.BaudRate);
+  this->begin(handle->Init.BaudRate,_config);
 #endif
 }
 
