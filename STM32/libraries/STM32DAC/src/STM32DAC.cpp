@@ -11,11 +11,11 @@ static DAC_ChannelConfTypeDef  DAC_ChannelConf;
 extern "C"
 void DAC_Init(uint32_t DACx) {
   if (DACx == DAC_CHANNEL_1) {
-    pinMode(PA4, OUTPUT_ANALOG);
+    pinMode(PA4, INPUT);
   } 
 #if defined(DAC_CHANNEL_2)
   else {
-    pinMode(PA5, OUTPUT_ANALOG);
+    pinMode(PA5, INPUT);
   }
 #endif
 
