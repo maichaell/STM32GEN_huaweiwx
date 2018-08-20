@@ -37,7 +37,7 @@ compiler.S.flags={compiler.extra_flags} -c -g -x assembler-with-cpp
 compiler.c.flags={compiler.extra_flags} -c -g -MMD -Os {compiler.warning_flags} -std=gnu11 -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -Dprintf=iprintf -MMD
 
 #compiler.cpp.flags={compiler.extra_flags} -c -g -Os {compiler.warning_flags} -std=gnu++11 -ffunction-sections -fdata-sections -nostdlib -fno-threadsafe-statics --param max-inline-insns-single=500 -fno-rtti -fno-exceptions -Dprintf=iprintf -MMD
-compiler.cpp.flags={compiler.extra_flags} -c -g -Os {compiler.warning_flags} -std=gnu++11 -fpermissive -ffunction-sections -fdata-sections -nostdlib -fno-threadsafe-statics --param max-inline-insns-single=500 -fno-rtti -Dprintf=iprintf -MMD
+compiler.cpp.flags={compiler.extra_flags} -c -g -Os {compiler.warning_flags} -std=gnu++14 -fpermissive -ffunction-sections -fdata-sections -nostdlib -fno-threadsafe-statics --param max-inline-insns-single=500 -fno-rtti -Dprintf=iprintf -MMD
 
 compiler.ar.flags=rcs
 
