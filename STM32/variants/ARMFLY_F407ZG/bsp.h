@@ -36,10 +36,10 @@
 #define TOUCH_MOSI PA7
 #define TOUCH_NIRQ PC5
 
-#define TOUCH_XOFF 38  //int16
+#define TOUCH_XOFF 38     //int16
 #define TOUCH_XFAC 94.19  //float *1000
-#define TOUCH_YOFF 29   //int16
-#define TOUCH_YFAC 71.83 //float *1000
+#define TOUCH_YOFF 29     //int16
+#define TOUCH_YFAC 71.83  //float *1000
 #define TOUCH_XYCHG 1
 #endif
 
@@ -48,6 +48,7 @@
 #define SRAM_START            LCD_BASE_BK13
 #define SRAM_LENGTH			  (1*1024*1024)  
 #define SRAM_END              (SRAM_START+SRAM_LENGTH)
+#define FSMC_ADDRESSBITS      19
 extern SRAM_HandleTypeDef sramHandle;
 
 #if USE_EXTRAMSYSMALLOC

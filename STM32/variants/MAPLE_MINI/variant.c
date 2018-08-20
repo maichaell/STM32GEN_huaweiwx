@@ -29,11 +29,11 @@ void SystemClock_Config(void) {
 
     while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL);
 
-    SysTick_Config(48000000);
+    SysTick_Config(F_CPU);
 
     LL_SYSTICK_SetClkSource(LL_SYSTICK_CLKSOURCE_HCLK);
 
-    LL_SetSystemCoreClock(48000000);
+    LL_SetSystemCoreClock(F_CPU);
 
     /* SysTick_IRQn interrupt configuration */
     HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_INT_PRIORITY, 0);
@@ -63,11 +63,11 @@ void SystemClock_Config(void) {
     LL_RCC_SetUSBClockSource(LL_RCC_USB_CLKSOURCE_PLL_DIV_1_5);
     while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL);
 
-    SysTick_Config(72000000);
+    SysTick_Config(F_CPU);
 
     LL_SYSTICK_SetClkSource(LL_SYSTICK_CLKSOURCE_HCLK);
 
-    LL_SetSystemCoreClock(72000000);
+    LL_SetSystemCoreClock(F_CPU);
 
 	HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_INT_PRIORITY, 0);
 
