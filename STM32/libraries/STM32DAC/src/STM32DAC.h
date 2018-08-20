@@ -16,8 +16,8 @@ void DAC_Stop(uint32_t channel);
 void DAC_Start(uint32_t channel);
 void DAC_Start_DMA(uint32_t channel,uint32_t* pData, uint32_t Length, uint32_t Alignment);
 void DAC_Stop_DMA(uint32_t channel);
-void DACEx_TriangleWaveGenerate(uint32_t channel, uint32_t Amplitude);
-void DACEx_NoiseWaveGenerate(uint32_t channel, uint32_t Amplitude);
+void DACEx_TriangleWaveGenerate(uint32_t channel, uint32_t Amplitude,uint32_t dataHolding);
+void DACEx_NoiseWaveGenerate(uint32_t channel, uint32_t Amplitude,uint32_t dataHolding);
 
 #ifdef __cplusplus
 }
@@ -44,12 +44,12 @@ class STM32DAC {
 	  DAC_Stop(channel);
     }
 
-	void triangleWaveGenerate(uint32_t Amplitude){
-	  DACEx_TriangleWaveGenerate(channel, Amplitude);	
+	void triangleWaveGenerate(uint32_t Amplitude,uint32_t dataHolding = 0){
+	  DACEx_TriangleWaveGenerate(channel, Amplitude,dataHolding);	
 	}
 
-	void noiseWaveGenerate(uint32_t Amplitude){
-	  DACEx_NoiseWaveGenerate(channel, Amplitude);	
+	void noiseWaveGenerate(uint32_t Amplitude,uint32_t dataHolding = 0){
+	  DACEx_NoiseWaveGenerate(channel, Amplitude,dataHolding);	
 	}
 
     void resume(void){

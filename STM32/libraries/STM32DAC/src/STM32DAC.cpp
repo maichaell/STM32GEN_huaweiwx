@@ -22,7 +22,7 @@ void DAC_Init(const uint32_t DACx, const uint32_t trig) {
   } 
 #if defined(DAC_CHANNEL_2)
   else {
-    GPIO_InitStruct.Pin = GPIO_PIN_4;
+    GPIO_InitStruct.Pin = GPIO_PIN_5;
 //    pinMode(PA5, INPUT);
   }
 #endif
@@ -88,34 +88,34 @@ uint16_t DAC_GetValue(uint32_t DACx) {
 }
 
 extern "C"
-void DACEx_TriangleWaveGenerate(uint32_t DACx, uint32_t Amplitude){
+void DACEx_TriangleWaveGenerate(uint32_t DACx, uint32_t Amplitude,uint32_t dataHolding){
   if (DACx == DAC_CHANNEL_1) {
     HAL_DACEx_TriangleWaveGenerate(&DAC_Handle[(uint8_t)DACx], DAC_CHANNEL_1, Amplitude);
     HAL_DAC_Start(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_1);
-	HAL_DAC_SetValue(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0);
+	HAL_DAC_SetValue(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_1, DAC_ALIGN_12B_R, dataHolding);
   }
 #if defined(DAC_CHANNEL_2)
   else{
     HAL_DACEx_TriangleWaveGenerate(&DAC_Handle[(uint8_t)DACx], DAC_CHANNEL_2, Amplitude);
     HAL_DAC_Start(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_2);
-	HAL_DAC_SetValue(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_2, DAC_ALIGN_12B_R, 0);
+	HAL_DAC_SetValue(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_2, DAC_ALIGN_12B_R, dataHolding);
   }
 #endif
 
 }
 
 extern "C"
-void DACEx_NoiseWaveGenerate(uint32_t DACx, uint32_t Amplitude){
+void DACEx_NoiseWaveGenerate(uint32_t DACx, uint32_t Amplitude,uint32_t dataHolding){
   if (DACx == DAC_CHANNEL_1) {
     HAL_DACEx_NoiseWaveGenerate(&DAC_Handle[(uint8_t)DACx], DAC_CHANNEL_1, Amplitude);
     HAL_DAC_Start(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_1);
-	HAL_DAC_SetValue(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0x100);
+	HAL_DAC_SetValue(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_1, DAC_ALIGN_12B_R, dataHolding);
   }
 #if defined(DAC_CHANNEL_2)
   else{
     HAL_DACEx_NoiseWaveGenerate(&DAC_Handle[(uint8_t)DACx], DAC_CHANNEL_2, Amplitude);
     HAL_DAC_Start(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_2);
-	HAL_DAC_SetValue(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_2, DAC_ALIGN_12B_R, 0x100);
+	HAL_DAC_SetValue(&DAC_Handle[(uint8_t)DACx],DAC_CHANNEL_2, DAC_ALIGN_12B_R, dataHolding);
   }
 #endif
 }
