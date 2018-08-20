@@ -1354,7 +1354,7 @@ DISCOVERY_F746NG.build.mcu=cortex-m7 -mfloat-abi=hard -mfpu=fpv4-sp-d16
 DISCOVERY_F746NG.build.series=STM32F7
 DISCOVERY_F746NG.build.variant=DISCOVERY_F746NG
 DISCOVERY_F746NG.build.f_cpupre=216000000L
-DISCOVERY_F746NG.build.extra_flags=-DSTM32F746NG -DDATA_IN_ExtSDRAM
+DISCOVERY_F746NG.build.extra_flags=-DSTM32F746NG
 
 DISCOVERY_F746NG.menu.clock_source.bypass=HSE_BYPASS_Clock_Source
 DISCOVERY_F746NG.menu.clock_source.bypass.build.f_cpu={build.f_cpupre} -DUSE_HSEBYPASS -DHSE_VALUE=8000000
@@ -1479,8 +1479,136 @@ F030F.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
 F030F.menu.log.trace=TRACE
 F030F.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 
+####################################### F103x4/6#########################################
+# f103x4/6 board
+f103x6.name=F103R/C/T_4/6
+f103x6.upload.uploadadr=0x08000000
+f103x6.upload.vect=0x08000000
+f103x6.serial.disableDTR=true
+f103x6.serial.disableRTS=true
+
+f103x6.build.mcu=cortex-m3
+f103x6.build.board=F103x6
+f103x6.build.core=arduino
+f103x6.build.variant=BLUEPILL
+f103x6.build.series=STM32F1
+f103x6.build.f_cpu=72000000L
+
+f103x6.menu.subboard.F103R6=F103R6[LED PC13]
+f103x6.menu.subboard.F103R6.upload.maximum_size=32768
+f103x6.menu.subboard.F103R6.upload.maximum_data_size=10240
+f103x6.menu.subboard.F103R6.upload.device=STM32F103R6
+f103x6.menu.subboard.F103R6.build.variant=F103R
+f103x6.menu.subboard.F103R6.build.extra_flags=-DSTM32F103R6
+f103x6.menu.subboard.F103R6.build.ldscript=ld/f103x6.ld
+f103x6.menu.subboard.F103R6.build.board=F103R6
+
+f103x6.menu.subboard.F103R4=F103R4[LED PB8]
+f103x6.menu.subboard.F103R4.upload.maximum_size=16384
+f103x6.menu.subboard.F103R4.upload.maximum_data_size=6144
+f103x6.menu.subboard.F103R4.upload.device=STM32F103R4
+f103x6.menu.subboard.F103R4.build.variant=F103R
+f103x6.menu.subboard.F103R4.build.extra_flags=-DSTM32F103R4 -DLED_BUILTIN=PB8
+f103x6.menu.subboard.F103R4.build.ldscript=ld/f103x4.ld
+f103x6.menu.subboard.F103R4.build.board=F103R4
+
+f103x6.menu.subboard.F103C6=F103C6[LED PC13]
+f103x6.menu.subboard.F103C6.upload.maximum_size=32768
+f103x6.menu.subboard.F103C6.upload.maximum_data_size=10240
+f103x6.menu.subboard.F103C6.upload.device=STM32F103C6
+f103x6.menu.subboard.F103C6.build.extra_flags=-DSTM32F103C6
+f103x6.menu.subboard.F103C6.build.ldscript=ld/f103x6.ld
+f103x6.menu.subboard.F103C6.build.board=F103C6
+
+f103x6.menu.subboard.F103C4=F103C4[LED PB8]
+f103x6.menu.subboard.F103C4.upload.maximum_size=16384
+f103x6.menu.subboard.F103C4.upload.maximum_data_size=6144
+f103x6.menu.subboard.F103C4.upload.device=STM32F103C4
+f103x6.menu.subboard.F103C4.build.extra_flags=-DSTM32F103C4 -DLED_BUILTIN=PB8
+f103x6.menu.subboard.F103C4.build.ldscript=ld/f103x4.ld
+f103x6.menu.subboard.F103C4.build.board=F103C4
+
+f103x6.menu.subboard.F103T6=F103T6[LED PB7]
+f103x6.menu.subboard.F103T6.upload.maximum_size=32768
+f103x6.menu.subboard.F103T6.upload.maximum_data_size=10240
+f103x6.menu.subboard.F103T6.upload.device=STM32F103T6
+f103x6.menu.subboard.F103T6.build.extra_flags=-DSTM32F103T6 -DLED_BUILTIN=PB7
+f103x6.menu.subboard.F103T6.build.ldscript=ld/f103x6.ld
+f103x6.menu.subboard.F103T6.build.board=F103T6
+
+f103x6.menu.subboard.F103T4=F103T4[LED PB7]
+f103x6.menu.subboard.F103T4.upload.maximum_size=16384
+f103x6.menu.subboard.F103T4.upload.maximum_data_size=6144
+f103x6.menu.subboard.F103T4.upload.device=STM32F103T4
+f103x6.menu.subboard.F103T4.build.extra_flags=-DSTM32F103T4 -DLED_BUILTIN=PB7
+f103x6.menu.subboard.F103T4.build.ldscript=ld/f103x4.ld
+f103x6.menu.subboard.F103T4.build.board=F103T4
+
+f103x6.menu.osc_speed.speed_hsi8=8M(HSI)_8M(for proteus)
+f103x6.menu.osc_speed.speed_hsi8.build.f_cpu=8000000L -DUSE_HSI -DPROTEUS
+f103x6.menu.osc_speed.speed_hsi48=8M(HSI)_48M
+f103x6.menu.osc_speed.speed_hsi48.build.f_cpu=48000000L -DUSE_HSI
+f103x6.menu.osc_speed.speed_08m=8M(HSE)_72M
+f103x6.menu.osc_speed.speed_08m.build.f_cpu=72000000L -DHSE_VALUE=8000000
+
+#---------------------------- UPLOAD METHODS ---------------------------
+f103x6.menu.upload_method.STLinkMethod=STLink
+f103x6.menu.upload_method.STLinkMethod.upload.protocol=STLink
+f103x6.menu.upload_method.STLinkMethod.upload.tool=stlink_upload
+f103x6.menu.upload_method.STLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
+
+f103x6.menu.upload_method.jLinkMethod=JLink
+f103x6.menu.upload_method.jLinkMethod.upload.tool=jlink_upload
+f103x6.menu.upload_method.jLinkMethod.upload.protocol=jlink
+f103x6.menu.upload_method.jLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
+
+f103x6.menu.upload_method.serialMethod=SerialUART1 [TX/PA9, RX/PA10, BOOT0=1]
+f103x6.menu.upload_method.serialMethod.upload.protocol=maple_serial
+f103x6.menu.upload_method.serialMethod.upload.tool=serial_upload
+f103x6.menu.upload_method.serialMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUART1
+
+f103x6.menu.upload_method.BMPMethod=BMP
+f103x6.menu.upload_method.BMPMethod.upload.protocol=gdb_bmp
+f103x6.menu.upload_method.BMPMethod.upload.tool=bmp_upload
+f103x6.menu.upload_method.BMPMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
+
+f103x6.menu.usb.Disabled=Disabled USB
+f103x6.menu.usb.SerialUSB=Serial [Virtual COM port, PA11/PA12 pins]
+f103x6.menu.usb.SerialUSB.build.extra_flags_usb=-DMENU_USB_SERIAL
+
+f103x6.menu.serial.SerialUART1=SerialUART1[PA9/PA10]
+f103x6.menu.serial.SerialUART1.build.extra_flags_serial=-DMENU_SERIAL=SerialUART1
+f103x6.menu.serial.SerialUART2=SerialUART2[PA2/PA3]
+f103x6.menu.serial.SerialUART2.build.extra_flags_serial=-DMENU_SERIAL=SerialUART2
+f103x6.menu.serial.SerialUSB=SerialUSB
+f103x6.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
+
+f103x6.menu.jtag_swd.JTAG=JTAG [reserved: PA13, PA14, PA15, PB3, PB4]
+f103x6.menu.jtag_swd.JTAG.build.extra_flags_jtag=-DMENU_DEBUG_JTAG
+f103x6.menu.jtag_swd.SWD=SWD [debug pins reserved: PA13, PA14]
+f103x6.menu.jtag_swd.SWD.build.extra_flags_jtag=-DMENU_DEBUG_SWD
+f103x6.menu.jtag_swd.Disabled=Disabled [debug pins free]
+f103x6.menu.jtag_swd.Disabled.build.extra_flags_jtag=-DMENU_DEBUG_DISABLED
+
+#-------------------------------------- DEBUG & LOGLEVEL ---------------------------------------#
+f103x6.menu.log.default=Release(no-exceptions)
+f103x6.menu.log.default.build.log_level=-fno-exceptions
+f103x6.menu.log.Release=Release(exceptions)
+f103x6.menu.log.fatal=FATAL
+f103x6.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
+f103x6.menu.log.error=ERROR
+f103x6.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
+f103x6.menu.log.warning=WARNING
+f103x6.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
+f103x6.menu.log.info=INFO
+f103x6.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
+f103x6.menu.log.debug=DEBUG
+f103x6.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
+f103x6.menu.log.trace=TRACE
+f103x6.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
+
 ####################################MapleMini_F103C board############################################
-MapleMini.name=MapleMini F103C
+MapleMini.name=MapleMini F103C8/B
 
 MapleMini.upload.uploadadr=0x08000000
 MapleMini.upload.vect=0x08000000
@@ -1500,15 +1628,6 @@ MapleMini.menu.subboard.F103CB.build.extra_flags=-DSTM32F103CB
 MapleMini.menu.subboard.F103CB.build.ldscript_pre=ld/f103xB
 MapleMini.menu.subboard.F103CB.build.ldscript=ld/f103xB.ld
 MapleMini.menu.subboard.F103CB.build.board=MAPLEMINI_F103CB
-MapleMini.menu.subboard.F103CB.build.extra_flags_jtag=-DMENU_DEBUG_SWD
-
-MapleMini.menu.extern_lib.NONE=NONE
-MapleMini.menu.extern_lib.STemWin=STemWin
-MapleMini.menu.extern_lib.STemWin.build.extra_lib={build.system.path}/EXTRALIB/STemWin/
-MapleMini.menu.extern_lib.STemWin.build.extra_flags_os=-DOS_SUPPORT=0
-MapleMini.menu.extern_lib.STemWinOS=STemWin_OS
-MapleMini.menu.extern_lib.STemWinOS.build.extra_lib={build.system.path}/EXTRALIB/STemWin/STemWin532_CM3_OS_GCC.a
-MapleMini.menu.extern_lib.STemWinOS.build.extra_flags_os=-DOS_SUPPORT=1
 
 MapleMini.menu.clock_source.hse=8M(HSE)_72M
 MapleMini.menu.clock_source.hse.build.f_cpu=72000000L -DHSE_VALUE=8000000
@@ -1568,13 +1687,14 @@ MapleMini.menu.usb.SerialMSC.build.extra_flags_usb=-DMENU_USB_MASS_STORAGE
 MapleMini.menu.usb.Composite=Composite[CDC+MSC]
 MapleMini.menu.usb.Composite.build.extra_flags_usb=-DMENU_USB_IAD
 
-MapleMini.menu.serial.SerialUART1=SerialUART1
+MapleMini.menu.serial.SerialUART1=SerialUART1[PA9/PA10]
 MapleMini.menu.serial.SerialUART1.build.extra_flags_serial=-DMENU_SERIAL=SerialUART1
+MapleMini.menu.serial.SerialUART2=SerialUART2[PA2/PA3]
+MapleMini.menu.serial.SerialUART2.build.extra_flags_serial=-DMENU_SERIAL=SerialUART2
 MapleMini.menu.serial.SerialUSB=SerialUSB
 MapleMini.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
 MapleMini.menu.serial.Automatic=Automatically selected based on upload method
 
-#MapleMini.menu.jtag_swd.default=Debug_default[SWD]
 MapleMini.menu.jtag_swd.SWD=SWD [debug pins reserved: (PA14,PA13)]
 MapleMini.menu.jtag_swd.SWD.build.extra_flags_jtag=-DMENU_DEBUG_SWD
 MapleMini.menu.jtag_swd.JTAG=JTAG [debug pins reserved: PB3,PB4,PA13,PA14,PA15]
@@ -1601,7 +1721,7 @@ MapleMini.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 
 ####################################### F103CB#########################################
 # BluePill board
-BluePill.name=F103Cx
+BluePill.name=F103C8/B
 BluePill.upload.uploadadr=0x08000000
 BluePill.upload.vect=0x08000000
 BluePill.serial.disableDTR=true
@@ -1622,7 +1742,6 @@ BluePill.menu.subboard.F103CB.build.extra_flags0=-DSTM32F103CB
 BluePill.menu.subboard.F103CB.build.ldscript_pre=ld/f103xB
 BluePill.menu.subboard.F103CB.build.ldscript=ld/f103xB.ld
 BluePill.menu.subboard.F103CB.build.board=BluePill_F103CB
-BluePill.menu.subboard.F103CB.build.extra_flags_jtag=-DMENU_DEBUG_SWD
 
 BluePill.menu.subboard.GF103CB=GENERIC F103C8/B[LED PB8]
 BluePill.menu.subboard.GF103CB.upload.maximum_size=131072
@@ -1675,14 +1794,6 @@ BluePill.menu.startadr.F08000000.build.ldscript=ld/f103xB_0800.ld
 BluePill.menu.startadr.F08000000.upload.uploadadr=0x08000000
 BluePill.menu.startadr.F08000000.upload.vect=0x08000000
 
-BluePill.menu.extern_lib.NONE=NONE
-BluePill.menu.extern_lib.STemWin=STemWin
-BluePill.menu.extern_lib.STemWin.build.extra_lib={build.system.path}/EXTRALIB/STemWin/
-BluePill.menu.extern_lib.STemWin.build.extra_flags_os=-DOS_SUPPORT=0
-BluePill.menu.extern_lib.STemWinOS=STemWin_OS
-BluePill.menu.extern_lib.STemWinOS.build.extra_lib={build.system.path}/EXTRALIB/STemWin/STemWin532_CM3_OS_GCC.a
-BluePill.menu.extern_lib.STemWinOS.build.extra_flags_os=-DOS_SUPPORT=1
-
 BluePill.menu.startadr.R20000000=Sram 0:0x20000000(16K+4K BOOT=11 St/Jlink uploader only)
 BluePill.menu.startadr.R20000000.upload.maximum_size=16384
 BluePill.menu.startadr.R20000000.upload.maximum_data_size=4096
@@ -1693,8 +1804,6 @@ BluePill.menu.startadr.R20000000.upload.vect=0x20000000
 
 BluePill.menu.osc_speed.speed_08m=8M(HSE)_72M
 BluePill.menu.osc_speed.speed_08m.build.f_cpu=72000000L -DHSE_VALUE=8000000
-BluePill.menu.osc_speed.speed_hsi=8M(HSI)_72M
-BluePill.menu.osc_speed.speed_hsi.build.f_cpu=72000000L -DUSE_HSI
 BluePill.menu.osc_speed.speed_hsi=8M(HSI)_48M
 BluePill.menu.osc_speed.speed_hsi.build.f_cpu=48000000L -DUSE_HSI
 
@@ -1727,8 +1836,10 @@ BluePill.menu.usb.SerialMSC.build.extra_flags_usb=-DMENU_USB_MASS_STORAGE
 BluePill.menu.usb.Composite=Composite[CDC+MSC]
 BluePill.menu.usb.Composite.build.extra_flags_usb=-DMENU_USB_IAD
 
-BluePill.menu.serial.SerialUART1=SerialUART1
+BluePill.menu.serial.SerialUART1=SerialUART1[PA9/PA10]
 BluePill.menu.serial.SerialUART1.build.extra_flags_serial=-DMENU_SERIAL=SerialUART1
+BluePill.menu.serial.SerialUART2=SerialUART2[PA2/PA3]
+BluePill.menu.serial.SerialUART2.build.extra_flags_serial=-DMENU_SERIAL=SerialUART2
 BluePill.menu.serial.SerialUSB=SerialUSB
 BluePill.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
 
@@ -2273,10 +2384,8 @@ F103RB.menu.extern_lib.STemWinOS.build.extra_flags_os=-DOS_SUPPORT=1
 
 F103RB.menu.osc_speed.speed_08m=8M(HSE)_72M
 F103RB.menu.osc_speed.speed_08m.build.f_cpu=72000000L -DHSE_VALUE=8000000
-F103RB.menu.osc_speed.speed_hsi1=8M(HSI)_72M
-F103RB.menu.osc_speed.speed_hsi1.build.f_cpu=72000000L -DUSE_HSI
-F103RB.menu.osc_speed.speed_hsi0=8M(HSI)_48M
-F103RB.menu.osc_speed.speed_hsi0.build.f_cpu=48000000L -DUSE_HSI
+F103RB.menu.osc_speed.speed_hsi=8M(HSI)_48M
+F103RB.menu.osc_speed.speed_hsi.build.f_cpu=48000000L -DUSE_HSI
 
 #---------------------------- UPLOAD METHODS ---------------------------
 F103RB.menu.upload_method.jLinkMethod=JLink
@@ -2319,9 +2428,9 @@ F103RB.menu.usb.SerialMSC.build.extra_flags_usb=-DMENU_USB_MASS_STORAGE
 F103RB.menu.usb.Composite=Composite[CDC+MSC]
 F103RB.menu.usb.Composite.build.extra_flags_usb=-DMENU_USB_IAD
 
-F103RB.menu.serial.SerialUART1=SerialUART1
+F103RB.menu.serial.SerialUART1=SerialUART1[PA9/PA10]
 F103RB.menu.serial.SerialUART1.build.extra_flags_serial=-DMENU_SERIAL=SerialUART1
-F103RB.menu.serial.SerialUART2=SerialUART2
+F103RB.menu.serial.SerialUART2=SerialUART2[PA2/PA3]
 F103RB.menu.serial.SerialUART2.build.extra_flags_serial=-DMENU_SERIAL=SerialUART2
 F103RB.menu.serial.SerialUSB=SerialUSB
 F103RB.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
@@ -2471,10 +2580,8 @@ F103RE.menu.extern_lib.STemWinOS.build.extra_flags_os=-DOS_SUPPORT=1
 
 F103RE.menu.osc_speed.speed_08m=8M(HSE)_72M
 F103RE.menu.osc_speed.speed_08m.build.f_cpu=72000000L -DHSE_VALUE=8000000
-F103RE.menu.osc_speed.speed_hsi1=8M(HSI)_72M
-F103RE.menu.osc_speed.speed_hsi1.build.f_cpu=72000000L -DUSE_HSI
-F103RE.menu.osc_speed.speed_hsi0=8M(HSI)_48M
-F103RE.menu.osc_speed.speed_hsi0.build.f_cpu=48000000L -DUSE_HSI
+F103RE.menu.osc_speed.speed_hsi=8M(HSI)_48M
+F103RE.menu.osc_speed.speed_hsi.build.f_cpu=48000000L -DUSE_HSI
 
 #---------------------------- UPLOAD METHODS ---------------------------
 F103RE.menu.upload_method.jLinkMethod=JLink
@@ -2517,9 +2624,9 @@ F103RE.menu.usb.SerialMSC.build.extra_flags_usb=-DMENU_USB_MASS_STORAGE
 F103RE.menu.usb.Composite=Composite[CDC+MSC]
 F103RE.menu.usb.Composite.build.extra_flags_usb=-DMENU_USB_IAD
 
-F103RE.menu.serial.SerialUART1=SerialUART1
+F103RE.menu.serial.SerialUART1=SerialUART1[PA9/PA10]
 F103RE.menu.serial.SerialUART1.build.extra_flags_serial=-DMENU_SERIAL=SerialUART1
-F103RE.menu.serial.SerialUART2=SerialUART2
+F103RE.menu.serial.SerialUART2=SerialUART2[PA2/PA3]
 F103RE.menu.serial.SerialUART2.build.extra_flags_serial=-DMENU_SERIAL=SerialUART2
 F103RE.menu.serial.SerialUSB=SerialUSB
 F103RE.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
@@ -2721,9 +2828,9 @@ F103V.menu.usb.SerialMSC.build.extra_flags_usb=-DMENU_USB_MASS_STORAGE
 F103V.menu.usb.Composite=Composite[CDC+MSC]
 F103V.menu.usb.Composite.build.extra_flags_usb=-DMENU_USB_IAD
 
-F103V.menu.serial.SerialUART1=SerialUART1
+F103V.menu.serial.SerialUART1=SerialUART1[PA9/PA10]
 F103V.menu.serial.SerialUART1.build.extra_flags_serial=-DMENU_SERIAL=SerialUART1
-F103V.menu.serial.SerialUART2=SerialUART2
+F103V.menu.serial.SerialUART2=SerialUART2[PA2/PA3]
 F103V.menu.serial.SerialUART2.build.extra_flags_serial=-DMENU_SERIAL=SerialUART2
 F103V.menu.serial.SerialUSB=SerialUSB
 F103V.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
@@ -2887,9 +2994,9 @@ F107V.menu.usb.SerialMSC.build.extra_flags_usb=-DMENU_USB_MASS_STORAGE
 F107V.menu.usb.Composite=Composite[CDC+MSC]
 F107V.menu.usb.Composite.build.extra_flags_usb=-DMENU_USB_IAD
 
-F107V.menu.serial.SerialUART1=SerialUART1
+F107V.menu.serial.SerialUART1=SerialUART1[PA9/PA10]
 F107V.menu.serial.SerialUART1.build.extra_flags_serial=-DMENU_SERIAL=SerialUART1
-F107V.menu.serial.SerialUART2=SerialUART2
+F107V.menu.serial.SerialUART2=SerialUART2[PA2/PA3]
 F107V.menu.serial.SerialUART2.build.extra_flags_serial=-DMENU_SERIAL=SerialUART2
 F107V.menu.serial.SerialUSB=SerialUSB
 F107V.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
@@ -2951,7 +3058,6 @@ F103Z.menu.subboard.F103ZE2.upload.maximum_size=524288
 F103Z.menu.subboard.F103ZE2.upload.maximum_data_size=65536
 F103Z.menu.subboard.F103ZE2.upload.device=STM32F103ZE
 F103Z.menu.subboard.F103ZE2.build.variant=HASEE_III_F103ZE
-#F103Z.menu.subboard.F103ZE2.build.variant=HASEE_III_F103ZE -DDATA_IN_ExtSRAM
 F103Z.menu.subboard.F103ZE2.build.board=HASEE_V3
 F103Z.menu.subboard.F103ZE2.build.extra_flags0=-DSTM32F103ZE
 F103Z.menu.subboard.F103ZE2.build.ldscript=ld/f103xE.ld
@@ -3132,9 +3238,9 @@ F103Z.menu.usb.SerialMSC.build.extra_flags_usb=-DMENU_USB_MASS_STORAGE
 F103Z.menu.usb.Composite=Composite[CDC+MSC]
 F103Z.menu.usb.Composite.build.extra_flags_usb=-DMENU_USB_IAD
 
-F103Z.menu.serial.SerialUART1=SerialUART1
+F103Z.menu.serial.SerialUART1=SerialUART1[PA9/PA10]
 F103Z.menu.serial.SerialUART1.build.extra_flags_serial=-DMENU_SERIAL=SerialUART1
-F103Z.menu.serial.SerialUART2=SerialUART2
+F103Z.menu.serial.SerialUART2=SerialUART2[PA2/PA3]
 F103Z.menu.serial.SerialUART2.build.extra_flags_serial=-DMENU_SERIAL=SerialUART2
 F103Z.menu.serial.SerialUART3=SerialUART3
 F103Z.menu.serial.SerialUART3.build.extra_flags_serial=-DMENU_SERIAL=SerialUART3
@@ -3239,11 +3345,11 @@ F401S.menu.extern_lib.STemWinOS=STemWin_OS
 F401S.menu.extern_lib.STemWinOS.build.extra_lib={build.system.path}/EXTRALIB/STemWin/STemWin532_CM4_OS_GCC.a
 F401S.menu.extern_lib.STemWinOS.build.extra_flags_os=-DOS_SUPPORT=1
 
-F401S.menu.osc_speed.speed_12m=12M (HSE)
-F401S.menu.osc_speed.speed_12m.build.osc=-DHSE_VALUE=12000000 -DOSC=12
-
 F401S.menu.osc_speed.speed_08m=8M (HSE)
 F401S.menu.osc_speed.speed_08m.build.osc=-DHSE_VALUE=8000000 -DOSC=8
+
+F401S.menu.osc_speed.speed_12m=12M (HSE)
+F401S.menu.osc_speed.speed_12m.build.osc=-DHSE_VALUE=12000000 -DOSC=12
 
 F401S.menu.osc_speed.speed_hsi=16M (HSI)
 F401S.menu.osc_speed.speed_hsi.build.osc=-DUSE_HSI
@@ -3967,7 +4073,7 @@ F746S.build.board=WAVESHARE_F746IG
 F746S.build.mcu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16 
 F746S.build.series=STM32F7
 F746S.build.variant=WAVESHARE_F746IG
-F746S.build.extra_flags0=-DSTM32F746IG -DDATA_IN_ExtSDRAM -DHSE_VALUE=((uint32_t)8000000)
+F746S.build.extra_flags0=-DSTM32F746IG -DHSE_VALUE=((uint32_t)8000000)
 F746S.build.f_cpu=216000000L
 
 F746S.menu.subboard.F746IG=WaveShare F746IG
@@ -4030,11 +4136,6 @@ F746S.menu.serial.SerialUSB=SerialUSB
 F746S.menu.serial.SerialUSB.build.extra_flags_serial=-DMENU_SERIAL=SerialUSB
 
 #-------------------------------------- UPLOAD METHODS ----------------------------------------#
-F746S.menu.upload_method.serialMethod=Serial UART1 [TX/PA9, RX/PA10, BOOT0=1]
-F746S.menu.upload_method.serialMethod.upload.protocol=maple_serial
-F746S.menu.upload_method.serialMethod.upload.tool=serial_upload
-F746S.menu.upload_method.serialMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUART1
-
 F746S.menu.upload_method.STLinkMethod=STLink
 F746S.menu.upload_method.STLinkMethod.upload.protocol=STLink
 F746S.menu.upload_method.STLinkMethod.upload.tool=stlink_upload
@@ -4043,6 +4144,11 @@ F746S.menu.upload_method.jLinkMethod=JLink
 F746S.menu.upload_method.jLinkMethod.upload.tool=jlink_upload
 F746S.menu.upload_method.jLinkMethod.upload.protocol=jlink
 F746S.menu.upload_method.jLinkMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUSB
+
+F746S.menu.upload_method.serialMethod=Serial UART1 [TX/PA9, RX/PA10, BOOT0=1]
+F746S.menu.upload_method.serialMethod.upload.protocol=maple_serial
+F746S.menu.upload_method.serialMethod.upload.tool=serial_upload
+F746S.menu.upload_method.serialMethod.build.extra_flags_serial_auto=-DMENU_SERIAL_AUTO=SerialUART1
 
 F746S.menu.log.default=Release(no-exceptions)
 F746S.menu.log.default.build.log_level=-fno-exceptions

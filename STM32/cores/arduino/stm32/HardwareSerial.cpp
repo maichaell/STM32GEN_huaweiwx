@@ -521,13 +521,17 @@ int HardwareSerial::read() {
 }
 
 size_t HardwareSerial::write(const uint8_t c) {
+#if PROTEUS
+   HAL_UART_Transmit(handle, (uint8_t*)&c, 1,100); /*for proteus*/	  
+#else
   while ((txEnd + 1) % BUFFER_SIZE == txStart % BUFFER_SIZE);
 
   txBuffer[txEnd % BUFFER_SIZE] = c;
   txEnd++;
   if (txEnd % BUFFER_SIZE == (txStart + 1) % BUFFER_SIZE) {
     HAL_UART_Transmit_IT(handle, &txBuffer[txStart % BUFFER_SIZE], 1);
-  }
+  } 
+#endif	
   return 1;
 }
 
