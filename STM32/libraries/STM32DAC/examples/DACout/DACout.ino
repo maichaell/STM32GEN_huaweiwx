@@ -12,12 +12,14 @@
 void setup() {
   Serial.begin(115200);
   PA4_DACOUT.Init();
+  PA5_DACOUT.Init();
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
   static uint16_t val = 0;
   if (++val > 0xfff) val = 0;
-  PA4_DACOUT = val;
+  PA4_DACOUT = val;                  /* eq:  PA4_DACOUT.write(val); */
+  PA5_DACOUT = 0xfff  - PA4_DACOUT;  /* eq:  PA5_DACOUT.write(0xfff-PA4_DACOUT.read()); */
 }
 
