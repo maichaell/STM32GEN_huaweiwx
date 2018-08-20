@@ -30,6 +30,6 @@ Example 11. Blocking When Sending to a Queue / Sending Structures on a Queue   �
 Example 12. Using a Binary Semaphore to Synchronize a Task with an Interrupt  使用二进制信号量将任务与中断同步
 Example 13. Using a Counting Semaphore to Synchronize a Task with an Interrupt  使用计数信号量将任务与中断同步
 Example 14. Sending and Receiving on a Queue from Within an Interrupt  从中断中发送和接收队列
-Example 15. Rewriting vPrintString() to Use a Semaphore     重写 vPrintString ()以使用信号量
-Example 16. Re-writing vPrintString() to Use a Gatekeeper Task   重新编写 vPrintString()以使用网关守卫任务
+Example 15. Rewriting vPrintString() to Use a Semaphore     重写 vPrintString () 使用信号量
+Example 16. Re-writing vPrintString() to Use a Gatekeeper Task   重新编写 vPrintString()，使用一个把关守卫任务
 

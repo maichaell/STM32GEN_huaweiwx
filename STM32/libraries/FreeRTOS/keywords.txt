@@ -11,6 +11,7 @@
 #######################################
 # Task and Scheduler API
 #######################################
+portEND_SWITCHING_ISR	KEYWORD2
 portSWITCH_TO_USER_MODE	KEYWORD2
 vTaskAllocateMPURegions	KEYWORD2
 xTaskAbortDelay	KEYWORD2

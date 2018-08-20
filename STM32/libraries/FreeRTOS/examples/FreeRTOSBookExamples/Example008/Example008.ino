@@ -67,7 +67,7 @@ void setup( void )
 
 void vTask1( void *pvParameters )
 {
-unsigned portBASE_TYPE uxPriority;
+/* unsigned */ portBASE_TYPE uxPriority;
 
   /* This task will always run before Task2 as it has the higher priority.
   Neither Task1 nor Task2 ever block so both will always be in either the
@@ -98,7 +98,7 @@ unsigned portBASE_TYPE uxPriority;
 
 void vTask2( void *pvParameters )
 {
-unsigned portBASE_TYPE uxPriority;
+/*unsigned*/ portBASE_TYPE uxPriority;
 
   /* Task1 will always run before this task as Task1 has the higher priority.
   Neither Task1 nor Task2 ever block so will always be in either the

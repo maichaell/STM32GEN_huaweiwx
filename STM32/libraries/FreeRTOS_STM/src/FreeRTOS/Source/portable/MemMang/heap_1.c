@@ -84,7 +84,7 @@ task.h is included from an application file. */
 
 #include "../../include/FreeRTOS.h"
 
-#if USE_HEAP == 1
+#if portUSE_HEAP == 1
 
 #include "../../include/task.h"
 

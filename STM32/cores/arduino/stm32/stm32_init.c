@@ -25,23 +25,22 @@
 extern void SystemClock_Config(void);
 
 void init() {
+#if defined(STM32F7)||defined(STM32H7)	
+  SCB_EnableICache();  /* Enable I-Cache */
+  SCB_EnableDCache();  /* Enable D-Cache */
+#endif
   HAL_Init();
   SystemClock_Config();
 }
 
 
-#if  FREERTOS  //huawei (huaweiwx@sina.com)
-void   osSystickHandler(void);
-#endif
-
-void SysTick_Handler(void) {
-#if  FREERTOS  //huawei (huaweiwx@sina.com)
-  osSystickHandler();
-#else
+#if FREERTOS == 0
+void SysTick_Handler(void)	
+{
   HAL_IncTick();
   HAL_SYSTICK_IRQHandler();
-#endif
 }
+#endif
 
 void HAL_MspInit(void)
 {
@@ -52,7 +51,6 @@ void HAL_MspInit(void)
 #if (defined(STM32L0)||defined(STM32F0))
   /* SVCall_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(SVC_IRQn, CORTEX_INT_PRIORITY, 0);
-	
 #else	
   HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
   /* System interrupt init*/
@@ -71,7 +69,6 @@ void HAL_MspInit(void)
   /* DebugMonitor_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DebugMonitor_IRQn, CORTEX_INT_PRIORITY, 0);
 #endif
-
   HAL_NVIC_SetPriority(PendSV_IRQn, SYSTICK_INT_PRIORITY, 0); /*move to here from variant.c huawei 2018.7.17*/
 }
 

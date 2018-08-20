@@ -70,9 +70,19 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
-#ifndef USE_HEAP
-	#define  USE_HEAP 4
+#ifndef portUSE_HEAP
+	#define  portUSE_HEAP 4
 #endif
+
+#ifndef portTickUSE_TIMx
+    #define portTickUSE_TIMx 7   /* 0/7 use systick/TIM7*/
+#else
+# if (portTickUSE_TIMx !=0)||(portTickUSE_TIMx !=7)
+#   error "portTickUSE_TIMx must be 0 or 7"
+# endif	
+#endif
+
+
 /*-----------------------------------------------------------
  * Application specific definitions.
  *

@@ -12,7 +12,6 @@
 */
 
 #include <FreeRTOS.h>
-#include <Streaming.h>
 
 #ifdef  LED_BUILTIN
 # define LED    LED_BUILTIN
@@ -43,7 +42,7 @@ static void myTask1(void  __attribute__ ((unused)) *argument)
     digitalToggle(LED);			// turn the LED off by making the voltage LOW
     vTaskDelay(950); 			// wait for 950ms
     i++;
-    Serial << "Count:" << _HEX(i) << " in myTask1\n";
+    Serial << "Count:" << _HEX(i) << " in myTask1\n";   /*set USE_ARDUINOSTREAMING to 1 or include streaming.h*/
   }
   /* USER CODE END Task1 */
 }
@@ -92,7 +91,7 @@ void setup() {
   _Error_Handler(__FILENAME__, __LINE__);
   }
 
-/****************  default idle hook callback if configUSE_IDLE_HOOK ***************************
+/****************  default idle hook callback if configUSE_IDLE_HOOK *******************
  * 1  STM32GENERIC loop() is default idle hook if enable(set configUSE_IDLE_HOOK to 1) *
  * 2  idle loop has a very small stack (check or set configMINIMAL_STACK_SIZE)         * 
  * 3  loop must never block.                                                           *

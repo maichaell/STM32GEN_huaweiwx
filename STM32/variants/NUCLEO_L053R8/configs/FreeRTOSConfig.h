@@ -70,9 +70,14 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
-#ifndef USE_HEAP
-	#define  USE_HEAP 3
+#ifndef portUSE_HEAP
+	#define  portUSE_HEAP 3
 #endif
+
+#ifndef portTickUSE_TIMx
+    #define portTickUSE_TIMx 0   /* 0/6/17 use systick/TIM6/TIM17*/
+#endif
+
 /*-----------------------------------------------------------
  * Application specific definitions.
  *
@@ -107,8 +112,15 @@
 #define configCPU_CLOCK_HZ                       ( SystemCoreClock )
 #define configTICK_RATE_HZ                       ((TickType_t)1000)
 #define configMAX_PRIORITIES                     ( 7 )
+
+#ifndef configMINIMAL_STACK_SIZE
 #define configMINIMAL_STACK_SIZE                 ((uint16_t)128)
-#define configTOTAL_HEAP_SIZE                    ((size_t)2048)
+#endif
+
+#ifndef configTOTAL_HEAP_SIZE
+#define configTOTAL_HEAP_SIZE                    ((size_t)(2*1024))
+#endif
+
 #define configMAX_TASK_NAME_LEN                  ( 16 )
 #define configUSE_16_BIT_TICKS                   0
 #define configUSE_MUTEXES                        1

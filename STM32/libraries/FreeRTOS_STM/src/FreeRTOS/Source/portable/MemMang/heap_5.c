@@ -118,7 +118,7 @@ task.h is included from an application file. */
 
 #include "../../include/FreeRTOS.h"
 
-#if USE_HEAP == 5
+#if portUSE_HEAP == 5
 
 #include "../../include/task.h"
 #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE

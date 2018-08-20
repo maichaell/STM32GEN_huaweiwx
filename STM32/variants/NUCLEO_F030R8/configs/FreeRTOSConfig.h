@@ -70,9 +70,18 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
-#ifndef USE_HEAP
-	#define  USE_HEAP 3
+#ifndef portUSE_HEAP
+	#define  portUSE_HEAP 3   //huaweiwx@sina.com 2017.7.2
 #endif
+
+#ifndef portTickUSE_TIMx
+    #define portTickUSE_TIMx 0   /* 0/17 use systick/TIM17*/
+#else
+# if (portTickUSE_TIMx !=0)||(portTickUSE_TIMx !=17)
+#   error "portTickUSE_TIMx must be 0 or 17"
+#  endif	
+#endif
+
 /*-----------------------------------------------------------
  * Application specific definitions.
  *
@@ -107,8 +116,15 @@
 #define configCPU_CLOCK_HZ                       ( SystemCoreClock )
 #define configTICK_RATE_HZ                       ((TickType_t)1000)
 #define configMAX_PRIORITIES                     ( 7 )
+
+#ifndef configMINIMAL_STACK_SIZE
 #define configMINIMAL_STACK_SIZE                 ((uint16_t)128)
-#define configTOTAL_HEAP_SIZE                    ((size_t)3072)
+#endif
+
+#ifndef configTOTAL_HEAP_SIZE
+#define configTOTAL_HEAP_SIZE                    ((size_t)(2*1024))
+#endif
+
 #define configMAX_TASK_NAME_LEN                  ( 16 )
 #define configUSE_16_BIT_TICKS                   0
 #define configUSE_MUTEXES                        1
@@ -142,7 +158,7 @@ to exclude the API function. */
 
 /* The lowest interrupt priority that can be used in a call to a "set priority"
 function. */
-#define configLIBRARY_LOWEST_INTERRUPT_PRIORITY   3
+#define configLIBRARY_LOWEST_INTERRUPT_PRIORITY  3
 
 /* The highest interrupt priority that can be used by any interrupt service
 routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL
@@ -159,11 +175,13 @@ See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
 
 /* Normal assert() semantics without relying on the provision of an assert.h
 header file. */
-/* USER CODE BEGIN 1 */  
+/* USER CODE BEGIN 1 */
+  
 #ifndef configASSERT
 #define configASSERT( x ) if ((x) == 0) {taskDISABLE_INTERRUPTS(); for( ;; );} 
 #endif
 /* USER CODE END 1 */
+
 /* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
 standard names. */
 #define vPortSVCHandler    SVC_Handler

@@ -49,7 +49,7 @@
 #if defined(STM32F7)||defined(STM32H7)
 
 /* Includes ------------------------------------------------------------------*/
-#include <Arduino.h>
+#include "../../Source/include/FreeRTOS.h"
 
 /** @addtogroup STM32F7xx_HAL_Examples
   * @{
@@ -58,7 +58,7 @@
 /** @addtogroup HAL_TimeBase
   * @{
   */ 
-
+#if defined(TIM7)&& (portTickUSE_TIMx == 7)
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -181,7 +181,7 @@ void TIM7_IRQHandler(void)
 /**
   * @}
   */ 
-  
+#endif /* portUSE_TIM7 */
 #endif // defined(STM32F7)||defined(STM32H7)
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

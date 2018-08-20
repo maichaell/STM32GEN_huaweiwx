@@ -92,20 +92,40 @@
     extern uint32_t SystemCoreClock;
 #endif
 
+#ifndef portTickUSE_TIMx
+
+#ifdef TIM7
+#define portTickUSE_TIMx 7
+#else
+#define portTickUSE_TIMx 0
+#endif
+
+#endif
+
 #define configUSE_PREEMPTION                     1
 #define configSUPPORT_STATIC_ALLOCATION          0
 #define configSUPPORT_DYNAMIC_ALLOCATION         1
+
 #ifndef configUSE_IDLE_HOOK
-#define configUSE_IDLE_HOOK                      0
+#  define configUSE_IDLE_HOOK                    0
 #endif
+
 #ifndef  configUSE_TICK_HOOK
-#define configUSE_TICK_HOOK                      0
+#  define configUSE_TICK_HOOK                    0
 #endif
+
 #define configCPU_CLOCK_HZ                       ( SystemCoreClock )
 #define configTICK_RATE_HZ                       ((TickType_t)1000)
 #define configMAX_PRIORITIES                     ( 7 )
+
+#ifndef configMINIMAL_STACK_SIZE
 #define configMINIMAL_STACK_SIZE                 ((uint16_t)128)
+#endif
+
+#ifndef configTOTAL_HEAP_SIZE
 #define configTOTAL_HEAP_SIZE                    ((size_t)(8*1024))
+#endif
+
 #define configMAX_TASK_NAME_LEN                  ( 16 )
 #define configUSE_16_BIT_TICKS                   0
 #define configUSE_MUTEXES                        1
@@ -123,9 +143,11 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelete                 1
 #define INCLUDE_vTaskCleanUpResources       0
 #define INCLUDE_vTaskSuspend                1
+
 #ifndef INCLUDE_vTaskDelayUntil
-#define INCLUDE_vTaskDelayUntil             0
+#  define INCLUDE_vTaskDelayUntil           0
 #endif
+
 #define INCLUDE_vTaskDelay                  1
 #define INCLUDE_xTaskGetSchedulerState      1
 
@@ -145,7 +167,7 @@ function. */
 routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL
 INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER
 PRIORITY THAN THIS! (higher priorities are lower numeric values. */
-#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY 5
+#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY  5
 
 /* Interrupt priorities used by the kernel port layer itself.  These are generic
 to all Cortex-M ports, and do not rely on any particular library functions. */
@@ -158,7 +180,7 @@ See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
 header file. */
 /* USER CODE BEGIN 1 */   
 #ifndef configASSERT
-#define configASSERT( x ) if ((x) == 0) {taskDISABLE_INTERRUPTS(); for( ;; );} 
+#  define configASSERT( x ) if ((x) == 0) {taskDISABLE_INTERRUPTS(); for( ;; );} 
 #endif
 /* USER CODE END 1 */
 

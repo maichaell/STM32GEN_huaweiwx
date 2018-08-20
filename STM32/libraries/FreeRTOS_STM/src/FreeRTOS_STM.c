@@ -56,3 +56,55 @@ void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
 #endif
 }
 
+void osSystickHandler(void);
+
+void SysTick_Handler(void) {
+#if (portTickUSE_TIMx == 0)  /*use systick*/
+    HAL_IncTick();
+#endif
+    osSystickHandler();
+}
+
+#if (portINFO >0)
+
+#if (portTickUSE_TIMx == 0)
+#pragma message "SysTick Timer used for scheduler."
+#elif (portTickUSE_TIMx == 6)	
+#pragma message "TIM6 used for scheduler."
+#elif (portTickUSE_TIMx == 7)	
+#pragma message "TIM7 used for scheduler."
+#elif (portTickUSE_TIMx == 11)	
+#pragma message "TIM11 used for scheduler."
+#elif (portTickUSE_TIMx == 17)	
+#pragma message "TIM17 used for scheduler."
+#endif
+
+#if portUSE_HEAP == 1
+#pragma message "port heap use heap_1.c"
+#elif portUSE_HEAP == 2
+#pragma message "port heap use heap_2.c"
+#elif portUSE_HEAP == 3
+#pragma message "port heap use heap_3.c"
+#elif portUSE_HEAP == 4
+#pragma message "port heap use heap_4.c"
+#elif portUSE_HEAP == 5
+#pragma message "port heap use heap_5.c"
+#endif
+
+#if configUSE_COUNTING_SEMAPHORES > 0
+#pragma message "use counting semaphores"
+#endif
+
+#if configUSE_IDLE_HOOK > 0
+#pragma message "use idle hook"
+#endif
+
+#if  configUSE_TICK_HOOK >0
+#pragma message "use tick hook"
+#endif
+
+#if  INCLUDE_vTaskDelayUntil >0
+#pragma message "include INCLUDE_vTaskDelayUntil"
+#endif
+
+#endif

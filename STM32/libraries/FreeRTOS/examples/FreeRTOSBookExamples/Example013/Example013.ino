@@ -48,8 +48,8 @@ semaphore that is used to synchronize a task with an interrupt. */
 SemaphoreHandle_t xCountingSemaphore;
 
 // pins to generate interrupts - they must be connected
-const uint8_t inputPin = 2;
-const uint8_t outputPin = 3;
+const uint8_t inputPin = PB6;
+const uint8_t outputPin = PB8;
 
 void setup( void )
 {
@@ -80,7 +80,7 @@ void setup( void )
     bool tmp = digitalRead(inputPin);
     digitalWrite(outputPin, LOW);
     if (digitalRead(inputPin) || !tmp) {
-      Serial.println("pin 2 must be connected to pin 3");
+      Serial.println("inputpin must be connected to outputpin");
       while(1);
     }
     attachInterrupt(inputPin, vExampleInterruptHandler, RISING);    

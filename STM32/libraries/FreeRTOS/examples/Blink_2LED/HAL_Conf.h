@@ -22,6 +22,7 @@
 
 /*select Release or Release(exceptions) from menu should be closed the DEBUG auto*/
 #ifdef USE_FULL_ASSERT
+#define portINFO 1  /* Displaying port information at compiling*/
 /* ------------------------------------------------------------------
  * set USE_ERRORBLINK 1 enable blink a err code for debug 
  * blink err code:
@@ -33,8 +34,8 @@
  *   StackOverflow   23 (freertos if configCHECK_FOR_STACK_OVERFLOW 1)
  *   others          __LINE__   (err line from assert_failed or _Error_Handler )
  */
+ 
 #define USE_ERRORBLINK 1
-
 #undef configASSERT
 #define configASSERT( x ) if( ( x ) == 0 ) {assertMsg(__FILE__,__LINE__);}
 

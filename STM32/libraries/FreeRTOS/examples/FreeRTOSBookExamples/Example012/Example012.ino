@@ -51,12 +51,13 @@ semaphore that is used to synchronize a task with an interrupt. */
 SemaphoreHandle_t xBinarySemaphore;
 
 // pins to generate interrupts - they must be connected
-const uint8_t inputPin = 2;
-const uint8_t outputPin = 3;
+const uint8_t inputPin = PB6;
+const uint8_t outputPin = PB8;
 
 void setup( void )
 {
   Serial.begin(115200);
+  delay(1000);
     /* Before a semaphore is used it must be explicitly created.  In this example
   a binary semaphore is created. */
     vSemaphoreCreateBinary( xBinarySemaphore );
@@ -82,7 +83,7 @@ void setup( void )
     bool tmp = digitalRead(inputPin);
     digitalWrite(outputPin, LOW);
     if (digitalRead(inputPin) || !tmp) {
-      Serial.println("pin 2 must be connected to pin 3");
+      Serial.println("inputpin must be connected to outputpin");
       while(1);
     }
     attachInterrupt(inputPin, vExampleInterruptHandler, RISING);    
@@ -101,6 +102,7 @@ void setup( void )
 
 static void vHandlerTask( void *pvParameters )
 {
+  UNUSED(pvParameters);
   /* Note that when you create a binary semaphore in FreeRTOS, it is ready
   to be taken, so you may want to take the semaphore after you create it
   so that the task waiting on this semaphore will block until given by
@@ -126,7 +128,7 @@ static void vHandlerTask( void *pvParameters )
 
 static void vPeriodicTask( void *pvParameters )
 {
-
+  UNUSED(pvParameters);
   /* As per most tasks, this task is implemented within an infinite loop. */
   for( ;; )
   {
@@ -148,7 +150,7 @@ static void vPeriodicTask( void *pvParameters )
 
 static void  vExampleInterruptHandler( void )
 {
-static signed portBASE_TYPE xHigherPriorityTaskWoken;
+static /*signed*/  portBASE_TYPE xHigherPriorityTaskWoken;
 
   xHigherPriorityTaskWoken = pdFALSE;
 

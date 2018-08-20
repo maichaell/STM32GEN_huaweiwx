@@ -34,6 +34,7 @@
  *   others          __LINE__   (err line from assert_failed or _Error_Handler )
  */
 #define USE_ERRORBLINK 1
+#define portINFO 1  /* Displaying port information at compiling*/
 
 #define configUSE_MALLOC_FAILED_HOOK   1
 #define configCHECK_FOR_STACK_OVERFLOW 1

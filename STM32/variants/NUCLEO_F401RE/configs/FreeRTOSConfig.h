@@ -70,8 +70,15 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
-#ifndef USE_HEAP
-	#define  USE_HEAP 4
+#ifndef portUSE_HEAP
+	#define  portUSE_HEAP 4
+#endif
+#ifndef portTickUSE_TIMx
+    #define portTickUSE_TIMx 0   /* 0/11 use systick/TIM11*/
+#else
+# if (portTickUSE_TIMx !=0)||(portTickUSE_TIMx !=11)
+#   error "portTickUSE_TIMx must be 0 or 11"
+# endif	
 #endif
 /*-----------------------------------------------------------
  * Application specific definitions.
@@ -98,17 +105,27 @@
 #define configUSE_PREEMPTION                     1
 #define configSUPPORT_STATIC_ALLOCATION          0
 #define configSUPPORT_DYNAMIC_ALLOCATION         1
+
 #ifndef configUSE_IDLE_HOOK
 #define configUSE_IDLE_HOOK                      0
 #endif
+
 #ifndef  configUSE_TICK_HOOK
 #define configUSE_TICK_HOOK                      0
 #endif
+
 #define configCPU_CLOCK_HZ                       ( SystemCoreClock )
 #define configTICK_RATE_HZ                       ((TickType_t)1000)
 #define configMAX_PRIORITIES                     ( 7 )
+
+#ifndef configMINIMAL_STACK_SIZE
 #define configMINIMAL_STACK_SIZE                 ((uint16_t)128)
-#define configTOTAL_HEAP_SIZE                    ((size_t)(16*1024))
+#endif
+
+#ifndef configTOTAL_HEAP_SIZE
+#define configTOTAL_HEAP_SIZE                    ((size_t)(15*1024))
+#endif
+
 #define configMAX_TASK_NAME_LEN                  ( 16 )
 #define configUSE_16_BIT_TICKS                   0
 #define configUSE_MUTEXES                        1

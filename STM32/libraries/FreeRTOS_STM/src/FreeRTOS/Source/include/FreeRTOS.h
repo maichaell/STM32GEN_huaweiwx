@@ -94,6 +94,8 @@
 extern "C" {
 #endif
 
+#include "stm32_def.h"
+
 /* Application specific configuration options. */
 #if __has_include("FreeRTOSConfig.h")
 #   include "FreeRTOSConfig.h"
@@ -103,7 +105,6 @@ extern "C" {
 #   include "FreeRTOS/default/FreeRTOSConfig.h"
 #endif
 
-#include "stm32_def.h"
 
 /* Basic FreeRTOS definitions. */
 #include "projdefs.h"

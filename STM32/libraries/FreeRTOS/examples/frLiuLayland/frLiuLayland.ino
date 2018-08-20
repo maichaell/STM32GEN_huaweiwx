@@ -178,6 +178,8 @@ void setup() {
 
   // start tasks
   vTaskStartScheduler();
+  
+  //never to here  
   Serial.println("Scheduler failed");
   while (1);
 }

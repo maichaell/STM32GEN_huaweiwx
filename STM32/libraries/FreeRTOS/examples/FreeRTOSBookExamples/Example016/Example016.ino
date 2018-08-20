@@ -1,6 +1,6 @@
 /*
   Example 16. Re-writing vPrintString() to Use a Gatekeeper Task
-  重新编写 vPrintString()以使用网关守卫任务
+  重新编写 vPrintString()以使用一个守卫把关任务
   
   FreeRTOS.org V9.0.0 - Copyright (C) 2003-2017 Richard Barry.
   This file is part of the FreeRTOS.org distribution.
@@ -39,7 +39,7 @@ static void prvPrintTask( void *pvParameters );
 static void prvStdioGatekeeperTask( void *pvParameters );
 
 /* Define the strings that the tasks and interrupt will print out via the gatekeeper. */
-static char *pcStringsToPrint[] =
+static char  *pcStringsToPrint[] =
 {
   "Task 1 ****************************************************\r\n",
   "Task 2 ----------------------------------------------------\r\n",
@@ -62,7 +62,12 @@ void setup( void )
 
   /* The tasks are going to use a pseudo random delay, seed the random number
     generator. */
-  srand( 567 );
+#if defined( STM32H7) && ( __GNUC__ < 6)
+ // GCC 5.4.2-2016q2 srand(x) and rand() have a bug for STM32H7 into HardFault_Handler
+ // but GCC 7.3.1-2018q2 ok   huaweiwx@sina.com 2018.7.20
+#else 
+  randomSeed( 567 ); 
+#endif
 
   /* Check the queue was created successfully. */
   if ( xPrintQueue != NULL )
@@ -92,6 +97,7 @@ void setup( void )
 
 static void prvStdioGatekeeperTask( void *pvParameters )
 {
+  UNUSED(pvParameters);
   char *pcMessageToPrint;
 
   /* This is the only task that is allowed to write to the terminal output.
@@ -167,7 +173,13 @@ static void prvPrintTask( void *pvParameters )
       not care what value is returned.  In a more secure application a version
       of rand() that is known to be re-entrant should be used - or calls to
       rand() should be protected using a critical section. */
-    vTaskDelay( ( rand() & 0x1FF ) );
+#if defined( STM32H7) && ( __GNUC__ < 6)
+#warning  "GCC 5.4.2-2016q2  srand(x) and rand() have a bug for STM32H7 into HardFault_Handler  but GCC 7.3.1-2018q2  ok"
+//huaweiwx@sina.com 2018.7.20"
+    vTaskDelay(0x100);
+#else
+    vTaskDelay(random(0x200));
+#endif
   }
 }
 

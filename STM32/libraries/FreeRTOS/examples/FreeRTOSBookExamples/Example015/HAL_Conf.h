@@ -20,6 +20,7 @@
 
 /*select Release or Release(exceptions) from menu should be closed the DEBUG auto*/
 #ifdef USE_FULL_ASSERT
+#define portINFO 1  /* Displaying port information at compiling*/
 /* ------------------------------------------------------------------
  * set USE_ERRORBLINK 1 enable blink a err code for debug 
  * blink err code:
