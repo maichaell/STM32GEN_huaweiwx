@@ -1,26 +1,32 @@
 
 ## FreeRTOSConfig.h 配置文件
 
-### 1. FreeRTOS Search Profile FreeRTOSConfig.h and use the following order of precedence. 搜索 FreeRTOSConfig.h,并按下述优先顺序序使用
+### 1. FreeRTOS Search Profile FreeRTOSConfig.h and use the following order of precedence. 搜索 FreeRTOSConfig.h,并按下述优先顺序使用
 
 -  Current project directory  当前工程所在目录
--  Current Board Definition directory 当前板子定义目录: [variant]
-/configs/
+-  Current Board Definition directory 当前板子定义目录: [variant]/configs/
 -  FreeRTOS/default/
 
 ---
 
 ### 2. Some definitions can be changed by HAL_Conf.h in current project directory
-###   部份常用的定义可以通过当前工程所在目录的文件 HAL_Conf.h 改变
+###   许多常用的内部定义可以通过当前工程所在目录的文件 HAL_Conf.h 改变
+
+---
+
+### 3. FreeRTOS port. 系统定制
+
+-  	`portUSE_HEAP` Memory management 1~5  use 'HEAP_x.c' default 4
+-  	`portTickUSE_TIMx` use  systic or TIMx  to schedule
 
 --- 
 
-### 3. The following API features are disable by default, and need to be set to 1 in the Hal_conf.h file when using these features:
+### 4. The following API features are disable by default, and need to be set to 1 in the Hal_conf.h file when using these features:
 ###    下述API功能缺省是关闭的,当使用这些功能时需要在HAL_Conf.h文件中设置为1:
 
 - configUSE_COUNTING_SEMAPHORES
 - INCLUDE_vTaskDelayUntil
--  configUSE_IDLE_HOOK
+- configUSE_IDLE_HOOK
 - configUSE_TICK_HOOK
 
 ---
