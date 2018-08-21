@@ -8,6 +8,8 @@
 
 SPIFLASH	KEYWORD1
 SOFT_SPIFLASH	KEYWORD1
+SpiFlash	KEYWORD1
+
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
