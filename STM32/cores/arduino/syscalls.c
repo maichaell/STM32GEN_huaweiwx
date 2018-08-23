@@ -38,6 +38,10 @@
 #endif
 
 #include "Arduino.h"
+#include <time.h>
+#include <sys/time.h>
+#include <sys/times.h>
+#include <sys/errno.h>
 
 // Helper macro to mark unused parameters and prevent compiler warnings.
 // Appends _UNUSED to the variable name to prevent accidentally using them.
@@ -55,13 +59,6 @@
 extern int errno ;
 extern int  _end ;
 
-/*----------------------------------------------------------------------------
- *        Exported functions
- *----------------------------------------------------------------------------*/
-extern void _exit( int status ) ;
-extern void _kill( int pid, int sig ) ;
-extern int _getpid ( void ) ;
-
 static unsigned char *heap_brk = NULL;
 static unsigned char *heap_end = NULL;
 
@@ -70,7 +67,7 @@ void setHeap(unsigned char *start, unsigned char *end) {
     heap_end = end;
 }
 
-extern caddr_t _sbrk ( int incr )
+caddr_t _sbrk ( int incr )
 {
    caddr_t prev_heap;
 
@@ -89,34 +86,63 @@ extern caddr_t _sbrk ( int incr )
   return prev_heap ;
 }
 
-extern int link( UNUSED_PARAM(char *cOld), UNUSED_PARAM(char *cNew) )
+int _open(char *path, int flags, ...)
+{
+	/* Pretend like we always fail */
+    UNUSED(path);
+    UNUSED(flags);
+	return -1;
+}
+
+__attribute__((weak))
+int _close( UNUSED_PARAM(int file) )
 {
   return -1 ;
 }
 
-extern int _close( UNUSED_PARAM(int file) )
+int _link(char *old, char *new)
 {
-  return -1 ;
+    UNUSED(old);
+    UNUSED(new);	
+	errno = EMLINK;
+	return -1;
 }
 
-extern int _fstat( UNUSED_PARAM(int file), struct stat *st )
+int _unlink(char *name)
+{
+    UNUSED(name);
+	return -1;
+}
+
+int _times(struct tms *buf)
+{
+    UNUSED(buf);
+	return -1;
+}
+
+
+__attribute__((weak))
+int _fstat( UNUSED_PARAM(int file), struct stat *st )
 {
   st->st_mode = S_IFCHR ;
 
   return 0 ;
 }
 
-extern int _isatty( UNUSED_PARAM(int file) )
+__attribute__((weak))
+int _isatty( UNUSED_PARAM(int file) )
 {
   return 1 ;
 }
 
-extern int _lseek( UNUSED_PARAM(int file), UNUSED_PARAM(int ptr), UNUSED_PARAM(int dir) )
+__attribute__((weak))
+int _lseek( UNUSED_PARAM(int file), UNUSED_PARAM(int ptr), UNUSED_PARAM(int dir) )
 {
   return 0 ;
 }
 
-extern int _read(UNUSED_PARAM(int file), UNUSED_PARAM(char *ptr), UNUSED_PARAM(int len) )
+__attribute__((weak))
+int _read(UNUSED_PARAM(int file), UNUSED_PARAM(char *ptr), UNUSED_PARAM(int len) )
 {
   return 0 ;
 }
@@ -131,19 +157,20 @@ extern int _write( UNUSED_PARAM(int file), UNUSED_PARAM(char *ptr), int len )
   return iIndex ;
 }
 */
-extern void _exit( int status )
+void _exit( int status )
 {
-  printf( "Exiting with status %d.\n", status ) ;
-
+//  printf( "Exiting with status %d.\n", status ) ;
   for ( ; ; ) ;
 }
 
-extern void _kill( UNUSED_PARAM(int pid), UNUSED_PARAM(int sig) )
+__attribute__((weak))
+int _kill( UNUSED_PARAM(int pid), UNUSED_PARAM(int sig) )
 {
+  errno = EINVAL;	
   return ;
 }
 
-extern int _getpid ( void )
+int _getpid ( void )
 {
   return -1 ;
 }
