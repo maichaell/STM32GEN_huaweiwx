@@ -17,10 +17,10 @@
 
 /******************  BSP_FSMC DEVICE ******************/
 //comman base address
-#define LCD_BASE_BK11	((uint32_t)(0x60000000 | 0x00000000)) //PD1/NE1 FSMC_BANK1_1
-#define LCD_BASE_BK12	((uint32_t)(0x60000000 | 0x04000000)) //PG9/NE2 FSMC_BANK1_2
-#define LCD_BASE_BK13	((uint32_t)(0x60000000 | 0x08000000)) //PG10/NE3 FSMC_BANK1_3
-#define LCD_BASE_BK14	((uint32_t)(0x60000000 | 0x0C000000)) //PG12/NE4 FSMC_BANK1_4
+#define LCD_BASE_BK11	(0x60000000 | 0x00000000) //PD1/NE1 FSMC_BANK1_1
+#define LCD_BASE_BK12	(0x60000000 | 0x04000000) //PG9/NE2 FSMC_BANK1_2
+#define LCD_BASE_BK13	(0x60000000 | 0x08000000) //PG10/NE3 FSMC_BANK1_3
+#define LCD_BASE_BK14	(0x60000000 | 0x0C000000) //PG12/NE4 FSMC_BANK1_4
 
 #include "configs/LCDConfig.h"
 #define LCD_ADDR_SETUPTIME 30       //FSMC addr time setup
@@ -49,14 +49,14 @@
 // SRAM BANK1_3
 #ifdef HAVE_SRAM
 #define SRAM_START	LCD_BASE_BK13
-#define SRAM_LENTH	((uint32_t)(1*512*1024))
+#define SRAM_LENGTH	((uint32_t)(1*512*1024))
 #endif
 
 //nor
 #ifdef HAVE_NOR
 #define NOR_DEVICE_ADDR	LCD_BASE_BK12
+#define NOR_DEVICE_LENGTH    ((uint32_t)(2*1024*1024)) /* 39VF160 */
 #define NOR_WAIT_PIN    PD6
-
 #endif
 
 //nand
@@ -78,8 +78,13 @@ void STM_FSMC_SRAM_Init(void);
 uint8_t STM_FSMC_NOR_Init(void);
 void STM_FSMC_NAND_Init(void);
 
+#if USE_EXTRAMSYSMALLOC
+void setHeapAtSram(void);
+#endif
+
 #ifdef __cplusplus
 } //extern "C"
 #endif
+
 
 #endif   //__BSP_H__

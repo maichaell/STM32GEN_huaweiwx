@@ -97,7 +97,22 @@ void STM_FSMC_GPIO_Init(void)
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
   /* GPIO_InitStruct */
-  GPIO_InitStruct.Pin =  GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
+  GPIO_InitStruct.Pin =  GPIO_PIN_0|GPIO_PIN_1
+#if FSMC_ADDRESSBITS > 23  /* 168M*16 */
+                         |GPIO_PIN_2
+#endif						 
+#if FSMC_ADDRESSBITS > 22 /* 8M*16 */
+                         |GPIO_PIN_6
+#endif						 
+#if FSMC_ADDRESSBITS > 21  /* 4M*16 */
+                         |GPIO_PIN_5
+#endif						 
+#if FSMC_ADDRESSBITS > 20  /* 2M*16 */
+                         |GPIO_PIN_4
+#endif						 
+#if FSMC_ADDRESSBITS > 19  /* 1M*16 */ 
+						 |GPIO_PIN_3
+#endif
 						 |GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10 
                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14 
                          |GPIO_PIN_15;
@@ -105,8 +120,11 @@ void STM_FSMC_GPIO_Init(void)
 
   /* GPIO_InitStruct */
   GPIO_InitStruct.Pin = GPIO_PIN_0| GPIO_PIN_1| GPIO_PIN_4| GPIO_PIN_5
-                      | GPIO_PIN_7| GPIO_PIN_8| GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11 
-                      |GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
+                      | GPIO_PIN_7| GPIO_PIN_8| GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12
+#if   FSMC_ADDRESSBITS > 18 /* 512K*16 */ 					  
+					  |GPIO_PIN_13
+#endif					  
+					  |GPIO_PIN_14|GPIO_PIN_15;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
   
     /*!< Configure PD6 for NOR memory Ready/Busy signal */
@@ -159,14 +177,14 @@ void STM_FSMC_LCD_TimeSet(uint8_t _as, uint8_t _ds)
 
 //for spfd5420, other must fixed!  
   Timing.AddressSetupTime      = _as/6;	  //  6ns(1/168M)*2(HCLK) = 12ns	
-  Timing.AddressHoldTime       = 0;   //  FSMC_ACCESS_MODE_A unused 
+  Timing.AddressHoldTime       =  1;   //  FSMC_ACCESS_MODE_A unused 
   Timing.DataSetupTime         = _ds/6;   //  6ns(1/168M)* 5 (HCLK)=30ns
   Timing.AccessMode            = FSMC_ACCESS_MODE_A;
  /* ExtTiming */
 
   if (HAL_SRAM_Init(&fsmcLcdHandle, &Timing, NULL) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    _Error_Handler(__FILENAME__, __LINE__);
   }
 }
 
@@ -203,19 +221,20 @@ void STM_FSMC_SRAM_Init(void)
 	IS61LV25616AL-10TL  10ns
 	IS62WV51216BLL-55TL 55ns
   */
-  Timing.AddressSetupTime      = 0;	  //  6ns(1/168M)*(_as/6+1)(HCLK) ns	
-  Timing.AddressHoldTime       = 0;   //  FSMC_ACCESS_MODE_A unused 
-  Timing.DataSetupTime         = 9;   //  6ns(1/168M)* (9+1)(HCLK)=60 ns for IS62WV51216BLL-55TL 55ns
-  Timing.BusTurnAroundDuration = 0;
-  Timing.CLKDivision           = 0;
-  Timing.DataLatency           = 0;
+  Timing.AddressSetupTime      = 2;	  //  6ns(1/168M)*(_as/6+1)(HCLK) ns	
+  Timing.AddressHoldTime       = 1;   //  FSMC_ACCESS_MODE_A unused 
+//Timing.DataSetupTime         = 2;   //  5.5ns(1/168M)* (2+1)(HCLK)=16.5 ns for IS61/64LV256 10/12TL
+  Timing.DataSetupTime         = 9;   //  5.5ns(1/168M)* (9+1)(HCLK)=55 ns for IS62WV51216BLL-55TL
+  Timing.BusTurnAroundDuration = 1;
+  Timing.CLKDivision           = 2;
+  Timing.DataLatency           = 2;
   Timing.AccessMode            = FSMC_ACCESS_MODE_A;
 
   /* ExtTiming */
 
   if (HAL_SRAM_Init(&sramHandle, &Timing, NULL) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    _Error_Handler(__FILENAME__, __LINE__);
   }
  
 }
@@ -231,24 +250,26 @@ void STM_FSMC_NAND_Init(void)
   
   /*NAND Configuration */  
   Timing.SetupTime     = 0U;
-  Timing.WaitSetupTime = 4U; 
+  Timing.WaitSetupTime = 4U;
   Timing.HoldSetupTime = 2U;
   Timing.HiZSetupTime  = 0U;
   
   nandHandle.Init.NandBank        = FSMC_NAND_BANK2;
-  nandHandle.Init.Waitfeature     = FSMC_NAND_PCC_WAIT_FEATURE_ENABLE;
+  nandHandle.Init.Waitfeature     = FSMC_NAND_PCC_WAIT_FEATURE_DISABLE;
   nandHandle.Init.MemoryDataWidth = FSMC_NAND_PCC_MEM_BUS_WIDTH_8;
-  nandHandle.Init.EccComputation  = FSMC_NAND_ECC_ENABLE;
+  nandHandle.Init.EccComputation  = FSMC_NAND_ECC_DISABLE;
   nandHandle.Init.ECCPageSize     = FSMC_NAND_ECC_PAGE_SIZE_2048BYTE;
   nandHandle.Init.TCLRSetupTime   = 0U;
   nandHandle.Init.TARSetupTime    = 0U;
   
   nandHandle.Config.BlockNbr      = NAND_MAX_PLANE;
   nandHandle.Config.BlockSize     = NAND_BLOCK_SIZE;
+  nandHandle.Config.PlaneNbr      = 0;
   nandHandle.Config.PlaneSize     = NAND_PLANE_SIZE;
   nandHandle.Config.PageSize      = NAND_PAGE_SIZE; 
   nandHandle.Config.SpareAreaSize = NAND_SPARE_AREA_SIZE;
-  
+  nandHandle.Config.ExtraCommandEnable = DISABLE;
+   
   /* NAND controller initialization */
 //  NAND_MspInit();
   HAL_NAND_Init(&nandHandle, &Timing, &Timing);
@@ -274,15 +295,20 @@ void STM_FSMC_LCD_Init(void)
 #endif	
 }
 
-
+//void preinitVariant() {}
 
 #ifndef DATA_IN_ExtSRAM
-void preinitVariant() {
+void initVariant() {
 	STM_FSMC_SRAM_Init();
 }
 #endif
 
+#if USE_EXTRAMSYSMALLOC
 extern void setHeap(unsigned char* s, unsigned char* e);
 void setHeapAtSram(void){
- setHeap((unsigned char*)SRAM_START, (unsigned char*)(SRAM_START +SRAM_LENTH));
+ setHeap((unsigned char*)SRAM_START, (unsigned char*)(SRAM_START +SRAM_LENGTH));
 }
+void setHeapAtCCram(void){
+ setHeap((unsigned char*)(0x10000000), (unsigned char*)(0x10000000 + 64*1024));
+}
+#endif

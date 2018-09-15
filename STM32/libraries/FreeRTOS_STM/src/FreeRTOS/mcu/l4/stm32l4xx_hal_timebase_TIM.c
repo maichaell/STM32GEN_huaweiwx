@@ -46,12 +46,12 @@
   ******************************************************************************
   *  modify:  huaweiwx@sina.com 2017.5.4
   */
-#if (STM32L4)
-
 /* Includes ------------------------------------------------------------------*/
-#include <Arduino.h>
+#if defined(STM32L4)
 
+#include "../../Source/include/FreeRTOS.h"
 
+#if defined(TIM7)&& (portTickUSE_TIMx == 7)
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -142,4 +142,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
 }
 
+void TIM7_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM7_IRQn 0 */
+
+  /* USER CODE END TIM7_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim7);
+  /* USER CODE BEGIN TIM7_IRQn 1 */
+
+  /* USER CODE END TIM7_IRQn 1 */
+}
+#endif /* portTickUSE_TIMx */
 #endif

@@ -140,14 +140,14 @@ void STM_FSMC_LCD_TimeSet(uint8_t _as, uint8_t _ds)
 
 //for spfd5420, other must fixed!  
   Timing.AddressSetupTime      = _as/6;	  //  6ns(1/168M)*2(HCLK) = 12ns	
-  Timing.AddressHoldTime       = 0;   //  FSMC_ACCESS_MODE_A unused 
+  Timing.AddressHoldTime       = 1;   //  FSMC_ACCESS_MODE_A unused 
   Timing.DataSetupTime         = _ds/6;   //  6ns(1/168M)* 5 (HCLK)=30ns
   Timing.AccessMode            = FSMC_ACCESS_MODE_A;
  /* ExtTiming */
 
   if (HAL_SRAM_Init(&fsmcLcdHandle, &Timing, NULL) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    _Error_Handler(__FILENAME__, __LINE__);
   }
 }
 
@@ -183,10 +183,11 @@ void STM_FSMC_SRAM_Init(void)
 	IS61LV25616AL-10T   10ns
 	IS62WV51216BLL-55TL 55ns
   */
-  Timing.AddressSetupTime      = 5;	  //  6ns(1/168M)*(HCLK+1) ns	
+  Timing.AddressSetupTime      = 2;	  //  6ns(1/168M)*(HCLK+1) ns	
   Timing.AddressHoldTime       = 1;   //  FSMC_ACCESS_MODE_A unused 
-  Timing.DataSetupTime         = 9;   //  6ns(1/168M)* (9+1)=60ns for IS62WV51216BLL-55TL
-  Timing.BusTurnAroundDuration = 0;
+//Timing.DataSetupTime         = 2;   //  5.5ns(1/168M)* (2+1)(HCLK)=16.5 ns for IS61/64LV256 10/12TL
+  Timing.DataSetupTime         = 9;   //  5.5ns(1/168M)* (9+1)(HCLK)=55 ns for IS62WV51216BLL-55TL
+  Timing.BusTurnAroundDuration = 1;
   Timing.CLKDivision           = 2;
   Timing.DataLatency           = 2;
   Timing.AccessMode            = FSMC_ACCESS_MODE_A;
@@ -195,7 +196,7 @@ void STM_FSMC_SRAM_Init(void)
 
   if (HAL_SRAM_Init(&sramHandle, &Timing, NULL) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    _Error_Handler(__FILENAME__, __LINE__);
   }
  
 }
@@ -221,13 +222,24 @@ void STM_FSMC_LCD_Init(void)
 #endif	
 }
 
-void preinitVariant() {
-#ifndef DATA_IN_ExtSRAM
-	STM_FSMC_SRAM_Init();
-#endif
-}
+//void preinitVariant() {
 
+//}
+
+#ifndef DATA_IN_ExtSRAM
+void initVariant() {
+	STM_FSMC_SRAM_Init();
+//  setHeapAtSram();
+}
+#endif
+
+#if USE_EXTRAMSYSMALLOC
 extern void setHeap(unsigned char* s, unsigned char* e);
 void setHeapAtSram(void){
- setHeap((unsigned char*)SRAM_START, (unsigned char*)(SRAM_START +SRAM_LENTH));
+ setHeap((unsigned char*)SRAM_START, (unsigned char*)(SRAM_START +SRAM_LENGTH));
 }
+
+void setHeapAtCCram(void){
+ setHeap((unsigned char*)(0x10000000), (unsigned char*)(0x10000000 + 64*1024));
+}
+#endif

@@ -59,7 +59,7 @@ struct chipInfo {
 	uint32_t	flags;
 };
 
-extern chipInfo_t *pChipInfo;
+extern const chipInfo_t *pChipInfo;
 
 //extern const stm32_dev_t devices;
 
@@ -2071,6 +2071,8 @@ stm32_dev_t* UTIL_getStmDev(uint16_t id);
 #elif defined(STM32F779NI)
   #define CHIP_ID 0x451 //STM32F76xxx/77xxx
   #define CHIP_INFO CHIP_ID451
+  
+#elif defined(STM32H743ZI)
 
 #elif defined(STM32L011D3)
 
@@ -2937,9 +2939,13 @@ stm32_dev_t* UTIL_getStmDev(uint16_t id);
 #elif defined(STM32L4A6ZG)
   #define CHIP_ID 0x461 //STM32L496xx/4A6xx" 
   #define CHIP_INFO CHIP_ID461
+  
+#elif defined(STM32L4R5ZI)
+  #define CHIP_ID 0x470 //STM32L4R5xx" 
+  #define CHIP_INFO CHIP_ID470
 
 #else 
-#error   UNKNOWN CHIP PLEASE FIXED ME
+#warning   UNKNOWN CHIP PLEASE FIXED ME
 #endif
 
 
